@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
@@ -80,12 +80,23 @@ const Index = () => {
     roulette.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Calculate top performing roulettes for the Navbar
+  const topRoulettes = useMemo(() => {
+    return [...mockRoulettes]
+      .sort((a, b) => {
+        const aWinRate = (a.wins / (a.wins + a.losses)) * 100;
+        const bWinRate = (b.wins / (b.wins + b.losses)) * 100;
+        return bWinRate - aWinRate;
+      })
+      .slice(0, 3);
+  }, []);
+
   return (
     <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
       <main className="flex-1 flex flex-col w-full ml-0 md:ml-64">
-        <Navbar />
+        <Navbar topRoulettes={topRoulettes} />
         
         <div className="p-6 flex flex-col h-[calc(100vh-64px)] overflow-hidden">
           <div className="w-full max-w-2xl mx-auto mb-6">

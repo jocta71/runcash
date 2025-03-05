@@ -1,6 +1,6 @@
 
 import { 
-  Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu 
+  Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu, TrendingUp, Trophy, Flame
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -11,8 +11,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 
-const Navbar = () => {
+interface NavbarProps {
+  topRoulettes?: {
+    name: string;
+    wins: number;
+    losses: number;
+  }[];
+}
+
+const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
   return (
     <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-50">
       <div className="flex items-center justify-between h-full px-4">
@@ -21,6 +36,46 @@ const Navbar = () => {
             <Menu size={24} />
           </Button>
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
+        </div>
+        
+        {/* New Status Section */}
+        <div className="hidden md:flex items-center gap-4 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-2">
+            <TrendingUp size={18} className="text-vegas-green" />
+            <span className="text-sm text-muted-foreground">Hot Roletas:</span>
+          </div>
+          
+          <TooltipProvider>
+            {topRoulettes.map((roulette, index) => {
+              const winRate = ((roulette.wins / (roulette.wins + roulette.losses)) * 100).toFixed(1);
+              const icon = index === 0 ? Trophy : Flame;
+              const colorClass = index === 0 
+                ? "text-vegas-gold bg-vegas-gold/10 hover:bg-vegas-gold/20"
+                : "text-vegas-green bg-vegas-green/10 hover:bg-vegas-green/20";
+              
+              return (
+                <Tooltip key={index}>
+                  <TooltipTrigger asChild>
+                    <Badge 
+                      variant="outline" 
+                      className={`flex items-center gap-1 cursor-pointer animate-fade-in ${colorClass}`}
+                    >
+                      <icon size={14} className="animate-pulse" />
+                      <span className="truncate max-w-[100px]">{roulette.name}</span>
+                      <span className="font-bold">{winRate}%</span>
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className="space-y-1">
+                      <p className="font-bold">{roulette.name}</p>
+                      <p className="text-xs">Taxa de Vitória: {winRate}%</p>
+                      <p className="text-xs">Vitórias: {roulette.wins} | Derrotas: {roulette.losses}</p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </TooltipProvider>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-4">
