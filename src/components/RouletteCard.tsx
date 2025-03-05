@@ -62,6 +62,21 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
     setIsBlurred(!isBlurred);
   };
   
+  // Function to determine the color for a roulette number
+  const getRouletteNumberColor = (num: number) => {
+    if (num === 0) return "bg-vegas-green text-black";
+    
+    // In a standard European roulette wheel:
+    // Red numbers: 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36
+    const redNumbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
+    
+    if (redNumbers.includes(num)) {
+      return "bg-red-600 text-white";
+    } else {
+      return "bg-black text-white";
+    }
+  };
+  
   return (
     <div className="glass-card p-4 space-y-4 animate-fade-in hover-scale">
       <div className="flex items-center justify-between">
@@ -73,7 +88,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
         {lastNumbers.map((num, i) => (
           <div
             key={i}
-            className="w-8 h-8 rounded-full bg-vegas-darkgray flex items-center justify-center text-sm font-medium"
+            className={`w-8 h-8 rounded-full ${getRouletteNumberColor(num)} flex items-center justify-center text-sm font-medium`}
           >
             {num}
           </div>
@@ -103,7 +118,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           {suggestion.map((num, i) => (
             <div
               key={i}
-              className={`w-8 h-8 rounded-full bg-vegas-gold/20 border border-vegas-gold flex items-center justify-center text-sm font-medium text-vegas-gold ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
+              className={`w-8 h-8 rounded-full ${getRouletteNumberColor(num)} border border-vegas-gold flex items-center justify-center text-sm font-medium ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
             >
               {num}
             </div>
