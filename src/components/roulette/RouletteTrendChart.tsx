@@ -23,8 +23,8 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
         <LineChart data={trend}>
           <defs>
             <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#ffad33" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#b3ff00" stopOpacity={0.3}/>
+              <stop offset="5%" stopColor="#00ff00" stopOpacity={0.8}/>
+              <stop offset="95%" stopColor="#8bff00" stopOpacity={0.3}/>
             </linearGradient>
           </defs>
           <Line
