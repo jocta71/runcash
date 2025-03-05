@@ -49,9 +49,9 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
       <div className="ml-10">
         <p className={`text-sm text-gray-300 p-2 rounded-lg max-w-[85%] inline-block
           ${message.isModerator 
-            ? 'bg-[#1A1625] border border-[#333333] shadow-[0_0_8px_0px_rgba(139,92,246,0.3)]' 
+            ? 'bg-[#1A1625] border border-[#33333359] shadow-[0_0_8px_0px_rgba(139,92,246,0.3)]' 
             : message.isAdmin 
-              ? 'bg-[#1e1c22] border border-[#333333]' 
+              ? 'bg-[#1e1c22] border border-[#33333359]' 
               : 'bg-[#1e1c26]'}`}>
           {message.message}
         </p>

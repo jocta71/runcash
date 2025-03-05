@@ -108,7 +108,7 @@ const ChatUI = () => {
   };
   
   return (
-    <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50 border-l border-[#333333]">
+    <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50 border-l border-[#33333359]">
       <ChatHeader />
       <ChatMessageList messages={messages} />
       <ChatInput 
