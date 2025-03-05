@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -219,7 +220,7 @@ const Index = () => {
       <Sidebar />
       
       <div className="flex-1 relative">
-        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-16 flex items-center justify-between px-4 border-b border-vegas-darkgray/70 bg-[#100f13]">
+        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-[56px] flex items-center justify-between px-4 border-b border-vegas-darkgray/70 bg-[#100f13]">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">Vega</span>
             <div className="w-8 h-8 flex items-center justify-center ml-2">
@@ -254,7 +255,7 @@ const Index = () => {
           </div>
         </div>
         
-        <main className="pt-16 w-full overflow-y-auto md:mr-80">
+        <main className="pt-[56px] w-full overflow-y-auto md:mr-80">
           <div className="p-6 flex flex-col h-full bg-[#100f13]">
             <div className="w-full max-w-2xl mx-auto mb-6">
               <div className="relative">
@@ -275,3 +276,4 @@ const Index = () => {
 };
 
 export default Index;
+
