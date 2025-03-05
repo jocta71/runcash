@@ -10,6 +10,7 @@ import RouletteTrendChart from './roulette/RouletteTrendChart';
 import SuggestionDisplay from './roulette/SuggestionDisplay';
 import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
+import { seedRouletteNumbers } from '@/integrations/supabase/seedData';
 
 interface RouletteCardProps {
   name: string;
@@ -28,6 +29,40 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
+  const [dataSeeded, setDataSeeded] = useState(false);
+
+  // Check if data needs to be seeded and seed if necessary
+  useEffect(() => {
+    const checkAndSeedData = async () => {
+      try {
+        // First check if we have any data
+        const { data, error, count } = await supabase
+          .from('recent_numbers')
+          .select('number', { count: 'exact', head: true });
+        
+        // If no data exists, trigger seeding
+        if (!count || count === 0) {
+          console.log('No data found, seeding database...');
+          const success = await seedRouletteNumbers();
+          if (success) {
+            setDataSeeded(true);
+            toast({
+              title: 'Dados Adicionados',
+              description: 'Números iniciais adicionados com sucesso!',
+              variant: 'default',
+            });
+          }
+        } else {
+          console.log('Data already exists, skipping seeding');
+          setDataSeeded(true);
+        }
+      } catch (error) {
+        console.error('Error checking data:', error);
+      }
+    };
+
+    checkAndSeedData();
+  }, []);
 
   // Fetch recent numbers from the database
   useEffect(() => {
@@ -57,8 +92,11 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       }
     };
 
-    fetchRecentNumbers();
-  }, [name]);
+    // If data is seeded or we're retrying after a delay
+    if (dataSeeded) {
+      fetchRecentNumbers();
+    }
+  }, [name, dataSeeded]);
 
   useEffect(() => {
     generateSuggestion();
