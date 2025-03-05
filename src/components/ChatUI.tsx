@@ -174,7 +174,7 @@ const ChatUI = () => {
         ))}
       </div>
       
-      <form onSubmit={handleSendMessage} className="p-3 border-t border-border bg-[#0b0a0f]">
+      <form onSubmit={handleSendMessage} className="p-3 border-t border-border bg-[#0b0a0f] border-l border-[#222222]">
         <div className="flex items-center gap-1 bg-gray-800 rounded-md p-1">
           <Input 
             value={newMessage}
