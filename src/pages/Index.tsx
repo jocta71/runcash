@@ -95,43 +95,43 @@ const Index = () => {
     <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
-      <main className="flex-1 flex flex-col w-full ml-0 md:ml-64">
-        {/* Navbar based on the provided image */}
-        <div className="h-14 bg-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
-          <div className="flex items-center gap-2">
-            <span className="text-white text-2xl font-bold">Vega</span>
-            <div className="w-8 h-8 flex items-center justify-center ml-2">
-              <Search size={18} className="text-gray-400" />
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-[#222222] rounded-full py-1 px-3">
-              <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
-                <span className="text-[10px] text-white">₱</span>
-              </span>
-              <span className="text-white text-xs">342,203,561.23</span>
-              <ChevronDown size={14} className="text-gray-400" />
-            </div>
-            
-            <Button variant="default" size="sm" className="h-8 bg-vegas-green text-black font-medium">
-              <Wallet size={14} className="mr-1" /> Wallet
-            </Button>
-            
-            <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8 border border-vegas-darkgray">
-                <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <ChevronDown size={12} className="text-gray-400" />
-              
-              <div className="h-8 w-8 bg-vegas-green/20 rounded-full flex items-center justify-center ml-1">
-                <span className="text-vegas-green font-bold text-xs">3</span>
-              </div>
-            </div>
+      {/* Fixed navbar at the top */}
+      <div className="fixed top-0 right-0 left-0 md:left-64 z-10 h-14 bg-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
+        <div className="flex items-center gap-2">
+          <span className="text-white text-2xl font-bold">Vega</span>
+          <div className="w-8 h-8 flex items-center justify-center ml-2">
+            <Search size={18} className="text-gray-400" />
           </div>
         </div>
         
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-[#222222] rounded-full py-1 px-3">
+            <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
+              <span className="text-[10px] text-white">₱</span>
+            </span>
+            <span className="text-white text-xs">342,203,561.23</span>
+            <ChevronDown size={14} className="text-gray-400" />
+          </div>
+          
+          <Button variant="default" size="sm" className="h-8 bg-vegas-green text-black font-medium">
+            <Wallet size={14} className="mr-1" /> Wallet
+          </Button>
+          
+          <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8 border border-vegas-darkgray">
+              <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <ChevronDown size={12} className="text-gray-400" />
+            
+            <div className="h-8 w-8 bg-vegas-green/20 rounded-full flex items-center justify-center ml-1">
+              <span className="text-vegas-green font-bold text-xs">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <main className="flex-1 flex flex-col w-full ml-0 md:ml-64 pt-14">
         <div className="p-6 flex flex-col h-full overflow-y-auto">
           <div className="w-full max-w-2xl mx-auto mb-6">
             <div className="relative">
