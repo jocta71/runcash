@@ -28,6 +28,48 @@ const mockRoulettes = [
     wins: 200,
     losses: 90,
     trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Platinum VIP",
+    lastNumbers: [17, 22, 9, 31, 4],
+    wins: 220,
+    losses: 65,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Diamond",
+    lastNumbers: [19, 6, 27, 13, 36],
+    wins: 190,
+    losses: 55,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Gold",
+    lastNumbers: [2, 10, 20, 33, 16],
+    wins: 170,
+    losses: 60,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Lightning",
+    lastNumbers: [29, 24, 1, 30, 21],
+    wins: 210,
+    losses: 75,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Premium",
+    lastNumbers: [5, 18, 34, 11, 25],
+    wins: 230,
+    losses: 85,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Turbo",
+    lastNumbers: [8, 17, 29, 2, 19],
+    wins: 185,
+    losses: 65,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
   }
 ];
 
