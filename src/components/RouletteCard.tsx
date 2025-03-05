@@ -112,9 +112,9 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
       </div>
       
       <div>
-        <div className="flex items-center justify-between text-sm mb-2">
+        <div className="space-y-2 mb-2">
           <div className="flex items-center gap-2">
-            <span>Taxa de Vitória</span>
+            <span className="text-sm">Taxa de Vitória</span>
             <span className="text-vegas-gold font-medium">{winRate.toFixed(1)}%</span>
           </div>
           <div className="flex items-center gap-2">
