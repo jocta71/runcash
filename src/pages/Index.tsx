@@ -7,7 +7,6 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import AnimatedInsights from '@/components/AnimatedInsights';
-
 interface ChatMessage {
   id: string;
   user: {
@@ -20,7 +19,6 @@ interface ChatMessage {
   message: string;
   timestamp: Date;
 }
-
 const mockRoulettes = [{
   name: "Roleta Brasileira",
   lastNumbers: [7, 11, 23, 5, 18],
@@ -112,7 +110,6 @@ const mockRoulettes = [{
     value: Math.random() * 100
   }))
 }];
-
 const mockChatMessages: ChatMessage[] = [{
   id: '1',
   user: {
@@ -204,7 +201,6 @@ const mockChatMessages: ChatMessage[] = [{
   message: 'Hi guys! What are you doing?',
   timestamp: new Date()
 }];
-
 const Index = () => {
   const [search, setSearch] = useState("");
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
@@ -215,23 +211,16 @@ const Index = () => {
       return bWinRate - aWinRate;
     }).slice(0, 3);
   }, []);
-
   return <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
       <div className="flex-1 relative">
         <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-[70px] flex items-center justify-between px-4 border-b border-vegas-darkgray/70 bg-[#100f13]">
           <div className="flex items-center gap-2">
-            <span className="text-white text-2xl font-bold">Vega</span>
+            <span className="text-white text-2xl font-bold">RunCash</span>
             <div className="relative flex items-center ml-4 max-w-[180px]">
               <Search size={14} className="absolute left-2 text-gray-400" />
-              <Input 
-                type="text" 
-                placeholder="Pesquisar roleta..." 
-                className="h-8 pl-7 py-1 pr-2 text-xs bg-gray-800 border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-              />
+              <Input type="text" placeholder="Pesquisar roleta..." className="h-8 pl-7 py-1 pr-2 text-xs bg-gray-800 border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
           </div>
           
@@ -274,5 +263,4 @@ const Index = () => {
       <ChatUI />
     </div>;
 };
-
 export default Index;
