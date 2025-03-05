@@ -224,7 +224,7 @@ const Index = () => {
       <Sidebar />
       
       <div className="flex-1 relative">
-        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-16 bg-vegas-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
+        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-16 bg-vegas-darkgray flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">Vega</span>
             <div className="w-8 h-8 flex items-center justify-center ml-2">
