@@ -40,7 +40,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex bg-vegas-black">
-      <ChatUI />
       <Sidebar />
       
       <main className="flex-1 ml-64">
@@ -67,6 +66,8 @@ const Index = () => {
           </div>
         </div>
       </main>
+      
+      <ChatUI />
     </div>
   );
 };
