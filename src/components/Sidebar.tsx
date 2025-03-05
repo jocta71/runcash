@@ -47,7 +47,7 @@ const Sidebar = () => {
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Trophy size={18} className="text-white" />
                 </div>
-                <span>Afiliados</span>
+                <span>Loyalty program</span>
               </div>
               
               <div className="menu-item">
