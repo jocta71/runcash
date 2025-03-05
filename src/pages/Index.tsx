@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
 import RouletteCard from '@/components/RouletteCard';
 import { Input } from '@/components/ui/input';
+import ChatUI from '@/components/ChatUI';
 
 const mockRoulettes = [
   {
@@ -39,6 +40,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex bg-vegas-black">
+      <ChatUI />
       <Sidebar />
       
       <main className="flex-1 ml-64">
