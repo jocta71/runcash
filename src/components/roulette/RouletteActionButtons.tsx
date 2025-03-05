@@ -20,7 +20,7 @@ const RouletteActionButtons = ({ onDetailsClick, onPlayClick }: RouletteActionBu
       </Button>
       
       <Button 
-        className="flex-1 bg-vegas-green hover:bg-vegas-green/80 text-black font-medium animate-pulse-neon"
+        className="flex-1 text-black font-medium animate-pulse-neon bg-gradient-to-b from-[#00ff00] to-[#8bff00] hover:from-[#00ff00]/90 hover:to-[#8bff00]/90"
         onClick={onPlayClick}
       >
         <Play size={16} className="mr-2" />
