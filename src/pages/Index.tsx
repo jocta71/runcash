@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -220,7 +221,7 @@ const Index = () => {
       <Sidebar />
       
       <div className="flex-1 relative">
-        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-[70px] flex items-center justify-between px-4 border-b border-vegas-darkgray/70 bg-[#100f13]">
+        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-[70px] flex items-center justify-between px-4 border-b border-[#33333359] bg-[#100f13]">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">RunCash</span>
             <div className="relative flex items-center ml-4 max-w-[180px]">
