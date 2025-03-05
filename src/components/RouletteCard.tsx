@@ -1,3 +1,4 @@
+
 import { Play, TrendingUp, WandSparkles, Dices, Eye, EyeOff, Trophy, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -202,7 +203,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
             }}
           >
             <Play size={16} className="mr-2" />
-            Jogar Agora
+            Ir para a Roleta
           </Button>
         </div>
       </div>
