@@ -111,7 +111,7 @@ const Index = () => {
       <Sidebar />
       
       {/* Fixed navbar at the top with full width */}
-      <div className=" right-0 left-0 md:left-64 z-10 h-14 bg-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
+      <div className="">
         <div className="flex items-center gap-2">
           <span className="text-white text-2xl font-bold">Vega</span>
           <div className="w-8 h-8 flex items-center justify-center ml-2">
