@@ -1,5 +1,5 @@
 
-import { Play, TrendingUp } from 'lucide-react';
+import { Play, TrendingUp, WandSparkles, Dices } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -7,6 +7,8 @@ import {
   Line,
   ResponsiveContainer
 } from 'recharts';
+import { useState } from 'react';
+import { toast } from '@/components/ui/use-toast';
 
 interface RouletteCardProps {
   name: string;
@@ -18,6 +20,37 @@ interface RouletteCardProps {
 
 const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const winRate = (wins / (wins + losses)) * 100;
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [suggestion, setSuggestion] = useState<number[]>([]);
+
+  const generateSuggestion = () => {
+    // Different strategy types
+    const strategies = [
+      { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36] },
+      { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33] },
+      { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34] },
+      { name: 'Terminal 5,9,6', numbers: [5, 6, 9, 15, 16, 19, 25, 26, 29, 35, 36] },
+      { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36] },
+    ];
+
+    // Randomly select a strategy
+    const selectedStrategy = strategies[Math.floor(Math.random() * strategies.length)];
+    
+    // Randomly select 3 numbers from the selected strategy
+    const shuffled = [...selectedStrategy.numbers].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+
+    // Update state
+    setSuggestion(selected);
+    setShowSuggestions(true);
+    
+    // Show toast notification
+    toast({
+      title: "Sugestão Gerada",
+      description: `Estratégia: ${selectedStrategy.name}`,
+      variant: "default"
+    });
+  };
   
   return (
     <div className="glass-card p-4 space-y-4 animate-fade-in hover-scale">
@@ -36,6 +69,25 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           </div>
         ))}
       </div>
+      
+      {showSuggestions && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <WandSparkles size={18} className="text-vegas-gold" />
+            <span className="text-sm text-vegas-gold font-medium">Sugestão de Jogada</span>
+          </div>
+          <div className="flex gap-2">
+            {suggestion.map((num, i) => (
+              <div
+                key={i}
+                className="w-8 h-8 rounded-full bg-vegas-gold/20 border border-vegas-gold flex items-center justify-center text-sm font-medium text-vegas-gold animate-pulse"
+              >
+                {num}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       
       <div>
         <div className="flex items-center justify-between text-sm mb-2">
@@ -62,10 +114,20 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
         </ResponsiveContainer>
       </div>
       
-      <Button className="w-full bg-vegas-green hover:bg-vegas-green/80 text-black font-medium animate-pulse-neon">
-        <Play size={16} className="mr-2" />
-        Jogar Agora
-      </Button>
+      <div className="flex gap-2">
+        <Button 
+          onClick={generateSuggestion}
+          className="flex-1 bg-vegas-blue hover:bg-vegas-blue/80 text-black font-medium"
+        >
+          <Dices size={16} className="mr-2" />
+          Sugerir Jogada
+        </Button>
+        
+        <Button className="flex-1 bg-vegas-green hover:bg-vegas-green/80 text-black font-medium animate-pulse-neon">
+          <Play size={16} className="mr-2" />
+          Jogar Agora
+        </Button>
+      </div>
     </div>
   );
 };
