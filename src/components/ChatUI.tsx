@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Send, User, ShieldCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -190,14 +189,14 @@ const ChatUI = () => {
       </div>
       
       <form onSubmit={handleSendMessage} className="p-3 border-t border-[#222222] bg-[#0b0a0f]">
-        <div className="flex items-center gap-1 bg-gray-800 rounded-md p-1">
+        <div className="flex items-center gap-1 bg-[#1A191F] rounded-md px-2 py-1">
           <Input 
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Message..."
-            className="border-none bg-transparent text-white text-sm focus-visible:ring-0 focus-visible:ring-offset-0 h-8"
+            placeholder="Hi guys! What are you doing?"
+            className="border-none bg-transparent text-white text-sm focus-visible:ring-0 focus-visible:ring-offset-0 h-8 placeholder:text-gray-500"
           />
-          <Button type="submit" size="icon" variant="ghost" className="h-8 w-8 text-vegas-green hover:bg-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0">
+          <Button type="submit" size="icon" variant="ghost" className="h-8 w-8 text-vegas-green hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0">
             <Send size={16} />
           </Button>
         </div>
