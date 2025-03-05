@@ -1,12 +1,70 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from 'react';
+import { Search } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Sidebar from '@/components/Sidebar';
+import RouletteCard from '@/components/RouletteCard';
+import { Input } from '@/components/ui/input';
+
+const mockRoulettes = [
+  {
+    name: "Roleta Brasileira",
+    lastNumbers: [7, 11, 23, 5, 18],
+    wins: 150,
+    losses: 50,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Europeia",
+    lastNumbers: [32, 15, 3, 26, 8],
+    wins: 180,
+    losses: 70,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  },
+  {
+    name: "Roleta Americana",
+    lastNumbers: [0, 12, 28, 35, 14],
+    wins: 200,
+    losses: 90,
+    trend: Array.from({ length: 20 }, () => ({ value: Math.random() * 100 }))
+  }
+];
 
 const Index = () => {
+  const [search, setSearch] = useState("");
+  
+  const filteredRoulettes = mockRoulettes.filter(roulette =>
+    roulette.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex bg-vegas-black">
+      <Sidebar />
+      
+      <main className="flex-1 ml-64">
+        <Navbar />
+        
+        <div className="p-6 mt-16">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
+              <Input
+                type="search"
+                placeholder="Buscar roletas..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-10 bg-vegas-darkgray border-none"
+              />
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredRoulettes.map((roulette, index) => (
+              <RouletteCard key={index} {...roulette} />
+            ))}
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
