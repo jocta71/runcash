@@ -94,8 +94,8 @@ export default {
 					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
 				'pulse-neon': {
-					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(59, 255, 161, 0.7)' },
-					'50%': { boxShadow: '0 0 20px 5px rgba(59, 255, 161, 0.9)' }
+					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(59, 255, 161, 0.3)' },
+					'50%': { boxShadow: '0 0 20px 5px rgba(59, 255, 161, 0.4)' }
 				},
 				'pulse-gold': {
 					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(255, 203, 71, 0.7)' },
