@@ -19,11 +19,21 @@ interface RouletteCardProps {
   trend: { value: number }[];
 }
 
+// Define strategies and their colors
+const strategies = [
+  { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], color: "bg-purple-500" },
+  { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-500" },
+  { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-500" },
+  { name: 'Terminal 5,9,6', numbers: [5, 6, 9, 15, 16, 19, 25, 26, 29, 35, 36], color: "bg-amber-500" },
+  { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36], color: "bg-rose-500" },
+];
+
 const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const winRate = (wins / (wins + losses)) * 100;
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [suggestion, setSuggestion] = useState<number[]>([]);
   const [isBlurred, setIsBlurred] = useState(false);
+  const [currentStrategy, setCurrentStrategy] = useState(strategies[0]);
 
   // Generate suggestion on initial render
   useEffect(() => {
@@ -31,15 +41,6 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
   }, []);
 
   const generateSuggestion = () => {
-    // Different strategy types
-    const strategies = [
-      { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36] },
-      { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33] },
-      { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34] },
-      { name: 'Terminal 5,9,6', numbers: [5, 6, 9, 15, 16, 19, 25, 26, 29, 35, 36] },
-      { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36] },
-    ];
-
     // Randomly select a strategy
     const selectedStrategy = strategies[Math.floor(Math.random() * strategies.length)];
     
@@ -49,6 +50,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
 
     // Update state
     setSuggestion(selected);
+    setCurrentStrategy(selectedStrategy);
     
     // Show toast notification
     toast({
@@ -76,6 +78,11 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
       return "bg-black text-white";
     }
   };
+
+  // Function to get suggestion color based on strategy
+  const getSuggestionColor = (num: number) => {
+    return currentStrategy.color + " text-white";
+  };
   
   return (
     <div className="glass-card p-4 space-y-4 animate-fade-in hover-scale">
@@ -100,6 +107,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           <div className="flex items-center gap-2">
             <WandSparkles size={18} className="text-vegas-gold" />
             <span className="text-sm text-vegas-gold font-medium">Sugestão de Jogada</span>
+            <span className="text-xs text-vegas-gold/70">({currentStrategy.name})</span>
           </div>
           <TooltipProvider>
             <Tooltip>
@@ -118,7 +126,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           {suggestion.map((num, i) => (
             <div
               key={i}
-              className={`w-8 h-8 rounded-full ${getRouletteNumberColor(num)} border border-vegas-gold flex items-center justify-center text-sm font-medium ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
+              className={`w-8 h-8 rounded-full ${getSuggestionColor(num)} border border-vegas-gold flex items-center justify-center text-sm font-medium ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
             >
               {num}
             </div>
