@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { 
   CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, 
-  BarChart3, Scale, LifeBuoy, ChevronRight, ChevronDown, JackPlug, Flame
+  BarChart3, Scale, LifeBuoy, ChevronRight, ChevronDown, Gamepad2, Flame
 } from 'lucide-react';
 
 const Sidebar = () => {
@@ -13,7 +13,7 @@ const Sidebar = () => {
       <div className="p-3 mt-20">
         <div className="space-y-1">
           <div className="menu-item active">
-            <JackPlug size={20} className="text-vegas-green" />
+            <Gamepad2 size={20} className="text-vegas-green" />
             <span>Slots</span>
           </div>
           
@@ -48,9 +48,7 @@ const Sidebar = () => {
           </div>
           
           <div className="menu-item">
-            <Circ
-
-leDollarSign size={20} className="text-vegas-green" />
+            <CircleDollarSign size={20} className="text-vegas-green" />
             <span>Loteria</span>
           </div>
           
