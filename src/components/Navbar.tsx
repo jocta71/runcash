@@ -78,8 +78,8 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-30">
-      <div className="w-[calc(100%-22rem)] ml-64 flex items-center justify-between h-full px-4">
+    <div className="fixed top-0 z-30 left-64 right-0 h-16 bg-vegas-darkgray border-b border-border">
+      <div className="h-full flex items-center justify-between px-4">
         {/* Logo Section */}
         <div className="flex items-center gap-4">
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
