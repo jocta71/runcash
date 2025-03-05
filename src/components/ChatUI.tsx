@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Send, User, ShieldCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -119,7 +118,7 @@ const ChatUI = () => {
   
   return (
     <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50 border-l border-[#333333]">
-      <div className="p-4 h-[70px] border-b border-[#222222] flex items-center justify-between bg-[#0b0a0f]">
+      <div className="p-4 h-[70px] border-b border-[#333333] flex items-center justify-between bg-[#0b0a0f]">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 bg-[#1A191F] rounded-md flex items-center justify-center">
             <span className="text-xs text-white">#</span>
@@ -182,9 +181,9 @@ const ChatUI = () => {
             <div className="ml-10">
               <p className={`text-sm text-gray-300 p-2 rounded-lg max-w-[85%] inline-block
                 ${msg.isModerator 
-                  ? 'bg-[#1A1625] border border-[#4D3A6B] shadow-[0_0_8px_0px_rgba(139,92,246,0.3)]' 
+                  ? 'bg-[#1A1625] border border-[#333333] shadow-[0_0_8px_0px_rgba(139,92,246,0.3)]' 
                   : msg.isAdmin 
-                    ? 'bg-[#1e1c22] border border-vegas-gold/20' 
+                    ? 'bg-[#1e1c22] border border-[#333333]' 
                     : 'bg-[#1e1c26]'}`}>
                 {msg.message}
               </p>
@@ -193,7 +192,7 @@ const ChatUI = () => {
         ))}
       </div>
       
-      <form onSubmit={handleSendMessage} className="p-3 border-t border-[#222222] bg-[#0b0a0f]">
+      <form onSubmit={handleSendMessage} className="p-3 border-t border-[#333333] bg-[#0b0a0f]">
         <div className="flex items-center gap-1 bg-[#1A191F] rounded-md px-2 py-1">
           <Input 
             value={newMessage}

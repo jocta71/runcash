@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send } from 'lucide-react';
 const Sidebar = () => {
