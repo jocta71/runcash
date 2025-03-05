@@ -38,7 +38,7 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
         </span>
         {message.isModerator && (
           <div className="flex items-center gap-1">
-            <span className="bg-vegas-green text-xs px-1.5 py-0.5 rounded text-black font-medium">Moderator</span>
+            <span className="bg-gradient-to-b from-[#00ff00] to-[#8bff00] text-xs px-1.5 py-0.5 rounded text-black font-medium">Moderator</span>
             <span className="text-purple-500">
               <div className="p-1 bg-[#1A191F] rounded-md">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
