@@ -1,3 +1,4 @@
+
 import { 
   Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu, TrendingUp, Trophy, Flame,
   ArrowLeft, ArrowRight, Search
@@ -78,7 +79,7 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
 
   return (
     <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-30">
-      <div className="w-full max-w-[calc(100%-4rem)] mx-auto flex items-center justify-between h-full px-4">
+      <div className="w-[calc(100%-22rem)] ml-64 flex items-center justify-between h-full px-4">
         {/* Logo Section */}
         <div className="flex items-center gap-4">
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
