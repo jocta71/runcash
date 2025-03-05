@@ -9,8 +9,7 @@ import {
   YAxis,
   CartesianGrid,
   Legend,
-  ReferenceLine,
-  defs
+  ReferenceLine
 } from 'recharts';
 
 interface RouletteTrendChartProps {
