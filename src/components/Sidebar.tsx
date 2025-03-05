@@ -7,7 +7,7 @@ const Sidebar = () => {
         <div className="space-y-6">
           {/* Games Section */}
           <div>
-            <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Games</h3>
+            <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Jogos</h3>
             <div className="space-y-1">
               <div className="menu-item active">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
@@ -27,68 +27,68 @@ const Sidebar = () => {
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Heart size={18} className="text-white" />
                 </div>
-                <span>Favourites</span>
+                <span>Favoritos</span>
               </div>
             </div>
           </div>
           
           {/* Bonuses Section */}
           <div>
-            <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Bonuses</h3>
+            <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Bônus</h3>
             <div className="space-y-1">
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Gift size={18} className="text-green-500" />
                 </div>
-                <span>Promocode</span>
+                <span>Código Promocional</span>
               </div>
               
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Trophy size={18} className="text-white" />
                 </div>
-                <span>Loyalty program</span>
+                <span>Programa de Fidelidade</span>
               </div>
               
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Users size={18} className="text-white" />
                 </div>
-                <span>Referal program</span>
+                <span>Programa de Indicação</span>
               </div>
               
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <CircleDollarSign size={18} className="text-white" />
                 </div>
-                <span>Lottery</span>
+                <span>Loteria</span>
               </div>
             </div>
           </div>
           
           {/* Other Section */}
           <div>
-            <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Other</h3>
+            <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Outros</h3>
             <div className="space-y-1">
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <BarChart3 size={18} className="text-white" />
                 </div>
-                <span>Statistics</span>
+                <span>Estatísticas</span>
               </div>
               
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Scale size={18} className="text-white" />
                 </div>
-                <span>Provably fair</span>
+                <span>Jogo Justo</span>
               </div>
               
               <div className="menu-item">
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <LifeBuoy size={18} className="text-white" />
                 </div>
-                <span>Support</span>
+                <span>Suporte</span>
               </div>
             </div>
           </div>
@@ -108,7 +108,7 @@ const Sidebar = () => {
               <div className="bg-[#1A191F] p-1 rounded-md">
                 <Globe size={18} className="text-gray-400" />
               </div>
-              <span className="text-gray-300">English</span>
+              <span className="text-gray-300">Português</span>
             </div>
             <ChevronDown size={14} className="text-gray-400" />
           </div>
