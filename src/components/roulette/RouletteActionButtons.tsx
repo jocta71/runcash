@@ -13,7 +13,7 @@ const RouletteActionButtons = ({ onDetailsClick, onPlayClick }: RouletteActionBu
     <div className="flex gap-2">
       <Button 
         onClick={onDetailsClick}
-        className="flex-1 bg-vegas-blue hover:bg-vegas-blue/80 text-black font-medium"
+        className="flex-1 bg-[#00baff] hover:bg-[#00baff]/80 text-black font-medium"
       >
         <Dices size={16} className="mr-2" />
         Ver Detalhes
