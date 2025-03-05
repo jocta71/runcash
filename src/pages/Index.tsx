@@ -7,100 +7,194 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-const mockRoulettes = [{
-  name: "Roleta Brasileira",
-  lastNumbers: [7, 11, 23, 5, 18],
-  wins: 150,
-  losses: 50,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Europeia",
-  lastNumbers: [32, 15, 3, 26, 8],
-  wins: 180,
-  losses: 70,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Americana",
-  lastNumbers: [0, 12, 28, 35, 14],
-  wins: 200,
-  losses: 90,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Platinum VIP",
-  lastNumbers: [17, 22, 9, 31, 4],
-  wins: 220,
-  losses: 65,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Diamond",
-  lastNumbers: [19, 6, 27, 13, 36],
-  wins: 190,
-  losses: 55,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Gold",
-  lastNumbers: [2, 10, 20, 33, 16],
-  wins: 170,
-  losses: 60,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Lightning",
-  lastNumbers: [29, 24, 1, 30, 21],
-  wins: 210,
-  losses: 75,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Premium",
-  lastNumbers: [5, 18, 34, 11, 25],
-  wins: 230,
-  losses: 85,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Turbo",
-  lastNumbers: [8, 17, 29, 2, 19],
-  wins: 185,
-  losses: 65,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}];
+interface ChatMessage {
+  id: string;
+  user: {
+    name: string;
+    avatar?: string;
+    role?: string;
+    isAdmin?: boolean;
+    isModerator?: boolean;
+  };
+  message: string;
+  timestamp: Date;
+}
+
+const mockRoulettes = [
+  {
+    name: "Roleta Brasileira",
+    lastNumbers: [7, 11, 23, 5, 18],
+    wins: 150,
+    losses: 50,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Europeia",
+    lastNumbers: [32, 15, 3, 26, 8],
+    wins: 180,
+    losses: 70,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Americana",
+    lastNumbers: [0, 12, 28, 35, 14],
+    wins: 200,
+    losses: 90,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Platinum VIP",
+    lastNumbers: [17, 22, 9, 31, 4],
+    wins: 220,
+    losses: 65,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Diamond",
+    lastNumbers: [19, 6, 27, 13, 36],
+    wins: 190,
+    losses: 55,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Gold",
+    lastNumbers: [2, 10, 20, 33, 16],
+    wins: 170,
+    losses: 60,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Lightning",
+    lastNumbers: [29, 24, 1, 30, 21],
+    wins: 210,
+    losses: 75,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Premium",
+    lastNumbers: [5, 18, 34, 11, 25],
+    wins: 230,
+    losses: 85,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Turbo",
+    lastNumbers: [8, 17, 29, 2, 19],
+    wins: 185,
+    losses: 65,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }
+];
+
+const mockChatMessages: ChatMessage[] = [
+  {
+    id: '1',
+    user: { name: 'Wade Warren', avatar: '' },
+    message: 'when will it be ready?',
+    timestamp: new Date()
+  },
+  {
+    id: '2',
+    user: { name: 'Leslie Alexander', avatar: '' },
+    message: 'when will it be ready?',
+    timestamp: new Date()
+  },
+  {
+    id: '3',
+    user: { 
+      name: 'Moderator', 
+      avatar: '', 
+      isModerator: true 
+    },
+    message: 'when will it be ready?',
+    timestamp: new Date()
+  },
+  {
+    id: '4',
+    user: { name: 'Eleanor Pena', avatar: '' },
+    message: 'when will it be ready?',
+    timestamp: new Date()
+  },
+  {
+    id: '5',
+    user: { name: 'Cody Fisher', avatar: '' },
+    message: 'received?',
+    timestamp: new Date()
+  },
+  {
+    id: '6',
+    user: { 
+      name: 'Anonymous Admin', 
+      avatar: '', 
+      isAdmin: true 
+    },
+    message: 'Have you spoken to the delivery man? He is more than an hour late',
+    timestamp: new Date()
+  },
+  {
+    id: '7',
+    user: { name: 'Robert Fox', avatar: '' },
+    message: 'Great service.',
+    timestamp: new Date()
+  },
+  {
+    id: '8',
+    user: { name: 'Savannah Nguyen', avatar: '' },
+    message: 'tastes amazing!',
+    timestamp: new Date()
+  },
+  {
+    id: '9',
+    user: { name: 'Arlene McCoy', avatar: '' },
+    message: 'Ok',
+    timestamp: new Date()
+  },
+  {
+    id: '10',
+    user: { name: 'Mummyland', avatar: '' },
+    message: 'when will it be ready?',
+    timestamp: new Date()
+  },
+  {
+    id: '11',
+    user: { name: 'You', avatar: '' },
+    message: 'Hi guys! What are you doing?',
+    timestamp: new Date()
+  }
+];
 
 const Index = () => {
   const [search, setSearch] = useState("");
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(mockChatMessages);
+  const [newMessage, setNewMessage] = useState("");
   
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
   
@@ -111,12 +205,26 @@ const Index = () => {
       return bWinRate - aWinRate;
     }).slice(0, 3);
   }, []);
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() === "") return;
+    
+    const newChatMessage: ChatMessage = {
+      id: String(chatMessages.length + 1),
+      user: { name: 'You', avatar: '' },
+      message: newMessage,
+      timestamp: new Date()
+    };
+    
+    setChatMessages([...chatMessages, newChatMessage]);
+    setNewMessage("");
+  };
   
   return <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
       <div className="flex-1 relative">
-        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-40 h-16 bg-vegas-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
+        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-40 h-16 bg-vegas-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70 overflow-visible">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">Vega</span>
             <div className="w-8 h-8 flex items-center justify-center ml-2">
@@ -165,6 +273,71 @@ const Index = () => {
             </div>
           </div>
         </main>
+      </div>
+      
+      <div className="fixed top-0 right-0 bottom-0 w-80 bg-vegas-black border-l border-vegas-darkgray/70 flex flex-col z-30">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
+          <div className="flex items-center gap-2">
+            <span className="text-white font-medium">Chat</span>
+          </div>
+          <div className="flex items-center">
+            <span className="bg-vegas-blue px-2 py-0.5 rounded-md text-xs text-white">Rules</span>
+            <span className="text-white text-xs ml-4">3,331 →</span>
+          </div>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto p-3 space-y-3">
+          {chatMessages.map((msg) => (
+            <div key={msg.id} className="flex items-start gap-2">
+              <div className="shrink-0">
+                <Avatar className="h-8 w-8 border border-vegas-darkgray">
+                  {msg.user.avatar ? (
+                    <AvatarImage src={msg.user.avatar} alt={msg.user.name} />
+                  ) : (
+                    <AvatarFallback className="bg-vegas-darkgray text-white text-xs">
+                      {msg.user.name.substring(0, 2)}
+                    </AvatarFallback>
+                  )}
+                </Avatar>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white text-sm font-medium">{msg.user.name}</span>
+                  {msg.user.isAdmin && (
+                    <span className="bg-vegas-gold/20 text-vegas-gold text-[10px] px-1.5 py-0.5 rounded">Admin</span>
+                  )}
+                  {msg.user.isModerator && (
+                    <span className="bg-vegas-green/20 text-vegas-green text-[10px] px-1.5 py-0.5 rounded">Moderator</span>
+                  )}
+                </div>
+                <p className="text-gray-300 text-sm">{msg.message}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="p-3 border-t border-vegas-darkgray/70">
+          <div className="relative">
+            <Input 
+              className="bg-vegas-darkgray border-none pr-10 text-white" 
+              placeholder="Message..." 
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSendMessage();
+              }}
+            />
+            <button 
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-vegas-green"
+              onClick={handleSendMessage}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
       
       <ChatUI />
