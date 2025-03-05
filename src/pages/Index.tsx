@@ -45,7 +45,7 @@ const Index = () => {
       <main className="flex-1 ml-64 flex flex-col">
         <Navbar />
         
-        <div className="p-6 flex-1 flex flex-col h-[calc(100vh-64px)]">
+        <div className="p-6 flex-1 flex flex-col h-[calc(100vh-64px)] w-full">
           <div className="w-full max-w-2xl mx-auto mb-6">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
