@@ -87,8 +87,8 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
         </div>
         
-        {/* Status Section with Animation */}
-        <div className="hidden md:flex items-center gap-3 overflow-hidden mx-4 relative max-w-3xl bg-vegas-darkgray/60 px-3 py-1 rounded-lg border border-vegas-green/20">
+        {/* Status Section with Animation - Removed overflow */}
+        <div className="hidden md:flex items-center gap-3 mx-4 relative max-w-3xl bg-vegas-darkgray/60 px-3 py-1 rounded-lg border border-vegas-green/20">
           <Button 
             variant="ghost" 
             size="icon" 
@@ -105,7 +105,7 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
             </span>
           </div>
           
-          <div className={`flex items-center gap-2 overflow-x-auto scrollbar-hide transition-all duration-300 ${isAnimating ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
+          <div className={`flex items-center gap-2 transition-all duration-300 ${isAnimating ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
             <TooltipProvider>
               {viewData[currentView].data.slice(0, 5).map((roulette, index) => {
                 const winRate = ((roulette.wins / (roulette.wins + roulette.losses)) * 100).toFixed(1);
