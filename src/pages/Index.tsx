@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 interface ChatMessage {
   id: string;
   user: {
@@ -18,6 +19,7 @@ interface ChatMessage {
   message: string;
   timestamp: Date;
 }
+
 const mockRoulettes = [{
   name: "Roleta Brasileira",
   lastNumbers: [7, 11, 23, 5, 18],
@@ -109,6 +111,7 @@ const mockRoulettes = [{
     value: Math.random() * 100
   }))
 }];
+
 const mockChatMessages: ChatMessage[] = [{
   id: '1',
   user: {
@@ -200,6 +203,7 @@ const mockChatMessages: ChatMessage[] = [{
   message: 'Hi guys! What are you doing?',
   timestamp: new Date()
 }];
+
 const Index = () => {
   const [search, setSearch] = useState("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>(mockChatMessages);
@@ -212,6 +216,7 @@ const Index = () => {
       return bWinRate - aWinRate;
     }).slice(0, 3);
   }, []);
+
   const handleSendMessage = () => {
     if (newMessage.trim() === "") return;
     const newChatMessage: ChatMessage = {
@@ -226,6 +231,7 @@ const Index = () => {
     setChatMessages([...chatMessages, newChatMessage]);
     setNewMessage("");
   };
+
   return <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
@@ -266,7 +272,7 @@ const Index = () => {
         </div>
         
         <main className="pt-16 w-full overflow-y-auto">
-          <div className="p-6 flex flex-col h-full">
+          <div className="p-6 flex flex-col h-full bg-[#100f13]">
             <div className="w-full max-w-2xl mx-auto mb-6">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
@@ -330,4 +336,5 @@ const Index = () => {
       <ChatUI />
     </div>;
 };
+
 export default Index;
