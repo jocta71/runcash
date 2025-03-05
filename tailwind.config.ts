@@ -58,7 +58,7 @@ export default {
 				vegas: {
 					black: '#0A0C14',
 					darkgray: '#161A26',
-					green: '#3BFFA1',
+					green: '#71ec6f',
 					gold: '#FFCB47',
 					blue: '#36B5FF',
 					red: '#FF4560',
