@@ -7,6 +7,7 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import AnimatedInsights from '@/components/AnimatedInsights';
+
 interface ChatMessage {
   id: string;
   user: {
@@ -19,6 +20,7 @@ interface ChatMessage {
   message: string;
   timestamp: Date;
 }
+
 const mockRoulettes = [{
   name: "Roleta Brasileira",
   lastNumbers: [7, 11, 23, 5, 18],
@@ -110,6 +112,7 @@ const mockRoulettes = [{
     value: Math.random() * 100
   }))
 }];
+
 const mockChatMessages: ChatMessage[] = [{
   id: '1',
   user: {
@@ -201,6 +204,7 @@ const mockChatMessages: ChatMessage[] = [{
   message: 'Hi guys! What are you doing?',
   timestamp: new Date()
 }];
+
 const Index = () => {
   const [search, setSearch] = useState("");
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
@@ -211,6 +215,7 @@ const Index = () => {
       return bWinRate - aWinRate;
     }).slice(0, 3);
   }, []);
+
   return <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
@@ -236,7 +241,7 @@ const Index = () => {
             </div>
             
             <Button variant="default" size="sm" className="h-8 bg-vegas-green text-black font-medium">
-              <Wallet size={14} className="mr-1" /> Wallet
+              <Wallet size={14} className="mr-1" /> Saldo
             </Button>
             
             <div className="flex items-center gap-2">
@@ -263,4 +268,5 @@ const Index = () => {
       <ChatUI />
     </div>;
 };
+
 export default Index;
