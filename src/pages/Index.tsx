@@ -7,7 +7,6 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import AnimatedInsights from '@/components/AnimatedInsights';
-
 interface ChatMessage {
   id: string;
   user: {
@@ -20,7 +19,6 @@ interface ChatMessage {
   message: string;
   timestamp: Date;
 }
-
 const mockRoulettes = [{
   name: "Roleta Brasileira",
   lastNumbers: [7, 11, 23, 5, 18],
@@ -112,7 +110,6 @@ const mockRoulettes = [{
     value: Math.random() * 100
   }))
 }];
-
 const mockChatMessages: ChatMessage[] = [{
   id: '1',
   user: {
@@ -204,12 +201,9 @@ const mockChatMessages: ChatMessage[] = [{
   message: 'Hi guys! What are you doing?',
   timestamp: new Date()
 }];
-
 const Index = () => {
   const [search, setSearch] = useState("");
-  
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
-  
   const topRoulettes = useMemo(() => {
     return [...mockRoulettes].sort((a, b) => {
       const aWinRate = a.wins / (a.wins + a.losses) * 100;
@@ -217,7 +211,6 @@ const Index = () => {
       return bWinRate - aWinRate;
     }).slice(0, 3);
   }, []);
-  
   return <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
@@ -236,9 +229,9 @@ const Index = () => {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-[#1A191F] rounded-full py-1 px-3">
               <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
-                <span className="text-[10px] text-white">₱</span>
+                <span className="text-[10px] text-white">R$</span>
               </span>
-              <span className="text-white text-xs">342,203,561.23</span>
+              <span className="text-white text-xs">1.346,34</span>
               <ChevronDown size={14} className="text-gray-400" />
             </div>
             
@@ -270,5 +263,4 @@ const Index = () => {
       <ChatUI />
     </div>;
 };
-
 export default Index;
