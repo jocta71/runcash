@@ -1,12 +1,8 @@
-
 import { useState } from 'react';
 import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send } from 'lucide-react';
-
 const Sidebar = () => {
   const [otherExpanded, setOtherExpanded] = useState(false);
-
-  return (
-    <div className="h-screen fixed top-0 left-0 w-64 hidden md:flex flex-col animate-slide-right z-40 bg-[#0B0A0F]">
+  return <div className="h-screen fixed top-0 left-0 w-64 hidden md:flex flex-col animate-slide-right z-40 bg-[#0B0A0F]">
       <div className="p-3 flex flex-col h-full justify-between">
         <div className="space-y-6">
           {/* Games Section */}
@@ -24,7 +20,7 @@ const Sidebar = () => {
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Flame size={18} className="text-white" />
                 </div>
-                <span>Live casino</span>
+                <span>Cassino Ao Vivo</span>
               </div>
               
               <div className="menu-item">
@@ -118,8 +114,6 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Sidebar;
