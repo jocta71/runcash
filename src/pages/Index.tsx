@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -7,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import AnimatedInsights from '@/components/AnimatedInsights';
 
 interface ChatMessage {
   id: string;
@@ -234,6 +234,8 @@ const Index = () => {
               />
             </div>
           </div>
+          
+          <AnimatedInsights />
           
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-[#222222] rounded-full py-1 px-3">
