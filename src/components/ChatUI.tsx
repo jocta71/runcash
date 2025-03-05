@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Send, User, ShieldCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -139,7 +138,7 @@ const ChatUI = () => {
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-2 space-y-3 scrollbar-none bg-[#0b0a0f] border-l border-[#222222]">
+      <div className="flex-1 overflow-y-auto p-2 space-y-3 scrollbar-none bg-[#0b0a0f] border-l-0">
         {messages.map((msg) => (
           <div key={msg.id} className="flex gap-2">
             <Avatar className="h-8 w-8 rounded-lg bg-gray-700 flex-shrink-0">
