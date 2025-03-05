@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -265,11 +264,9 @@ const Index = () => {
           </div>
         </div>
         
-        <main className="pt-[70px] w-full overflow-y-auto md:mr-80">
-          <div className="p-6 flex flex-col h-full bg-[#100f13]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pb-6">
-              {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
-            </div>
+        <main className="pt-[70px] pb-8 px-6 md:pl-[280px] md:pr-[340px] w-full min-h-screen bg-[#100f13]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+            {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
           </div>
         </main>
       </div>
