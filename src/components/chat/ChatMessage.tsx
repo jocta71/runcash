@@ -27,7 +27,13 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             </AvatarFallback>
           )}
         </Avatar>
-        <span className={`text-sm font-semibold ${message.isModerator ? 'text-vegas-green' : message.isAdmin ? 'text-vegas-gold' : 'text-white'}`}>
+        <span className={`text-sm font-semibold ${
+          message.isModerator 
+            ? 'bg-gradient-to-b from-[#00ff00] to-[#8bff00] bg-clip-text text-transparent' 
+            : message.isAdmin 
+              ? 'text-vegas-gold' 
+              : 'text-white'
+        }`}>
           {message.sender}
         </span>
         {message.isModerator && (
