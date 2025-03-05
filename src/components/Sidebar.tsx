@@ -1,15 +1,8 @@
-
 import { useState } from 'react';
-import { 
-  CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, 
-  BarChart3, Scale, LifeBuoy, ChevronRight, ChevronDown, Gamepad2, Flame
-} from 'lucide-react';
-
+import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronRight, ChevronDown, Gamepad2, Flame } from 'lucide-react';
 const Sidebar = () => {
   const [otherExpanded, setOtherExpanded] = useState(false);
-  
-  return (
-    <div className="h-screen fixed top-0 left-0 w-64 bg-vegas-darkgray border-r border-border hidden md:flex flex-col animate-slide-right z-40">
+  return <div className="h-screen fixed top-0 left-0 w-64 border-r border-border hidden md:flex flex-col animate-slide-right z-40 bg-[#0c0b10]">
       <div className="p-3 mt-20">
         <div className="space-y-1">
           <div className="menu-item active">
@@ -52,17 +45,13 @@ const Sidebar = () => {
             <span>Loteria</span>
           </div>
           
-          <div 
-            className="menu-item"
-            onClick={() => setOtherExpanded(!otherExpanded)}
-          >
+          <div className="menu-item" onClick={() => setOtherExpanded(!otherExpanded)}>
             <Rocket size={20} />
             <span>Outros</span>
             {otherExpanded ? <ChevronDown size={16} className="ml-auto" /> : <ChevronRight size={16} className="ml-auto" />}
           </div>
           
-          {otherExpanded && (
-            <div className="ml-5 space-y-1">
+          {otherExpanded && <div className="ml-5 space-y-1">
               <div className="menu-item">
                 <BarChart3 size={18} />
                 <span>Estatísticas</span>
@@ -75,12 +64,9 @@ const Sidebar = () => {
                 <LifeBuoy size={18} />
                 <span>Suporte</span>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Sidebar;
