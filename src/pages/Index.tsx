@@ -224,7 +224,7 @@ const Index = () => {
       <Sidebar />
       
       <div className="flex-1 relative">
-        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-40 h-16 bg-vegas-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70 overflow-visible">
+        <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-16 bg-vegas-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">Vega</span>
             <div className="w-8 h-8 flex items-center justify-center ml-2">
@@ -232,7 +232,7 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="flex items-center gap-3 overflow-visible">
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 bg-[#222222] rounded-full py-1 px-3">
               <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
                 <span className="text-[10px] text-white">₱</span>
