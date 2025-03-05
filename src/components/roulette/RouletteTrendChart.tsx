@@ -18,7 +18,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
           <Line
             type="monotone"
             dataKey="value"
-            stroke="#71ec6f"
+            stroke="#ffad33"
             strokeWidth={2}
             dot={false}
           />

@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -66,7 +67,7 @@
 
 @layer components {
   .neon-border-green {
-    @apply border border-vegas-green shadow-[0_0_10px_rgba(113,236,111,0.5)];
+    @apply border border-vegas-green shadow-[0_0_10px_rgba(255,173,51,0.5)];
   }
   
   .neon-border-gold {
@@ -94,7 +95,7 @@
   }
 
   .hover-neon-green {
-    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(113,236,111,0.7)];
+    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(255,173,51,0.7)];
   }
 
   .hover-neon-gold {
