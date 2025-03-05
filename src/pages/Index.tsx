@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -226,7 +227,7 @@ const Index = () => {
               <Search size={14} className="absolute left-2 text-gray-400" />
               <Input 
                 type="text" 
-                placeholder="Pesquisar..." 
+                placeholder="Pesquisar roleta" 
                 className="h-8 pl-7 py-1 pr-2 text-xs bg-gray-800 border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
                 value={search}
                 onChange={e => setSearch(e.target.value)}
