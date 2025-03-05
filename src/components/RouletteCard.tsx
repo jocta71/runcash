@@ -1,4 +1,3 @@
-
 import { Play, TrendingUp, WandSparkles, Dices, Eye, EyeOff, Trophy, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -79,9 +78,36 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
     }
   };
 
-  // Function to get suggestion color based on strategy
+  // Function to determine which number group a number belongs to
+  const getNumberGroup = (num: number) => {
+    if ([1, 2, 3].includes(num % 10)) {
+      return "group-123";
+    } else if ([4, 7, 8].includes(num % 10)) {
+      return "group-478";
+    } else if ([5, 9, 6].includes(num % 10)) {
+      return "group-596";
+    } else if ([6, 9, 3].includes(num % 10)) {
+      return "group-693";
+    } else {
+      return "group-other";
+    }
+  };
+
+  // Get color for suggestion numbers based on their group
   const getSuggestionColor = (num: number) => {
-    return currentStrategy.color + " text-white";
+    const group = getNumberGroup(num);
+    switch (group) {
+      case "group-123":
+        return "bg-blue-500 text-white";
+      case "group-478":
+        return "bg-emerald-500 text-white";
+      case "group-596":
+        return "bg-amber-500 text-white";
+      case "group-693":
+        return "bg-rose-500 text-white";
+      default:
+        return "bg-purple-500 text-white";
+    }
   };
   
   return (
