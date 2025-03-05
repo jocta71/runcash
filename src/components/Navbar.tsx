@@ -1,6 +1,7 @@
 
 import { 
-  Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu, TrendingUp, Trophy, Flame
+  Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu, TrendingUp, Trophy, Flame,
+  ArrowLeft, ArrowRight
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -18,6 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from "react";
 
 interface NavbarProps {
   topRoulettes?: {
@@ -28,6 +30,53 @@ interface NavbarProps {
 }
 
 const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
+  const [currentView, setCurrentView] = useState<'hot' | 'trending' | 'new'>('hot');
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const rotateView = (direction: 'next' | 'prev') => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      if (direction === 'next') {
+        if (currentView === 'hot') setCurrentView('trending');
+        else if (currentView === 'trending') setCurrentView('new');
+        else setCurrentView('hot');
+      } else {
+        if (currentView === 'hot') setCurrentView('new');
+        else if (currentView === 'trending') setCurrentView('hot');
+        else setCurrentView('trending');
+      }
+      setIsAnimating(false);
+    }, 300);
+  };
+
+  // Auto-rotate views every 10 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      rotateView('next');
+    }, 10000);
+    
+    return () => clearInterval(timer);
+  }, [currentView]);
+
+  // Title and data based on current view
+  const viewData = {
+    hot: {
+      title: "Hot Roletas",
+      icon: <TrendingUp size={18} className="text-vegas-green" />,
+      data: topRoulettes
+    },
+    trending: {
+      title: "Tendências",
+      icon: <Flame size={18} className="text-vegas-gold" />,
+      data: topRoulettes.sort((a, b) => (b.wins - b.losses) - (a.wins - a.losses))
+    },
+    new: {
+      title: "Novas Roletas",
+      icon: <Trophy size={18} className="text-vegas-blue" />,
+      data: [...topRoulettes].sort(() => Math.random() - 0.5) // Just for demo purposes
+    }
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-50">
       <div className="flex items-center justify-between h-full px-4">
@@ -38,47 +87,73 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
         </div>
         
-        {/* New Status Section */}
-        <div className="hidden md:flex items-center gap-4 overflow-x-auto scrollbar-hide">
-          <div className="flex items-center gap-2">
-            <TrendingUp size={18} className="text-vegas-green" />
-            <span className="text-sm text-muted-foreground">Hot Roletas:</span>
+        {/* Status Section with Animation */}
+        <div className="hidden md:flex items-center gap-3 overflow-hidden mx-4 relative max-w-3xl bg-vegas-darkgray/60 px-3 py-1 rounded-lg border border-vegas-green/20">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-6 w-6 shrink-0" 
+            onClick={() => rotateView('prev')}
+          >
+            <ArrowLeft size={16} />
+          </Button>
+          
+          <div className="flex items-center gap-2 min-w-[110px] shrink-0">
+            {viewData[currentView].icon}
+            <span className="text-sm text-muted-foreground whitespace-nowrap">
+              {viewData[currentView].title}:
+            </span>
           </div>
           
-          <TooltipProvider>
-            {topRoulettes.map((roulette, index) => {
-              const winRate = ((roulette.wins / (roulette.wins + roulette.losses)) * 100).toFixed(1);
-              const colorClass = index === 0 
-                ? "text-vegas-gold bg-vegas-gold/10 hover:bg-vegas-gold/20"
-                : "text-vegas-green bg-vegas-green/10 hover:bg-vegas-green/20";
-              
-              return (
-                <Tooltip key={index}>
-                  <TooltipTrigger asChild>
-                    <Badge 
-                      variant="outline" 
-                      className={`flex items-center gap-1 cursor-pointer animate-fade-in ${colorClass}`}
-                    >
-                      {index === 0 ? (
-                        <Trophy size={14} className="animate-pulse" />
-                      ) : (
-                        <Flame size={14} className="animate-pulse" />
-                      )}
-                      <span className="truncate max-w-[100px]">{roulette.name}</span>
-                      <span className="font-bold">{winRate}%</span>
-                    </Badge>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <div className="space-y-1">
-                      <p className="font-bold">{roulette.name}</p>
-                      <p className="text-xs">Taxa de Vitória: {winRate}%</p>
-                      <p className="text-xs">Vitórias: {roulette.wins} | Derrotas: {roulette.losses}</p>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              );
-            })}
-          </TooltipProvider>
+          <div className={`flex items-center gap-2 overflow-x-auto scrollbar-hide transition-all duration-300 ${isAnimating ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
+            <TooltipProvider>
+              {viewData[currentView].data.slice(0, 5).map((roulette, index) => {
+                const winRate = ((roulette.wins / (roulette.wins + roulette.losses)) * 100).toFixed(1);
+                const profit = roulette.wins - roulette.losses;
+                
+                let colorClass = "text-vegas-green bg-vegas-green/10 hover:bg-vegas-green/20";
+                if (index === 0) colorClass = "text-vegas-gold bg-vegas-gold/10 hover:bg-vegas-gold/20";
+                else if (index === 1) colorClass = "text-vegas-blue bg-vegas-blue/10 hover:bg-vegas-blue/20";
+                
+                return (
+                  <Tooltip key={index}>
+                    <TooltipTrigger asChild>
+                      <Badge 
+                        variant="outline" 
+                        className={`flex items-center gap-1 cursor-pointer animate-fade-in ${colorClass}`}
+                      >
+                        {index === 0 ? (
+                          <Trophy size={14} className="animate-pulse" />
+                        ) : (
+                          <Flame size={14} className="animate-pulse" />
+                        )}
+                        <span className="truncate max-w-[100px]">{roulette.name}</span>
+                        <span className="font-bold">{winRate}%</span>
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <div className="space-y-1">
+                        <p className="font-bold">{roulette.name}</p>
+                        <p className="text-xs">Taxa de Vitória: {winRate}%</p>
+                        <p className="text-xs">Vitórias: {roulette.wins} | Derrotas: {roulette.losses}</p>
+                        <p className="text-xs">Lucro: {profit > 0 ? '+' : ''}{profit} pontos</p>
+                        <p className="text-xs">Tendência: {profit > 20 ? '🔥 Alta' : profit > 0 ? '📈 Positiva' : '📉 Negativa'}</p>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                );
+              })}
+            </TooltipProvider>
+          </div>
+          
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-6 w-6 shrink-0 ml-auto" 
+            onClick={() => rotateView('next')}
+          >
+            <ArrowRight size={16} />
+          </Button>
         </div>
         
         <div className="flex items-center gap-2 sm:gap-4">
