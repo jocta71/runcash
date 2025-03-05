@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Send, User, ShieldCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -117,7 +118,7 @@ const ChatUI = () => {
   };
   
   return (
-    <div className="w-80 h-screen flex flex-col bg-vegas-darkgray border-r border-border z-50">
+    <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray border-r border-[#222222] z-50">
       <div className="p-4 border-b border-border flex items-center justify-between bg-[#0b0a0f]">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 bg-gray-700 rounded-md flex items-center justify-center">

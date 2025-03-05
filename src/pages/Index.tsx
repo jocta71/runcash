@@ -206,8 +206,6 @@ const mockChatMessages: ChatMessage[] = [{
 
 const Index = () => {
   const [search, setSearch] = useState("");
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(mockChatMessages);
-  const [newMessage, setNewMessage] = useState("");
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
   const topRoulettes = useMemo(() => {
     return [...mockRoulettes].sort((a, b) => {
@@ -216,21 +214,6 @@ const Index = () => {
       return bWinRate - aWinRate;
     }).slice(0, 3);
   }, []);
-
-  const handleSendMessage = () => {
-    if (newMessage.trim() === "") return;
-    const newChatMessage: ChatMessage = {
-      id: String(chatMessages.length + 1),
-      user: {
-        name: 'You',
-        avatar: ''
-      },
-      message: newMessage,
-      timestamp: new Date()
-    };
-    setChatMessages([...chatMessages, newChatMessage]);
-    setNewMessage("");
-  };
 
   return <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
@@ -271,7 +254,7 @@ const Index = () => {
           </div>
         </div>
         
-        <main className="pt-16 w-full overflow-y-auto">
+        <main className="pt-16 w-full overflow-y-auto md:mr-80">
           <div className="p-6 flex flex-col h-full bg-[#100f13]">
             <div className="w-full max-w-2xl mx-auto mb-6">
               <div className="relative">
@@ -285,52 +268,6 @@ const Index = () => {
             </div>
           </div>
         </main>
-      </div>
-      
-      <div className="fixed top-0 right-0 bottom-0 w-80 bg-vegas-black border-l border-vegas-darkgray/70 flex flex-col z-30">
-        <div className="h-16 flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
-          <div className="flex items-center gap-2">
-            <span className="text-white font-medium">Chat</span>
-          </div>
-          <div className="flex items-center">
-            <span className="bg-vegas-blue px-2 py-0.5 rounded-md text-xs text-white">Rules</span>
-            <span className="text-white text-xs ml-4">3,331 →</span>
-          </div>
-        </div>
-        
-        <div className="flex-1 overflow-y-auto p-3 space-y-3">
-          {chatMessages.map(msg => <div key={msg.id} className="flex items-start gap-2">
-              <div className="shrink-0">
-                <Avatar className="h-8 w-8 border border-vegas-darkgray">
-                  {msg.user.avatar ? <AvatarImage src={msg.user.avatar} alt={msg.user.name} /> : <AvatarFallback className="bg-vegas-darkgray text-white text-xs">
-                      {msg.user.name.substring(0, 2)}
-                    </AvatarFallback>}
-                </Avatar>
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white text-sm font-medium">{msg.user.name}</span>
-                  {msg.user.isAdmin && <span className="bg-vegas-gold/20 text-vegas-gold text-[10px] px-1.5 py-0.5 rounded">Admin</span>}
-                  {msg.user.isModerator && <span className="bg-vegas-green/20 text-vegas-green text-[10px] px-1.5 py-0.5 rounded">Moderator</span>}
-                </div>
-                <p className="text-gray-300 text-sm">{msg.message}</p>
-              </div>
-            </div>)}
-        </div>
-        
-        <div className="p-3 border-t border-vegas-darkgray/70">
-          <div className="relative">
-            <Input className="bg-vegas-darkgray border-none pr-10 text-white" placeholder="Message..." value={newMessage} onChange={e => setNewMessage(e.target.value)} onKeyDown={e => {
-            if (e.key === 'Enter') handleSendMessage();
-          }} />
-            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-vegas-green" onClick={handleSendMessage}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 2L11 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
-        </div>
       </div>
       
       <ChatUI />
