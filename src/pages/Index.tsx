@@ -223,8 +223,13 @@ const Index = () => {
         <div className="fixed top-0 left-0 right-0 md:left-64 md:right-80 z-50 h-[56px] flex items-center justify-between px-4 border-b border-vegas-darkgray/70 bg-[#100f13]">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">Vega</span>
-            <div className="w-8 h-8 flex items-center justify-center ml-2">
-              <Search size={18} className="text-gray-400" />
+            <div className="relative flex items-center ml-4 max-w-[180px]">
+              <Search size={14} className="absolute left-2 text-gray-400" />
+              <Input 
+                type="text" 
+                placeholder="Pesquisar..." 
+                className="h-8 pl-7 py-1 pr-2 text-xs bg-gray-800 border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+              />
             </div>
           </div>
           
