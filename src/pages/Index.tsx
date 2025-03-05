@@ -42,11 +42,11 @@ const Index = () => {
     <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
-      <main className="flex-1 ml-64">
+      <main className="flex-1 ml-64 flex flex-col">
         <Navbar />
         
-        <div className="p-6 mt-16 flex flex-col items-center max-w-7xl mx-auto">
-          <div className="w-full max-w-2xl mb-6">
+        <div className="p-6 flex-1 flex flex-col h-[calc(100vh-64px)]">
+          <div className="w-full max-w-2xl mx-auto mb-6">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
               <Input
@@ -59,7 +59,7 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full flex-1 overflow-y-auto">
             {filteredRoulettes.map((roulette, index) => (
               <RouletteCard key={index} {...roulette} />
             ))}
