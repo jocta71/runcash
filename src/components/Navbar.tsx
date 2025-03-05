@@ -79,7 +79,7 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
 
   return (
     <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-30">
-      <div className="flex items-center justify-between h-full px-4">
+      <div className="container mx-auto flex items-center justify-between h-full px-4">
         <div className="flex items-center gap-2">
           <Button variant="ghost" className="md:hidden p-2">
             <Menu size={24} />
