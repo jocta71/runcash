@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -241,7 +240,7 @@ const Index = () => {
               <ChevronDown size={14} className="text-gray-400" />
             </div>
             
-            <Button variant="default" size="sm" className="h-8 bg-vegas-green text-black font-medium">
+            <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#8bff00] hover:from-[#00ff00]/90 hover:to-[#8bff00]/90">
               <Wallet size={14} className="mr-1" /> Saldo
             </Button>
             
