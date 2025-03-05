@@ -1,6 +1,6 @@
 
 import { 
-  Bell, User, Wallet, Settings, LogOut, Info, ChevronDown 
+  Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu 
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -17,13 +17,16 @@ const Navbar = () => {
     <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-50">
       <div className="flex items-center justify-between h-full px-4">
         <div className="flex items-center gap-2">
+          <Button variant="ghost" className="md:hidden p-2">
+            <Menu size={24} />
+          </Button>
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <Button
             variant="ghost"
-            className="hover-neon-blue flex items-center gap-2"
+            className="hover-neon-blue items-center gap-2 hidden sm:flex"
           >
             <Info size={18} />
             <span>Regras</span>
@@ -31,9 +34,9 @@ const Navbar = () => {
           
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="hover-neon-green flex items-center gap-2">
+              <Button variant="ghost" className="hover-neon-green flex items-center gap-1 sm:gap-2">
                 <Wallet size={18} />
-                <span>R$ 1.000,00</span>
+                <span className="hidden sm:inline">R$ 1.000,00</span>
                 <ChevronDown size={14} />
               </Button>
             </DropdownMenuTrigger>

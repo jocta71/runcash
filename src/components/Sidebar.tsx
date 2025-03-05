@@ -9,7 +9,7 @@ const Sidebar = () => {
   const [otherExpanded, setOtherExpanded] = useState(false);
   
   return (
-    <div className="h-screen w-64 bg-vegas-darkgray border-r border-border flex flex-col animate-slide-right">
+    <div className="h-screen fixed top-0 left-0 w-64 bg-vegas-darkgray border-r border-border hidden md:flex flex-col animate-slide-right z-40">
       <div className="p-3 mt-20">
         <div className="space-y-1">
           <div className="menu-item active">

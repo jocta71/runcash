@@ -42,7 +42,7 @@ const Index = () => {
     <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
-      <main className="flex-1 ml-64 flex flex-col">
+      <main className="flex-1 flex flex-col w-full ml-0 md:ml-64">
         <Navbar />
         
         <div className="p-6 flex-1 flex flex-col h-[calc(100vh-64px)] w-full">
@@ -59,7 +59,7 @@ const Index = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full flex-1 overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full flex-1 overflow-y-auto">
             {filteredRoulettes.map((roulette, index) => (
               <RouletteCard key={index} {...roulette} />
             ))}
