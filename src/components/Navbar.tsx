@@ -48,7 +48,6 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
           <TooltipProvider>
             {topRoulettes.map((roulette, index) => {
               const winRate = ((roulette.wins / (roulette.wins + roulette.losses)) * 100).toFixed(1);
-              const icon = index === 0 ? Trophy : Flame;
               const colorClass = index === 0 
                 ? "text-vegas-gold bg-vegas-gold/10 hover:bg-vegas-gold/20"
                 : "text-vegas-green bg-vegas-green/10 hover:bg-vegas-green/20";
@@ -60,7 +59,11 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
                       variant="outline" 
                       className={`flex items-center gap-1 cursor-pointer animate-fade-in ${colorClass}`}
                     >
-                      <icon size={14} className="animate-pulse" />
+                      {index === 0 ? (
+                        <Trophy size={14} className="animate-pulse" />
+                      ) : (
+                        <Flame size={14} className="animate-pulse" />
+                      )}
                       <span className="truncate max-w-[100px]">{roulette.name}</span>
                       <span className="font-bold">{winRate}%</span>
                     </Badge>
