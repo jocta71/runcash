@@ -23,16 +23,16 @@ const strategies = [
   { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], color: "bg-purple-600" },
   { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-600" },
   { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-600" },
-  { name: 'Terminal 5,9,6', numbers: [5, 6, 9, 15, 16, 19, 25, 26, 29, 35, 36], color: "bg-amber-600" },
+  { name: 'Terminal 5,9,6', numbers: [5, 9, 6, 15, 16, 19, 25, 26, 29, 35], color: "bg-amber-600" },
   { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36], color: "bg-rose-600" },
 ];
 
-// Define number groups and their colors - now directly mapping groups to colors
+// Define specific number groups to show in suggestions
 const numberGroups = {
-  "grupo-123": { numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-600 text-white" },
-  "grupo-478": { numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-600 text-white" },
-  "grupo-596": { numbers: [5, 9, 6, 15, 19, 16, 25, 29, 26, 35], color: "bg-amber-600 text-white" },
-  "grupo-693": { numbers: [6, 9, 3, 16, 19, 13, 26, 29, 23, 36], color: "bg-rose-600 text-white" },
+  "grupo-123": { name: "Grupo 123", numbers: [1, 2, 3], color: "bg-blue-600 text-white" },
+  "grupo-478": { name: "Grupo 478", numbers: [4, 7, 8], color: "bg-emerald-600 text-white" },
+  "grupo-596": { name: "Grupo 596", numbers: [5, 9, 6], color: "bg-amber-600 text-white" },
+  "grupo-693": { name: "Grupo 693", numbers: [6, 9, 3], color: "bg-rose-600 text-white" },
 };
 
 const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardProps) => {
@@ -41,6 +41,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
   const [suggestion, setSuggestion] = useState<number[]>([]);
   const [isBlurred, setIsBlurred] = useState(false);
   const [currentStrategy, setCurrentStrategy] = useState(strategies[0]);
+  const [selectedGroup, setSelectedGroup] = useState<string>("grupo-123");
 
   // Generate suggestion on initial render
   useEffect(() => {
@@ -48,21 +49,23 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
   }, []);
 
   const generateSuggestion = () => {
-    // Randomly select a strategy
-    const selectedStrategy = strategies[Math.floor(Math.random() * strategies.length)];
+    // Randomly select a group
+    const groupKeys = Object.keys(numberGroups);
+    const randomGroupKey = groupKeys[Math.floor(Math.random() * groupKeys.length)];
+    const selectedGroup = numberGroups[randomGroupKey as keyof typeof numberGroups];
     
-    // Randomly select 3 numbers from the selected strategy
-    const shuffled = [...selectedStrategy.numbers].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 3);
-
-    // Update state
-    setSuggestion(selected);
-    setCurrentStrategy(selectedStrategy);
+    // Get the full numbers of the selected strategy that corresponds to these terminal digits
+    const relatedStrategy = strategies.find(s => s.name.includes(selectedGroup.numbers.join(',')));
+    setCurrentStrategy(relatedStrategy || strategies[0]);
+    
+    // Set suggestion to be the exact group numbers
+    setSuggestion([...selectedGroup.numbers]);
+    setSelectedGroup(randomGroupKey);
     
     // Show toast notification
     toast({
       title: "Sugestão Gerada",
-      description: `Estratégia: ${selectedStrategy.name}`,
+      description: `Grupo: ${selectedGroup.name}`,
       variant: "default"
     });
   };
@@ -88,14 +91,8 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
 
   // Get color for suggestion numbers based on their group
   const getSuggestionColor = (num: number) => {
-    // Check which group the number belongs to
-    for (const [groupName, groupInfo] of Object.entries(numberGroups)) {
-      if (groupInfo.numbers.includes(num)) {
-        return groupInfo.color;
-      }
-    }
-    // Default color if not found in any group
-    return "bg-purple-600 text-white";
+    const groupKey = selectedGroup as keyof typeof numberGroups;
+    return numberGroups[groupKey].color;
   };
   
   return (
@@ -121,7 +118,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           <div className="flex items-center gap-2">
             <WandSparkles size={18} className="text-vegas-gold" />
             <span className="text-sm text-vegas-gold font-medium">Sugestão de Jogada</span>
-            <span className="text-xs text-vegas-gold/70">({currentStrategy.name})</span>
+            <span className="text-xs text-vegas-gold/70">({numberGroups[selectedGroup as keyof typeof numberGroups].name})</span>
           </div>
           <TooltipProvider>
             <Tooltip>
