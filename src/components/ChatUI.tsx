@@ -19,80 +19,80 @@ const ChatUI = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
-      sender: 'Wade Warren',
-      message: 'when will it be ready?',
+      sender: 'Zé das Couves',
+      message: 'Quando que vai ficar pronto, mano?',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 60 * 5)
     },
     {
       id: 2,
-      sender: 'Leslie Alexander',
-      message: 'when will it be ready?',
+      sender: 'Fernandinha',
+      message: 'Tô mó ansiedade pra jogar, viu?',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 60 * 4)
     },
     {
       id: 3,
-      sender: 'Moderator',
-      message: 'when will it be ready?',
+      sender: 'Moderador',
+      message: 'Galera, calma que já vai rolar!',
       isModerator: true,
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 60 * 3)
     },
     {
       id: 4,
-      sender: 'Eleanor Pena',
-      message: 'when will it be ready?',
+      sender: 'Bia',
+      message: 'Tô nem aí, só quero ganhar uma grana!',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 60 * 2)
     },
     {
       id: 5,
-      sender: 'Cody Fisher',
-      message: 'received?',
+      sender: 'Juninho',
+      message: 'Recebeu minha mensagem?',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 60 * 1)
     },
     {
       id: 6,
-      sender: 'Anonymous',
-      message: 'Have you spoken to the delivery man? He is more than an hour late',
+      sender: 'Admin',
+      message: 'Cês falaram com o entregador? Mó vacilo, tá atrasado mais de uma hora!',
       isAdmin: true,
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 30)
     },
     {
       id: 7,
-      sender: 'Robert Fox',
-      message: 'Great service.',
+      sender: 'Robertão',
+      message: 'Mano, esse app é show de bola!',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 20)
     },
     {
       id: 8,
-      sender: 'Savannah Nguyen',
-      message: 'tastes amazing!',
+      sender: 'Paty',
+      message: 'Tá top demais, curti mesmo!',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 15)
     },
     {
       id: 9,
-      sender: 'Arlene McCoy',
-      message: 'Ok',
+      sender: 'Dudinha',
+      message: 'Blz',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 10)
     },
     {
       id: 10,
-      sender: 'Mummyland',
-      message: 'when will it be ready?',
+      sender: 'Matheuzinho',
+      message: 'Fala aí, quando vai rolar a nova roleta?',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date(Date.now() - 1000 * 5)
     },
     {
       id: 11,
-      sender: 'You',
-      message: 'Hi guys! What are you doing?',
+      sender: 'Você',
+      message: 'Fala galera! Qual a boa?',
       avatar: '/lovable-uploads/433b5fd4-2378-47fe-9d10-276fead4ebce.png',
       timestamp: new Date()
     }
@@ -108,7 +108,7 @@ const ChatUI = () => {
       ...messages,
       {
         id: Date.now(),
-        sender: 'You',
+        sender: 'Você',
         message: newMessage,
         timestamp: new Date()
       }
