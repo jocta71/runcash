@@ -5,7 +5,7 @@ const Sidebar = () => {
   const [otherExpanded, setOtherExpanded] = useState(false);
   
   return (
-    <div className="h-screen fixed top-0 left-0 w-64 hidden md:flex flex-col animate-slide-right z-40 bg-[#0B0A0F] border-r border-[#33333340]">
+    <div className="h-screen fixed top-0 left-0 w-64 hidden md:flex flex-col animate-slide-right z-40 bg-[#0B0A0F] border-r border-[#33333380]">
       <div className="p-3 flex flex-col h-full justify-between">
         <div className="space-y-6">
           {/* Games Section */}
