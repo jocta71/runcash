@@ -187,12 +187,12 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           <Button 
             onClick={(e) => {
               e.stopPropagation();
-              generateSuggestion();
+              setIsStatsModalOpen(true);
             }}
             className="flex-1 bg-vegas-blue hover:bg-vegas-blue/80 text-black font-medium"
           >
             <Dices size={16} className="mr-2" />
-            Sugerir Jogada
+            Ver Detalhes
           </Button>
           
           <Button 
