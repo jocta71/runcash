@@ -95,7 +95,7 @@ const Index = () => {
     <div className="min-h-screen flex bg-vegas-black">
       <Sidebar />
       
-      {/* Fixed navbar at the top */}
+      {/* Fixed navbar at the top with full width */}
       <div className="fixed top-0 right-0 left-0 md:left-64 z-10 h-14 bg-black flex items-center justify-between px-4 border-b border-vegas-darkgray/70">
         <div className="flex items-center gap-2">
           <span className="text-white text-2xl font-bold">Vega</span>
@@ -104,7 +104,7 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 overflow-visible">
           <div className="flex items-center gap-2 bg-[#222222] rounded-full py-1 px-3">
             <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
               <span className="text-[10px] text-white">₱</span>
@@ -131,7 +131,7 @@ const Index = () => {
         </div>
       </div>
       
-      <main className="flex-1 flex flex-col w-full ml-0 md:ml-64 pt-14">
+      <main className="flex-1 flex flex-col w-full ml-0 md:ml-64 pt-16">
         <div className="p-6 flex flex-col h-full overflow-y-auto">
           <div className="w-full max-w-2xl mx-auto mb-6">
             <div className="relative">
