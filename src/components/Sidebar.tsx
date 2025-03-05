@@ -27,7 +27,7 @@ const Sidebar = () => {
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
                   <Heart size={18} className="text-white" />
                 </div>
-                <span>Favoritos</span>
+                <span>Favourites</span>
               </div>
             </div>
           </div>
