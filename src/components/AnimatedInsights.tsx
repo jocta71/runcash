@@ -43,7 +43,7 @@ const AnimatedInsights = () => {
   }, []);
 
   return (
-    <div className="flex-1 flex justify-center overflow-hidden mx-4">
+    <div className="flex-1 flex items-center justify-center overflow-hidden mx-4 h-full relative">
       {insights.map((insight, index) => (
         <div
           key={index}
