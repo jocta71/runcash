@@ -234,7 +234,7 @@ const Index = () => {
           <AnimatedInsights />
           
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-[#222222] rounded-full py-1 px-3">
+            <div className="flex items-center gap-2 bg-[#1A191F] rounded-full py-1 px-3">
               <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
                 <span className="text-[10px] text-white">₱</span>
               </span>
