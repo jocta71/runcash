@@ -119,7 +119,7 @@ const ChatUI = () => {
   
   return (
     <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray border-l border-[#222222] z-50">
-      <div className="p-4 h-[56px] border-b border-[#222222] flex items-center justify-between bg-[#0b0a0f]">
+      <div className="p-4 h-[70px] border-b border-[#222222] flex items-center justify-between bg-[#0b0a0f]">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 bg-gray-700 rounded-md flex items-center justify-center">
             <span className="text-xs text-white">#</span>
