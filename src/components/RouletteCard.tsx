@@ -1,5 +1,5 @@
 
-import { Play, TrendingUp, WandSparkles, Dices } from 'lucide-react';
+import { Play, TrendingUp, WandSparkles, Dices, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -7,8 +7,9 @@ import {
   Line,
   ResponsiveContainer
 } from 'recharts';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface RouletteCardProps {
   name: string;
@@ -20,8 +21,14 @@ interface RouletteCardProps {
 
 const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const winRate = (wins / (wins + losses)) * 100;
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const [suggestion, setSuggestion] = useState<number[]>([]);
+  const [isBlurred, setIsBlurred] = useState(false);
+
+  // Generate suggestion on initial render
+  useEffect(() => {
+    generateSuggestion();
+  }, []);
 
   const generateSuggestion = () => {
     // Different strategy types
@@ -42,7 +49,6 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
 
     // Update state
     setSuggestion(selected);
-    setShowSuggestions(true);
     
     // Show toast notification
     toast({
@@ -50,6 +56,10 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
       description: `Estratégia: ${selectedStrategy.name}`,
       variant: "default"
     });
+  };
+
+  const toggleVisibility = () => {
+    setIsBlurred(!isBlurred);
   };
   
   return (
@@ -70,24 +80,36 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
         ))}
       </div>
       
-      {showSuggestions && (
-        <div className="space-y-2">
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <WandSparkles size={18} className="text-vegas-gold" />
             <span className="text-sm text-vegas-gold font-medium">Sugestão de Jogada</span>
           </div>
-          <div className="flex gap-2">
-            {suggestion.map((num, i) => (
-              <div
-                key={i}
-                className="w-8 h-8 rounded-full bg-vegas-gold/20 border border-vegas-gold flex items-center justify-center text-sm font-medium text-vegas-gold animate-pulse"
-              >
-                {num}
-              </div>
-            ))}
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={toggleVisibility} className="text-vegas-gold hover:text-vegas-gold/80 transition-colors">
+                  {isBlurred ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{isBlurred ? "Mostrar números" : "Ocultar números"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
-      )}
+        <div className="flex gap-2">
+          {suggestion.map((num, i) => (
+            <div
+              key={i}
+              className={`w-8 h-8 rounded-full bg-vegas-gold/20 border border-vegas-gold flex items-center justify-center text-sm font-medium text-vegas-gold ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
+            >
+              {num}
+            </div>
+          ))}
+        </div>
+      </div>
       
       <div>
         <div className="flex items-center justify-between text-sm mb-2">
