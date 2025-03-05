@@ -138,7 +138,7 @@ const ChatUI = () => {
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-2 space-y-3 scrollbar-none">
+      <div className="flex-1 overflow-y-auto p-2 space-y-3 scrollbar-none bg-[#0b0a0f]">
         {messages.map((msg) => (
           <div key={msg.id} className="flex gap-2">
             <Avatar className="h-8 w-8 rounded-lg bg-gray-700 flex-shrink-0">
