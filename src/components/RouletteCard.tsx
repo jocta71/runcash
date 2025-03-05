@@ -20,12 +20,20 @@ interface RouletteCardProps {
 
 // Define strategies and their colors
 const strategies = [
-  { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], color: "bg-purple-500" },
-  { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-500" },
-  { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-500" },
-  { name: 'Terminal 5,9,6', numbers: [5, 6, 9, 15, 16, 19, 25, 26, 29, 35, 36], color: "bg-amber-500" },
-  { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36], color: "bg-rose-500" },
+  { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], color: "bg-purple-600" },
+  { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-600" },
+  { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-600" },
+  { name: 'Terminal 5,9,6', numbers: [5, 6, 9, 15, 16, 19, 25, 26, 29, 35, 36], color: "bg-amber-600" },
+  { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36], color: "bg-rose-600" },
 ];
+
+// Define number groups and their colors - now directly mapping groups to colors
+const numberGroups = {
+  "grupo-123": { numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-600 text-white" },
+  "grupo-478": { numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-600 text-white" },
+  "grupo-596": { numbers: [5, 9, 6, 15, 19, 16, 25, 29, 26, 35], color: "bg-amber-600 text-white" },
+  "grupo-693": { numbers: [6, 9, 3, 16, 19, 13, 26, 29, 23, 36], color: "bg-rose-600 text-white" },
+};
 
 const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const winRate = (wins / (wins + losses)) * 100;
@@ -78,36 +86,16 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
     }
   };
 
-  // Function to determine which number group a number belongs to
-  const getNumberGroup = (num: number) => {
-    if ([1, 2, 3].includes(num % 10)) {
-      return "group-123";
-    } else if ([4, 7, 8].includes(num % 10)) {
-      return "group-478";
-    } else if ([5, 9, 6].includes(num % 10)) {
-      return "group-596";
-    } else if ([6, 9, 3].includes(num % 10)) {
-      return "group-693";
-    } else {
-      return "group-other";
-    }
-  };
-
   // Get color for suggestion numbers based on their group
   const getSuggestionColor = (num: number) => {
-    const group = getNumberGroup(num);
-    switch (group) {
-      case "group-123":
-        return "bg-blue-500 text-white";
-      case "group-478":
-        return "bg-emerald-500 text-white";
-      case "group-596":
-        return "bg-amber-500 text-white";
-      case "group-693":
-        return "bg-rose-500 text-white";
-      default:
-        return "bg-purple-500 text-white";
+    // Check which group the number belongs to
+    for (const [groupName, groupInfo] of Object.entries(numberGroups)) {
+      if (groupInfo.numbers.includes(num)) {
+        return groupInfo.color;
+      }
     }
+    // Default color if not found in any group
+    return "bg-purple-600 text-white";
   };
   
   return (
