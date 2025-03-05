@@ -162,14 +162,28 @@ const ChatUI = () => {
                 {msg.sender}
               </span>
               {msg.isModerator && (
-                <span className="bg-vegas-green text-xs px-1 rounded text-black">Moderator</span>
+                <div className="flex items-center gap-1">
+                  <span className="bg-vegas-green text-xs px-1.5 py-0.5 rounded text-black font-medium">Moderator</span>
+                  <span className="text-purple-500">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </span>
+                </div>
               )}
               {msg.isAdmin && (
                 <span className="bg-vegas-gold text-xs px-1 rounded text-black">Admin</span>
               )}
             </div>
             <div className="ml-10">
-              <p className="bg-[#1e1c26] text-sm text-gray-300 p-2 rounded-lg max-w-[85%] inline-block">{msg.message}</p>
+              <p className={`text-sm text-gray-300 p-2 rounded-lg max-w-[85%] inline-block
+                ${msg.isModerator 
+                  ? 'bg-[#1A1625] border border-[#4D3A6B] shadow-[0_0_8px_0px_rgba(139,92,246,0.3)]' 
+                  : msg.isAdmin 
+                    ? 'bg-[#1e1c22] border border-vegas-gold/20' 
+                    : 'bg-[#1e1c26]'}`}>
+                {msg.message}
+              </p>
             </div>
           </div>
         ))}
