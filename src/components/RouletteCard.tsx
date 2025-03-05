@@ -66,7 +66,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
   return (
     <>
       <div 
-        className="glass-card p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
+        className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
         onClick={() => setIsStatsModalOpen(true)}
       >
         <div className="flex items-center justify-between">
