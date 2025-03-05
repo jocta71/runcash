@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Send, User, ShieldCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -120,14 +121,16 @@ const ChatUI = () => {
     <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50">
       <div className="p-4 h-[70px] border-b border-[#222222] flex items-center justify-between bg-[#0b0a0f]">
         <div className="flex items-center gap-2">
-          <div className="w-5 h-5 bg-gray-700 rounded-md flex items-center justify-center">
+          <div className="w-5 h-5 bg-[#1A191F] rounded-md flex items-center justify-center">
             <span className="text-xs text-white">#</span>
           </div>
           <h2 className="font-medium text-white">Rules</h2>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
-            <User size={14} className="text-vegas-green" />
+            <div className="p-1 bg-[#1A191F] rounded-md">
+              <User size={14} className="text-vegas-green" />
+            </div>
             <span className="text-xs text-vegas-green">3,331</span>
           </div>
           <div className="text-gray-500">
@@ -148,11 +151,11 @@ const ChatUI = () => {
                     <ShieldCheck size={16} className="text-vegas-green" />
                   </div>
                 ) : msg.isAdmin ? (
-                  <div className="h-8 w-8 rounded-lg bg-vegas-gold/20 flex items-center justify-center">
+                  <div className="h-8 w-8 rounded-lg bg-[#1A191F] flex items-center justify-center">
                     <span className="text-vegas-gold text-xs">★</span>
                   </div>
                 ) : (
-                  <AvatarFallback className="bg-gray-700 text-xs text-white">
+                  <AvatarFallback className="bg-[#1A191F] text-xs text-white rounded-lg">
                     {msg.sender.substring(0, 2)}
                   </AvatarFallback>
                 )}
@@ -164,9 +167,11 @@ const ChatUI = () => {
                 <div className="flex items-center gap-1">
                   <span className="bg-vegas-green text-xs px-1.5 py-0.5 rounded text-black font-medium">Moderator</span>
                   <span className="text-purple-500">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                    <div className="p-1 bg-[#1A191F] rounded-md">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#8B5CF6" stroke="#8B5CF6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
                   </span>
                 </div>
               )}
@@ -196,9 +201,11 @@ const ChatUI = () => {
             placeholder="Hi guys! What are you doing?"
             className="border-none bg-transparent text-white text-sm focus-visible:ring-0 focus-visible:ring-offset-0 h-8 placeholder:text-gray-500"
           />
-          <Button type="submit" size="icon" variant="ghost" className="h-8 w-8 text-vegas-green hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0">
-            <Send size={16} />
-          </Button>
+          <div className="p-1 bg-[#1A191F] rounded-md">
+            <Button type="submit" size="icon" variant="ghost" className="h-6 w-6 text-vegas-green hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 p-0">
+              <Send size={14} />
+            </Button>
+          </div>
         </div>
       </form>
     </div>

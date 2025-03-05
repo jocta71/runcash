@@ -14,17 +14,23 @@ const Sidebar = () => {
             <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Games</h3>
             <div className="space-y-1">
               <div className="menu-item active">
-                <Gamepad2 size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Gamepad2 size={18} className="text-white" />
+                </div>
                 <span>Slots</span>
               </div>
               
               <div className="menu-item">
-                <Flame size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Flame size={18} className="text-white" />
+                </div>
                 <span>Live casino</span>
               </div>
               
               <div className="menu-item">
-                <Heart size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Heart size={18} className="text-white" />
+                </div>
                 <span>Favourites</span>
               </div>
             </div>
@@ -35,22 +41,30 @@ const Sidebar = () => {
             <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Bonuses</h3>
             <div className="space-y-1">
               <div className="menu-item">
-                <Gift size={18} className="text-green-500" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Gift size={18} className="text-green-500" />
+                </div>
                 <span>Promocode</span>
               </div>
               
               <div className="menu-item">
-                <Trophy size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Trophy size={18} className="text-white" />
+                </div>
                 <span>Loyalty program</span>
               </div>
               
               <div className="menu-item">
-                <Users size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Users size={18} className="text-white" />
+                </div>
                 <span>Referal program</span>
               </div>
               
               <div className="menu-item">
-                <CircleDollarSign size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <CircleDollarSign size={18} className="text-white" />
+                </div>
                 <span>Lottery</span>
               </div>
             </div>
@@ -61,17 +75,23 @@ const Sidebar = () => {
             <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Other</h3>
             <div className="space-y-1">
               <div className="menu-item">
-                <BarChart3 size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <BarChart3 size={18} className="text-white" />
+                </div>
                 <span>Statistics</span>
               </div>
               
               <div className="menu-item">
-                <Scale size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Scale size={18} className="text-white" />
+                </div>
                 <span>Provably fair</span>
               </div>
               
               <div className="menu-item">
-                <LifeBuoy size={18} className="text-white" />
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <LifeBuoy size={18} className="text-white" />
+                </div>
                 <span>Support</span>
               </div>
             </div>
@@ -81,13 +101,17 @@ const Sidebar = () => {
         {/* Footer buttons */}
         <div className="space-y-2 mt-auto">
           <div className="bg-[#22202a] rounded-md p-2 flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity">
-            <Send size={18} className="text-gray-400" />
+            <div className="bg-[#1A191F] p-1 rounded-md">
+              <Send size={18} className="text-gray-400" />
+            </div>
             <span className="text-gray-300">Telegram</span>
           </div>
           
           <div className="bg-[#22202a] rounded-md p-2 flex items-center justify-between cursor-pointer hover:opacity-90 transition-opacity">
             <div className="flex items-center gap-2">
-              <Globe size={18} className="text-gray-400" />
+              <div className="bg-[#1A191F] p-1 rounded-md">
+                <Globe size={18} className="text-gray-400" />
+              </div>
               <span className="text-gray-300">English</span>
             </div>
             <ChevronDown size={14} className="text-gray-400" />
