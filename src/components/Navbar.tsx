@@ -1,7 +1,6 @@
-
 import { 
   Bell, User, Wallet, Settings, LogOut, Info, ChevronDown, Menu, TrendingUp, Trophy, Flame,
-  ArrowLeft, ArrowRight
+  ArrowLeft, ArrowRight, Search
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -79,122 +78,39 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
 
   return (
     <div className="fixed top-0 left-0 right-0 h-16 bg-vegas-darkgray border-b border-border z-30">
-      <div className="w-full max-w-[calc(100%-4rem)] mx-auto flex items-center justify-between h-full px-4 md:px-6">
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" className="md:hidden p-2">
-            <Menu size={24} />
-          </Button>
+      <div className="w-full max-w-[calc(100%-4rem)] mx-auto flex items-center justify-between h-full px-4">
+        {/* Logo Section */}
+        <div className="flex items-center gap-4">
           <span className="text-2xl font-bold text-vegas-green">Vega</span>
+          <div className="relative w-8 h-8 flex items-center justify-center rounded-full ml-2">
+            <Search size={16} className="text-gray-400" />
+          </div>
         </div>
         
-        {/* Status Section with Animation - Removed overflow */}
-        <div className="hidden md:flex items-center gap-3 mx-4 relative max-w-3xl bg-vegas-darkgray/60 px-3 py-1 rounded-lg border border-vegas-green/20">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-6 w-6 shrink-0" 
-            onClick={() => rotateView('prev')}
-          >
-            <ArrowLeft size={16} />
-          </Button>
-          
-          <div className="flex items-center gap-2 min-w-[110px] shrink-0">
-            {viewData[currentView].icon}
-            <span className="text-sm text-muted-foreground whitespace-nowrap">
-              {viewData[currentView].title}:
-            </span>
+        {/* Balance Section */}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 bg-blue-900/30 py-1 px-3 rounded-full">
+            <span className="text-white text-xs font-medium">₱342,203,561.23</span>
+            <ChevronDown size={14} className="text-gray-400" />
           </div>
           
-          <div className={`flex items-center gap-2 transition-all duration-300 ${isAnimating ? 'opacity-0 -translate-y-2' : 'opacity-100 translate-y-0'}`}>
-            <TooltipProvider>
-              {viewData[currentView].data.slice(0, 5).map((roulette, index) => {
-                const winRate = ((roulette.wins / (roulette.wins + roulette.losses)) * 100).toFixed(1);
-                const profit = roulette.wins - roulette.losses;
-                
-                let colorClass = "text-vegas-green bg-vegas-green/10 hover:bg-vegas-green/20";
-                if (index === 0) colorClass = "text-vegas-gold bg-vegas-gold/10 hover:bg-vegas-gold/20";
-                else if (index === 1) colorClass = "text-vegas-blue bg-vegas-blue/10 hover:bg-vegas-blue/20";
-                
-                return (
-                  <Tooltip key={index}>
-                    <TooltipTrigger asChild>
-                      <Badge 
-                        variant="outline" 
-                        className={`flex items-center gap-1 cursor-pointer animate-fade-in ${colorClass}`}
-                      >
-                        {index === 0 ? (
-                          <Trophy size={14} className="animate-pulse" />
-                        ) : (
-                          <Flame size={14} className="animate-pulse" />
-                        )}
-                        <span className="truncate max-w-[100px]">{roulette.name}</span>
-                        <span className="font-bold">{winRate}%</span>
-                      </Badge>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <div className="space-y-1">
-                        <p className="font-bold">{roulette.name}</p>
-                        <p className="text-xs">Taxa de Vitória: {winRate}%</p>
-                        <p className="text-xs">Vitórias: {roulette.wins} | Derrotas: {roulette.losses}</p>
-                        <p className="text-xs">Lucro: {profit > 0 ? '+' : ''}{profit} pontos</p>
-                        <p className="text-xs">Tendência: {profit > 20 ? '🔥 Alta' : profit > 0 ? '📈 Positiva' : '📉 Negativa'}</p>
-                      </div>
-                    </TooltipContent>
-                  </Tooltip>
-                );
-              })}
-            </TooltipProvider>
-          </div>
-          
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-6 w-6 shrink-0 ml-auto" 
-            onClick={() => rotateView('next')}
-          >
-            <ArrowRight size={16} />
+          <Button variant="default" size="sm" className="h-8 bg-vegas-green text-black font-medium">
+            <Wallet size={15} className="mr-1" />
+            Wallet
           </Button>
         </div>
         
-        <div className="flex items-center gap-2 sm:gap-4">
-          <Button
-            variant="ghost"
-            className="hover-neon-blue items-center gap-2 hidden sm:flex"
-          >
-            <Info size={18} />
-            <span>Regras</span>
-          </Button>
-          
+        {/* Right Section */}
+        <div className="flex items-center gap-3">
+          {/* Avatar and Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="hover-neon-green flex items-center gap-1 sm:gap-2">
-                <Wallet size={18} />
-                <span className="hidden sm:inline">R$ 1.000,00</span>
-                <ChevronDown size={14} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48 bg-vegas-darkgray border-vegas-green">
-              <DropdownMenuItem>Depósito</DropdownMenuItem>
-              <DropdownMenuItem>Saque</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Histórico</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          
-          <Button variant="ghost" className="hover-neon-gold relative">
-            <Bell size={20} className="animate-bell-shake" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-vegas-gold rounded-full text-[10px] flex items-center justify-center text-black font-bold">
-              3
-            </span>
-          </Button>
-          
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="hover-scale">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <Button variant="ghost" size="icon" className="rounded-full h-8 w-8 p-0">
+                <Avatar className="h-8 w-8 border-2 border-gray-700">
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
+                <ChevronDown size={12} className="text-gray-400 absolute bottom-0 right-0" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48 bg-vegas-darkgray">
@@ -213,6 +129,39 @@ const Navbar = ({ topRoulettes = [] }: NavbarProps) => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
+          {/* Notifications */}
+          <Button variant="ghost" size="icon" className="relative h-8 w-8 rounded-full bg-vegas-green/10">
+            <Bell size={16} className="text-vegas-green" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-vegas-green rounded-full text-[10px] flex items-center justify-center text-black font-bold">
+              3
+            </span>
+          </Button>
+          
+          {/* Rules Button */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-1 h-8 text-xs text-white bg-vegas-darkgray/80 border border-gray-700"
+          >
+            <Info size={14} />
+            Rules
+          </Button>
+          
+          {/* Points Badge */}
+          <div className="flex items-center gap-1 bg-vegas-green/10 rounded-lg py-1 px-2">
+            <Trophy size={16} className="text-vegas-green" />
+            <span className="text-vegas-green text-xs font-bold">3,281</span>
+          </div>
+          
+          {/* Menu Button */}
+          <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-vegas-darkgray/80">
+            <div className="flex flex-col gap-1">
+              <div className="w-3 h-0.5 bg-gray-400"></div>
+              <div className="w-3 h-0.5 bg-gray-400"></div>
+              <div className="w-3 h-0.5 bg-gray-400"></div>
+            </div>
+          </Button>
         </div>
       </div>
     </div>
