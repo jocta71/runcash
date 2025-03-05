@@ -1,12 +1,22 @@
 
 import React from 'react';
 import RouletteNumber from './RouletteNumber';
+import { Spinner } from 'lucide-react';
 
 interface LastNumbersProps {
   numbers: number[];
+  isLoading?: boolean;
 }
 
-const LastNumbers = ({ numbers }: LastNumbersProps) => {
+const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-10">
+        <Spinner size={20} className="animate-spin text-vegas-gold" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-wrap justify-center gap-2 max-w-full">
       {numbers.map((num, i) => (

@@ -9,6 +9,7 @@ import WinRateDisplay from './roulette/WinRateDisplay';
 import RouletteTrendChart from './roulette/RouletteTrendChart';
 import SuggestionDisplay from './roulette/SuggestionDisplay';
 import RouletteActionButtons from './roulette/RouletteActionButtons';
+import { supabase } from '@/integrations/supabase/client';
 
 interface RouletteCardProps {
   name: string;
@@ -18,13 +19,46 @@ interface RouletteCardProps {
   trend: { value: number }[];
 }
 
-const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardProps) => {
+const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [suggestion, setSuggestion] = useState<number[]>([]);
   const [isBlurred, setIsBlurred] = useState(false);
   const [currentStrategy, setCurrentStrategy] = useState(strategies[0]);
   const [selectedGroup, setSelectedGroup] = useState<string>("grupo-123");
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
+  const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch recent numbers from the database
+  useEffect(() => {
+    const fetchRecentNumbers = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('recent_numbers')
+          .select('number')
+          .eq('roulette_name', name)
+          .order('timestamp', { ascending: false })
+          .limit(5);
+
+        if (error) {
+          console.error('Error fetching recent numbers:', error);
+          return;
+        }
+
+        if (data && data.length > 0) {
+          const numbers = data.map(item => item.number);
+          setLastNumbers(numbers);
+        }
+      } catch (error) {
+        console.error('Error in fetching recent numbers:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecentNumbers();
+  }, [name]);
 
   useEffect(() => {
     generateSuggestion();
@@ -74,7 +108,7 @@ const RouletteCard = ({ name, lastNumbers, wins, losses, trend }: RouletteCardPr
           <TrendingUp size={20} className="text-vegas-green" />
         </div>
         
-        <LastNumbers numbers={lastNumbers} />
+        <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
         
         <SuggestionDisplay 
           suggestion={suggestion}
