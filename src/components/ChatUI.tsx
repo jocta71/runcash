@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Send, User, ShieldCheck } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -117,7 +118,7 @@ const ChatUI = () => {
   };
   
   return (
-    <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray border-l border-[#222222] z-50">
+    <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50">
       <div className="p-4 h-[70px] border-b border-[#222222] flex items-center justify-between bg-[#0b0a0f]">
         <div className="flex items-center gap-2">
           <div className="w-5 h-5 bg-gray-700 rounded-md flex items-center justify-center">
@@ -138,37 +139,37 @@ const ChatUI = () => {
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-2 space-y-3 scrollbar-none bg-[#0b0a0f] border-l-0">
+      <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none bg-[#0b0a0f]">
         {messages.map((msg) => (
-          <div key={msg.id} className="flex gap-2">
-            <Avatar className="h-8 w-8 rounded-lg bg-gray-700 flex-shrink-0">
-              {msg.isModerator ? (
-                <div className="h-8 w-8 rounded-lg bg-indigo-800 flex items-center justify-center">
-                  <ShieldCheck size={16} className="text-vegas-green" />
-                </div>
-              ) : msg.isAdmin ? (
-                <div className="h-8 w-8 rounded-lg bg-vegas-gold/20 flex items-center justify-center">
-                  <span className="text-vegas-gold text-xs">★</span>
-                </div>
-              ) : (
-                <AvatarFallback className="bg-gray-700 text-xs text-white">
-                  {msg.sender.substring(0, 2)}
-                </AvatarFallback>
+          <div key={msg.id} className="flex flex-col">
+            <div className="flex items-center gap-2 mb-1">
+              <Avatar className="h-8 w-8 rounded-lg bg-gray-700 flex-shrink-0">
+                {msg.isModerator ? (
+                  <div className="h-8 w-8 rounded-lg bg-indigo-800 flex items-center justify-center">
+                    <ShieldCheck size={16} className="text-vegas-green" />
+                  </div>
+                ) : msg.isAdmin ? (
+                  <div className="h-8 w-8 rounded-lg bg-vegas-gold/20 flex items-center justify-center">
+                    <span className="text-vegas-gold text-xs">★</span>
+                  </div>
+                ) : (
+                  <AvatarFallback className="bg-gray-700 text-xs text-white">
+                    {msg.sender.substring(0, 2)}
+                  </AvatarFallback>
+                )}
+              </Avatar>
+              <span className={`text-sm font-semibold ${msg.isModerator ? 'text-vegas-green' : msg.isAdmin ? 'text-vegas-gold' : 'text-white'}`}>
+                {msg.sender}
+              </span>
+              {msg.isModerator && (
+                <span className="bg-vegas-green text-xs px-1 rounded text-black">Moderator</span>
               )}
-            </Avatar>
-            <div className="flex-1">
-              <div className="flex items-center gap-1">
-                <span className={`text-sm font-semibold ${msg.isModerator ? 'text-vegas-green' : msg.isAdmin ? 'text-vegas-gold' : 'text-white'}`}>
-                  {msg.sender}
-                </span>
-                {msg.isModerator && (
-                  <span className="bg-vegas-green text-xs px-1 rounded text-black">Moderator</span>
-                )}
-                {msg.isAdmin && (
-                  <span className="bg-vegas-gold text-xs px-1 rounded text-black">Admin</span>
-                )}
-              </div>
-              <p className="text-sm text-gray-300 break-words">{msg.message}</p>
+              {msg.isAdmin && (
+                <span className="bg-vegas-gold text-xs px-1 rounded text-black">Admin</span>
+              )}
+            </div>
+            <div className="ml-10">
+              <p className="bg-[#1e1c26] text-sm text-gray-300 p-2 rounded-lg max-w-[85%] inline-block">{msg.message}</p>
             </div>
           </div>
         ))}
