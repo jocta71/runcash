@@ -1,7 +1,7 @@
 
 import React from 'react';
 import RouletteNumber from './RouletteNumber';
-import { Spinner } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 interface LastNumbersProps {
   numbers: number[];
@@ -12,7 +12,7 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-10">
-        <Spinner size={20} className="animate-spin text-vegas-gold" />
+        <Loader2 size={20} className="animate-spin text-vegas-gold" />
       </div>
     );
   }
