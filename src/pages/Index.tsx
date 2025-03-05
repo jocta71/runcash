@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Search, Wallet, ChevronDown } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -229,6 +228,8 @@ const Index = () => {
                 type="text" 
                 placeholder="Pesquisar..." 
                 className="h-8 pl-7 py-1 pr-2 text-xs bg-gray-800 border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+                value={search}
+                onChange={e => setSearch(e.target.value)}
               />
             </div>
           </div>
@@ -262,20 +263,7 @@ const Index = () => {
         
         <main className="pt-[56px] w-full overflow-y-auto md:mr-80">
           <div className="p-6 flex flex-col h-full bg-[#100f13]">
-            <div className="w-full max-w-2xl mx-auto mb-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
-                <Input 
-                  type="search" 
-                  placeholder="Buscar roletas..." 
-                  value={search} 
-                  onChange={e => setSearch(e.target.value)} 
-                  className="pl-10 bg-gray-800 border-none text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
-                />
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pb-6 pr-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pb-6">
               {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
             </div>
           </div>
