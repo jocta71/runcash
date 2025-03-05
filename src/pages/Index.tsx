@@ -260,7 +260,13 @@ const Index = () => {
             <div className="w-full max-w-2xl mx-auto mb-6">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" size={20} />
-                <Input type="search" placeholder="Buscar roletas..." value={search} onChange={e => setSearch(e.target.value)} className="pl-10 bg-vegas-darkgray border-none" />
+                <Input 
+                  type="search" 
+                  placeholder="Buscar roletas..." 
+                  value={search} 
+                  onChange={e => setSearch(e.target.value)} 
+                  className="pl-10 bg-gray-800 border-none text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+                />
               </div>
             </div>
             
@@ -276,4 +282,3 @@ const Index = () => {
 };
 
 export default Index;
-
