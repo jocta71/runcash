@@ -4,8 +4,15 @@ import ChatHeader from './chat/ChatHeader';
 import ChatMessageList from './chat/ChatMessageList';
 import ChatInput from './chat/ChatInput';
 import { ChatMessage } from './chat/types';
+import { X } from 'lucide-react';
 
-const ChatUI = () => {
+interface ChatUIProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  isMobile?: boolean;
+}
+
+const ChatUI = ({ isOpen = false, onClose, isMobile = false }: ChatUIProps) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
@@ -106,9 +113,24 @@ const ChatUI = () => {
     
     setNewMessage('');
   };
+
+  // Styles for mobile vs desktop
+  const chatClasses = isMobile
+    ? "fixed inset-0 bg-vegas-darkgray z-50 flex flex-col"
+    : "fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50 border-l border-[#33333359] md:block hidden";
+  
+  // For mobile, if it's not open, don't render
+  if (isMobile && !isOpen) return null;
   
   return (
-    <div className="fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50 border-l border-[#33333359]">
+    <div className={chatClasses}>
+      {isMobile && (
+        <div className="flex justify-end p-2">
+          <button onClick={onClose} className="p-1 rounded-md text-gray-400 hover:text-white">
+            <X size={24} />
+          </button>
+        </div>
+      )}
       <ChatHeader />
       <ChatMessageList messages={messages} />
       <ChatInput 
@@ -121,3 +143,4 @@ const ChatUI = () => {
 };
 
 export default ChatUI;
+

@@ -105,4 +105,37 @@
   .hover-neon-blue {
     @apply transition-all duration-200 hover:text-vegas-blue hover:shadow-[0_0_10px_rgba(54,181,255,0.7)];
   }
+  
+  /* Mobile responsive styles */
+  .mobile-menu-toggle {
+    @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
+  }
+  
+  .mobile-sidebar {
+    @apply fixed inset-0 z-50 bg-vegas-black/90 backdrop-blur-sm transition-all duration-300 md:hidden;
+  }
+  
+  .mobile-sidebar-inner {
+    @apply w-3/4 max-w-xs h-full bg-[#0B0A0F] overflow-auto border-r border-[#33333359];
+  }
+  
+  .mobile-header {
+    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-[#100f13] border-b border-[#33333359] md:hidden;
+  }
+  
+  .mobile-chat-toggle {
+    @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
+  }
 }
+
+/* Mobile first media queries */
+@media (max-width: 640px) {
+  .roulette-card-grid {
+    @apply grid-cols-1 gap-4;
+  }
+  
+  .stats-modal-content {
+    @apply p-3;
+  }
+}
+
