@@ -9,7 +9,7 @@ interface WinRateDisplayProps {
 }
 
 const WinRateDisplay = ({ wins, losses }: WinRateDisplayProps) => {
-  const winRate = (wins / (wins + losses)) * 100;
+  const winRate = wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0;
 
   return (
     <div>
@@ -32,7 +32,7 @@ const WinRateDisplay = ({ wins, losses }: WinRateDisplayProps) => {
       <Progress
         value={winRate}
         className="h-2 bg-gray-800"
-        indicatorClassName="bg-gradient-to-r from-[#00ff00] to-[#8bff00]"
+        indicatorClassName="bg-gradient-to-r from-[#00ff00] to-[#00ff00]"
       />
     </div>
   );
