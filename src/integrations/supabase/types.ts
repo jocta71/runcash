@@ -9,27 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      recent_numbers: {
+      roletas: {
         Row: {
-          color: string
+          derrotas: number | null
+          estado_estrategia: string | null
           id: string
-          number: number
-          roulette_name: string
-          timestamp: string
+          nome: string
+          numero_gatilho: number | null
+          numero_gatilho_anterior: number | null
+          numeros: number[] | null
+          sugestao_display: string | null
+          terminais_gatilho: number[] | null
+          terminais_gatilho_anterior: number[] | null
+          updated_at: string | null
+          vitorias: number | null
         }
         Insert: {
-          color: string
-          id?: string
-          number: number
-          roulette_name: string
-          timestamp?: string
+          derrotas?: number | null
+          estado_estrategia?: string | null
+          id: string
+          nome: string
+          numero_gatilho?: number | null
+          numero_gatilho_anterior?: number | null
+          numeros?: number[] | null
+          sugestao_display?: string | null
+          terminais_gatilho?: number[] | null
+          terminais_gatilho_anterior?: number[] | null
+          updated_at?: string | null
+          vitorias?: number | null
         }
         Update: {
-          color?: string
+          derrotas?: number | null
+          estado_estrategia?: string | null
           id?: string
-          number?: number
-          roulette_name?: string
-          timestamp?: string
+          nome?: string
+          numero_gatilho?: number | null
+          numero_gatilho_anterior?: number | null
+          numeros?: number[] | null
+          sugestao_display?: string | null
+          terminais_gatilho?: number[] | null
+          terminais_gatilho_anterior?: number[] | null
+          updated_at?: string | null
+          vitorias?: number | null
         }
         Relationships: []
       }
