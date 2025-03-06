@@ -143,7 +143,7 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       >
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">{name}</h3>
-          <TrendingUp size={20} className="text-vegas-green" />
+          <TrendingUp size={20} className="text-[#00ff00]" />
         </div>
         
         <LastNumbers numbers={lastNumbers} isLoading={isLoading} />

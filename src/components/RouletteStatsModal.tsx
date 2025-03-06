@@ -1,4 +1,3 @@
-
 import {
   Dialog,
   DialogContent,
@@ -127,9 +126,9 @@ const RouletteStatsModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-vegas-black border-vegas-gold">
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-vegas-black border-[#00ff00]">
         <DialogHeader>
-          <DialogTitle className="text-vegas-gold flex items-center text-xl">
+          <DialogTitle className="text-[#00ff00] flex items-center text-xl">
             <BarChart className="mr-2" /> Estatísticas da {name}
           </DialogTitle>
           <DialogDescription>
@@ -137,7 +136,7 @@ const RouletteStatsModal = ({
           </DialogDescription>
         </DialogHeader>
         
-        <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground text-vegas-gold">
+        <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground text-[#00ff00]">
           <X className="h-4 w-4" />
           <span className="sr-only">Fechar</span>
         </DialogClose>
@@ -146,7 +145,7 @@ const RouletteStatsModal = ({
           {/* Historical Numbers Section */}
           <div className="glass-card p-4 space-y-4">
             <h3 className="text-lg font-semibold flex items-center">
-              <TrendingUp size={20} className="text-vegas-gold mr-2" /> Últimos 120 Números
+              <TrendingUp size={20} className="text-[#00ff00] mr-2" /> Últimos 120 Números
             </h3>
             <div className="grid grid-cols-10 gap-2">
               {historicalNumbers.map((num, i) => (
@@ -163,7 +162,7 @@ const RouletteStatsModal = ({
           {/* Win Rate Chart */}
           <div className="glass-card p-4 space-y-4">
             <h3 className="text-lg font-semibold flex items-center">
-              <PercentIcon size={20} className="text-vegas-gold mr-2" /> Taxa de Vitória
+              <PercentIcon size={20} className="text-[#00ff00] mr-2" /> Taxa de Vitória
             </h3>
             <div className="h-60">
               <ResponsiveContainer width="100%" height="100%">
@@ -177,12 +176,12 @@ const RouletteStatsModal = ({
                     cy="50%"
                     innerRadius={60}
                     outerRadius={80}
-                    fill="#3BFFA1"
+                    fill="#00ff00"
                     paddingAngle={5}
                     dataKey="value"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >
-                    <Cell key="wins" fill="#3BFFA1" />
+                    <Cell key="wins" fill="#00ff00" />
                     <Cell key="losses" fill="#ef4444" />
                   </Pie>
                   <Legend />
@@ -195,7 +194,7 @@ const RouletteStatsModal = ({
           {/* Frequency Chart */}
           <div className="glass-card p-4 space-y-4">
             <h3 className="text-lg font-semibold flex items-center">
-              <ChartBar size={20} className="text-vegas-gold mr-2" /> Frequência de Números
+              <ChartBar size={20} className="text-[#00ff00] mr-2" /> Frequência de Números
             </h3>
             <div className="h-60">
               <ResponsiveContainer width="100%" height="100%">
@@ -204,10 +203,10 @@ const RouletteStatsModal = ({
                   <XAxis dataKey="number" stroke="#ccc" />
                   <YAxis stroke="#ccc" />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: '#222', borderColor: '#3BFFA1' }} 
-                    labelStyle={{ color: '#3BFFA1' }}
+                    contentStyle={{ backgroundColor: '#222', borderColor: '#00ff00' }} 
+                    labelStyle={{ color: '#00ff00' }}
                   />
-                  <Bar dataKey="frequency" fill="#3BFFA1" />
+                  <Bar dataKey="frequency" fill="#00ff00" />
                 </RechartsBarChart>
               </ResponsiveContainer>
             </div>
@@ -216,7 +215,7 @@ const RouletteStatsModal = ({
           {/* Distribution Pie Chart */}
           <div className="glass-card p-4 space-y-4">
             <h3 className="text-lg font-semibold flex items-center">
-              <ChartBar size={20} className="text-vegas-gold mr-2" /> Distribuição por Cor
+              <ChartBar size={20} className="text-[#00ff00] mr-2" /> Distribuição por Cor
             </h3>
             <div className="h-60">
               <ResponsiveContainer width="100%" height="100%">
@@ -226,7 +225,7 @@ const RouletteStatsModal = ({
                     cx="50%"
                     cy="50%"
                     outerRadius={80}
-                    fill="#3BFFA1"
+                    fill="#00ff00"
                     dataKey="value"
                     label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >

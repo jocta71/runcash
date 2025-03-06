@@ -16,7 +16,7 @@
     --popover: 229 25% 8%;
     --popover-foreground: 210 20% 98%;
 
-    --primary: 160 100% 62%;
+    --primary: 120 100% 50%;
     --primary-foreground: 229 20% 10%;
 
     --secondary: 229 15% 15%;
@@ -25,7 +25,7 @@
     --muted: 229 15% 15%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 227 100% 67%;
+    --accent: 120 100% 50%;
     --accent-foreground: 210 20% 98%;
 
     --destructive: 0 84% 60%;
@@ -33,7 +33,7 @@
 
     --border: 229 20% 18%;
     --input: 229 20% 18%;
-    --ring: 142 100% 49%;
+    --ring: 120 100% 50%;
 
     --radius: 0.75rem;
   }
@@ -57,21 +57,21 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-vegas-blue/60 rounded-full transition-all duration-300;
+    @apply bg-vegas-green/60 rounded-full transition-all duration-300;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-vegas-blue;
+    @apply bg-vegas-green;
   }
 }
 
 @layer components {
   .neon-border-green {
-    @apply border border-vegas-green shadow-[0_0_10px_rgba(255,173,51,0.5)];
+    @apply border border-vegas-green shadow-[0_0_10px_rgba(0,255,0,0.5)];
   }
   
   .neon-border-gold {
-    @apply border border-vegas-gold shadow-[0_0_10px_rgba(255,173,51,0.5)];
+    @apply border border-vegas-gold shadow-[0_0_10px_rgba(0,255,0,0.5)];
   }
   
   .neon-border-blue {
@@ -95,11 +95,11 @@
   }
 
   .hover-neon-green {
-    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(255,173,51,0.7)];
+    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(0,255,0,0.7)];
   }
 
   .hover-neon-gold {
-    @apply transition-all duration-200 hover:text-vegas-gold hover:shadow-[0_0_10px_rgba(255,173,51,0.7)];
+    @apply transition-all duration-200 hover:text-vegas-gold hover:shadow-[0_0_10px_rgba(0,255,0,0.7)];
   }
 
   .hover-neon-blue {
