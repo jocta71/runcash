@@ -10,7 +10,6 @@ import RouletteTrendChart from './roulette/RouletteTrendChart';
 import SuggestionDisplay from './roulette/SuggestionDisplay';
 import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
-import { seedRouletteNumbers } from '@/integrations/supabase/seedData';
 
 interface RouletteCardProps {
   name: string;
@@ -37,56 +36,57 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       try {
         // First check if we have any data
         const { data, error, count } = await supabase
-          .from('recent_numbers')
-          .select('number', { count: 'exact', head: true });
+          .from('roletas')
+          .select('numeros', { count: 'exact', head: true });
         
-        // If no data exists, trigger seeding
+        // If no data exists, use the mock data instead
         if (!count || count === 0) {
-          console.log('No data found, seeding database...');
-          const success = await seedRouletteNumbers();
-          if (success) {
-            setDataSeeded(true);
-            toast({
-              title: 'Dados Adicionados',
-              description: 'Números iniciais adicionados com sucesso!',
-              variant: 'default',
-            });
-          }
+          console.log('No data found in roletas table, using mock data');
+          setLastNumbers(initialLastNumbers);
+          setDataSeeded(true);
+          toast({
+            title: 'Usando Dados Locais',
+            description: 'Conecte um raspador para dados em tempo real',
+            variant: 'default',
+          });
         } else {
-          console.log('Data already exists, skipping seeding');
+          console.log('Data already exists, using database data');
           setDataSeeded(true);
         }
       } catch (error) {
         console.error('Error checking data:', error);
+        // Fallback to initial data
+        setLastNumbers(initialLastNumbers);
+        setDataSeeded(true);
       }
     };
 
     checkAndSeedData();
-  }, []);
+  }, [initialLastNumbers]);
 
-  // Fetch recent numbers from the database
+  // Fetch numbers from the database
   useEffect(() => {
-    const fetchRecentNumbers = async () => {
+    const fetchRouletteNumbers = async () => {
       try {
         setIsLoading(true);
         const { data, error } = await supabase
-          .from('recent_numbers')
-          .select('number')
-          .eq('roulette_name', name)
-          .order('timestamp', { ascending: false })
-          .limit(5);
+          .from('roletas')
+          .select('numeros')
+          .eq('nome', name)
+          .single();
 
         if (error) {
-          console.error('Error fetching recent numbers:', error);
+          console.error('Error fetching roulette numbers:', error);
           return;
         }
 
-        if (data && data.length > 0) {
-          const numbers = data.map(item => item.number);
-          setLastNumbers(numbers);
+        if (data && data.numeros && data.numeros.length > 0) {
+          // Use the first 5 numbers or fewer if less are available
+          const recentNumbers = data.numeros.slice(0, 5);
+          setLastNumbers(recentNumbers);
         }
       } catch (error) {
-        console.error('Error in fetching recent numbers:', error);
+        console.error('Error in fetching roulette numbers:', error);
       } finally {
         setIsLoading(false);
       }
@@ -94,7 +94,7 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
 
     // If data is seeded or we're retrying after a delay
     if (dataSeeded) {
-      fetchRecentNumbers();
+      fetchRouletteNumbers();
     }
   }, [name, dataSeeded]);
 
