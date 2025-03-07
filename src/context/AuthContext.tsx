@@ -59,19 +59,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      console.log("Iniciando login com Google...");
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: `${window.location.origin}/auth`,
+          queryParams: {
+            prompt: 'select_account',
+          }
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error("Erro na autenticação com Google:", error);
+        throw error;
+      }
+      
+      if (data?.url) {
+        console.log("Redirecionando para:", data.url);
+      } else {
+        console.warn("URL de redirecionamento não disponível");
+      }
     } catch (error) {
-      console.error('Error signing in with Google:', error);
+      console.error('Erro detalhado ao fazer login com Google:', error);
       toast({
         title: "Login com Google falhou",
-        description: error.message || "Não foi possível fazer login com Google.",
+        description: error.message || "Não foi possível fazer login com Google. Verifique as configurações de OAuth.",
         variant: "destructive"
       });
     }
@@ -79,16 +93,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGitHub = async () => {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      console.log("Iniciando login com GitHub...");
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: window.location.origin,
+          redirectTo: `${window.location.origin}/auth`
         }
       });
       
-      if (error) throw error;
+      if (error) {
+        console.error("Erro na autenticação com GitHub:", error);
+        throw error;
+      }
+      
+      if (data?.url) {
+        console.log("Redirecionando para:", data.url);
+      } else {
+        console.warn("URL de redirecionamento não disponível");
+      }
     } catch (error) {
-      console.error('Error signing in with GitHub:', error);
+      console.error('Erro detalhado ao fazer login com GitHub:', error);
       toast({
         title: "Login com GitHub falhou",
         description: error.message || "Não foi possível fazer login com GitHub.",
