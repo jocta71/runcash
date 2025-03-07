@@ -61,12 +61,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log("Iniciando login com Google...");
       
+      // Certifique-se de que esta URL corresponde exatamente à URL de redirecionamento 
+      // configurada no console do Google Cloud
+      const redirectTo = `${window.location.origin}/auth`;
+      console.log("URL de redirecionamento configurada:", redirectTo);
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth`,
+          redirectTo: redirectTo,
           queryParams: {
             prompt: 'select_account',
+            access_type: 'offline',
           }
         }
       });
@@ -78,6 +84,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (data?.url) {
         console.log("Redirecionando para:", data.url);
+        // Opcional: forçar a navegação para a URL de redirecionamento
+        window.location.href = data.url;
       } else {
         console.warn("URL de redirecionamento não disponível");
       }
@@ -95,10 +103,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log("Iniciando login com GitHub...");
       
+      const redirectTo = `${window.location.origin}/auth`;
+      console.log("URL de redirecionamento configurada:", redirectTo);
+      
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${window.location.origin}/auth`
+          redirectTo: redirectTo
         }
       });
       
@@ -109,6 +120,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (data?.url) {
         console.log("Redirecionando para:", data.url);
+        // Opcional: forçar a navegação para a URL de redirecionamento
+        window.location.href = data.url;
       } else {
         console.warn("URL de redirecionamento não disponível");
       }
