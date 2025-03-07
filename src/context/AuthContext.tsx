@@ -11,6 +11,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string) => Promise<{ error: any }>;
   signInWithGoogle: () => Promise<void>;
+  signInWithGitHub: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -76,6 +77,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const signInWithGitHub = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: window.location.origin,
+        }
+      });
+      
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error signing in with GitHub:', error);
+      toast({
+        title: "Login com GitHub falhou",
+        description: error.message || "Não foi possível fazer login com GitHub.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const signUp = async (email: string, password: string) => {
     try {
       const { error } = await supabase.auth.signUp({ email, password });
@@ -116,6 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signIn,
     signUp,
     signInWithGoogle,
+    signInWithGitHub,
     signOut
   };
 
