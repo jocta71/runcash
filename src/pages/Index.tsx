@@ -1,13 +1,12 @@
-
 import { useState, useMemo } from 'react';
-import { Search, Wallet, ChevronDown, Menu, MessageSquare } from 'lucide-react';
+import { Search, Wallet, Menu, MessageSquare } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
 import RouletteCard from '@/components/RouletteCard';
 import { Input } from '@/components/ui/input';
 import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import AnimatedInsights from '@/components/AnimatedInsights';
+import ProfileDropdown from '@/components/ProfileDropdown';
 
 interface ChatMessage {
   id: string;
@@ -272,24 +271,14 @@ const Index = () => {
                 <span className="text-[10px] text-white">R$</span>
               </span>
               <span className="text-white text-xs">1.346,34</span>
-              <ChevronDown size={14} className="text-gray-400" />
+              <Wallet size={14} className="text-gray-400" />
             </div>
             
             <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
               <Wallet size={14} className="mr-1" /> Saldo
             </Button>
             
-            <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8 border border-vegas-darkgray">
-                <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <ChevronDown size={12} className="text-gray-400" />
-              
-              <div className="h-8 w-8 bg-vegas-green/20 rounded-full flex items-center justify-center ml-1">
-                <span className="text-vegas-green font-bold text-xs">3</span>
-              </div>
-            </div>
+            <ProfileDropdown />
           </div>
         </div>
         
@@ -309,21 +298,7 @@ const Index = () => {
         
         {/* Mobile User Info */}
         <div className="md:hidden flex justify-between items-center px-4 py-3">
-          <div className="flex items-center gap-2">
-            <Avatar className="h-8 w-8 border border-vegas-darkgray">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <span className="text-xs text-white font-medium">User123</span>
-              <div className="flex items-center">
-                <span className="text-[10px] text-gray-400">R$ 1.346,34</span>
-                <div className="h-4 w-4 bg-vegas-green/20 rounded-full flex items-center justify-center ml-1">
-                  <span className="text-vegas-green font-bold text-[8px]">3</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProfileDropdown />
           
           <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
             <Wallet size={14} className="mr-1" /> Saldo
@@ -357,4 +332,3 @@ const Index = () => {
 };
 
 export default Index;
-
