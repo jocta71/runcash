@@ -1,8 +1,7 @@
-
 import { TrendingUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
-import RouletteStatsModal from './RouletteStatsModal';
+import { useNavigate } from 'react-router-dom';
 import { strategies, numberGroups } from './roulette/constants';
 import LastNumbers from './roulette/LastNumbers';
 import WinRateDisplay from './roulette/WinRateDisplay';
@@ -20,26 +19,23 @@ interface RouletteCardProps {
 }
 
 const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, trend }: RouletteCardProps) => {
+  const navigate = useNavigate();
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [suggestion, setSuggestion] = useState<number[]>([]);
   const [isBlurred, setIsBlurred] = useState(false);
   const [currentStrategy, setCurrentStrategy] = useState(strategies[0]);
   const [selectedGroup, setSelectedGroup] = useState<string>("grupo-123");
-  const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
   const [dataSeeded, setDataSeeded] = useState(false);
 
-  // Check if data needs to be seeded and seed if necessary
   useEffect(() => {
     const checkAndSeedData = async () => {
       try {
-        // First check if we have any data
         const { data, error, count } = await supabase
           .from('roletas')
           .select('numeros', { count: 'exact', head: true });
         
-        // If no data exists, use the mock data instead
         if (!count || count === 0) {
           console.log('No data found in roletas table, using mock data');
           setLastNumbers(initialLastNumbers);
@@ -55,7 +51,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
         }
       } catch (error) {
         console.error('Error checking data:', error);
-        // Fallback to initial data
         setLastNumbers(initialLastNumbers);
         setDataSeeded(true);
       }
@@ -64,7 +59,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     checkAndSeedData();
   }, [initialLastNumbers]);
 
-  // Fetch numbers from the database
   useEffect(() => {
     const fetchRouletteNumbers = async () => {
       try {
@@ -81,7 +75,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
         }
 
         if (data && data.numeros && data.numeros.length > 0) {
-          // Use the first 5 numbers or fewer if less are available
           const recentNumbers = data.numeros.slice(0, 5);
           setLastNumbers(recentNumbers);
         }
@@ -92,7 +85,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       }
     };
 
-    // If data is seeded or we're retrying after a delay
     if (dataSeeded) {
       fetchRouletteNumbers();
     }
@@ -127,55 +119,47 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
 
   const handleDetailsClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsStatsModalOpen(true);
+    navigate(`/roulette/${encodeURIComponent(name)}`);
   };
 
   const handlePlayClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Play functionality - currently just stops propagation
+    toast({
+      title: "Roleta Aberta",
+      description: "Redirecionando para o jogo...",
+      variant: "default"
+    });
   };
 
   return (
-    <>
-      <div 
-        className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
-        onClick={() => setIsStatsModalOpen(true)}
-      >
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{name}</h3>
-          <TrendingUp size={20} className="text-[#00ff00]" />
-        </div>
-        
-        <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
-        
-        <SuggestionDisplay 
-          suggestion={suggestion}
-          selectedGroup={selectedGroup}
-          isBlurred={isBlurred}
-          toggleVisibility={toggleVisibility}
-          numberGroups={numberGroups}
-        />
-        
-        <WinRateDisplay wins={wins} losses={losses} />
-        
-        <RouletteTrendChart trend={trend} />
-        
-        <RouletteActionButtons 
-          onDetailsClick={handleDetailsClick}
-          onPlayClick={handlePlayClick}
-        />
+    <div 
+      className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
+      onClick={handleDetailsClick}
+    >
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">{name}</h3>
+        <TrendingUp size={20} className="text-[#00ff00]" />
       </div>
-
-      <RouletteStatsModal
-        open={isStatsModalOpen}
-        onOpenChange={setIsStatsModalOpen}
-        name={name}
-        lastNumbers={lastNumbers}
-        wins={wins}
-        losses={losses}
-        trend={trend}
+      
+      <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
+      
+      <SuggestionDisplay 
+        suggestion={suggestion}
+        selectedGroup={selectedGroup}
+        isBlurred={isBlurred}
+        toggleVisibility={toggleVisibility}
+        numberGroups={numberGroups}
       />
-    </>
+      
+      <WinRateDisplay wins={wins} losses={losses} />
+      
+      <RouletteTrendChart trend={trend} />
+      
+      <RouletteActionButtons 
+        onDetailsClick={handleDetailsClick}
+        onPlayClick={handlePlayClick}
+      />
+    </div>
   );
 };
 

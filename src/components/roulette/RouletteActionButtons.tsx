@@ -16,7 +16,7 @@ const RouletteActionButtons = ({ onDetailsClick, onPlayClick }: RouletteActionBu
         className="w-full sm:flex-1 bg-[#00baff] hover:bg-[#00baff]/80 text-black font-medium text-xs sm:text-sm"
       >
         <Dices size={16} className="mr-1 sm:mr-2" />
-        Ver Detalhes
+        Ver Página de Estatísticas
       </Button>
       
       <Button 
