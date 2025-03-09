@@ -7,7 +7,7 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import AnimatedInsights from '@/components/AnimatedInsights';
 import ProfileDropdown from '@/components/ProfileDropdown';
-import RouletteFilters, { FilterType } from '@/components/RouletteFilters';
+import RouletteFilters, { FilterType, AdvancedFilters } from '@/components/RouletteFilters';
 
 interface ChatMessage {
   id: string;
@@ -211,33 +211,89 @@ const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+  const [advancedFilters, setAdvancedFilters] = useState<AdvancedFilters>({
+    realTime: false,
+    creation: false,
+    reverseDirection: false,
+    numbered: false,
+    countColumns: false,
+    countLines: false,
+    surf: false,
+    multipleSelection: null
+  });
   
+  const handleAdvancedFilterChange = (name: keyof AdvancedFilters, value: boolean | string | null) => {
+    setAdvancedFilters(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Logic to filter roulettes based on both standard and advanced filters
   const filteredRoulettes = useMemo(() => {
-    const searchFiltered = mockRoulettes.filter(roulette => 
+    // First apply the search filter
+    let filtered = mockRoulettes.filter(roulette => 
       roulette.name.toLowerCase().includes(search.toLowerCase())
     );
     
+    // Apply standard filters
     switch (activeFilter) {
       case 'trending':
-        return [...searchFiltered].sort((a, b) => {
+        filtered = [...filtered].sort((a, b) => {
           const aTrendSum = a.trend.reduce((sum, point) => sum + point.value, 0);
           const bTrendSum = b.trend.reduce((sum, point) => sum + point.value, 0);
           return bTrendSum - aTrendSum;
         });
+        break;
       case 'recent':
-        return [...searchFiltered].reverse();
+        filtered = [...filtered].reverse();
+        break;
       case 'high-win-rate':
-        return [...searchFiltered].sort((a, b) => {
+        filtered = [...filtered].sort((a, b) => {
           const aWinRate = a.wins / (a.wins + a.losses) * 100;
           const bWinRate = b.wins / (b.wins + b.losses) * 100;
           return bWinRate - aWinRate;
         });
+        break;
       case 'verified':
-        return searchFiltered.filter((_, index) => index < 4);
-      default:
-        return searchFiltered;
+        filtered = filtered.filter((_, index) => index < 4);
+        break;
     }
-  }, [search, activeFilter]);
+    
+    // Apply advanced filters
+    // Note: These are simulated filters for demonstration purposes
+    // In a real application, these would be implemented based on actual data attributes
+    
+    if (advancedFilters.realTime) {
+      // Simulate real-time filter - for demo, just take the first few items
+      filtered = filtered.slice(0, Math.ceil(filtered.length * 0.7));
+    }
+    
+    if (advancedFilters.reverseDirection) {
+      // Reverse the order
+      filtered = [...filtered].reverse();
+    }
+    
+    if (advancedFilters.multipleSelection) {
+      // Simulate selection highlighting by limiting results
+      switch (advancedFilters.multipleSelection) {
+        case 'same-number':
+          filtered = filtered.slice(0, 3);
+          break;
+        case 'same-color':
+          filtered = filtered.slice(0, 4);
+          break;
+        case 'same-hour':
+          filtered = filtered.slice(0, 5);
+          break;
+        case 'same-minute':
+          filtered = filtered.slice(0, 2);
+          break;
+      }
+    }
+    
+    return filtered;
+  }, [search, activeFilter, advancedFilters]);
 
   const topRoulettes = useMemo(() => {
     return [...mockRoulettes].sort((a, b) => {
@@ -344,7 +400,9 @@ const Index = () => {
           <div className="mb-4">
             <RouletteFilters 
               activeFilter={activeFilter} 
-              onFilterChange={setActiveFilter} 
+              onFilterChange={setActiveFilter}
+              advancedFilters={advancedFilters}
+              onAdvancedFilterChange={handleAdvancedFilterChange}
               className="mt-4"
             />
           </div>
