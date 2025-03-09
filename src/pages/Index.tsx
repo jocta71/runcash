@@ -7,6 +7,7 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import AnimatedInsights from '@/components/AnimatedInsights';
 import ProfileDropdown from '@/components/ProfileDropdown';
+import RouletteFilters, { FilterType } from '@/components/RouletteFilters';
 
 interface ChatMessage {
   id: string;
@@ -209,8 +210,35 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   
-  const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
+  const filteredRoulettes = useMemo(() => {
+    const searchFiltered = mockRoulettes.filter(roulette => 
+      roulette.name.toLowerCase().includes(search.toLowerCase())
+    );
+    
+    switch (activeFilter) {
+      case 'trending':
+        return [...searchFiltered].sort((a, b) => {
+          const aTrendSum = a.trend.reduce((sum, point) => sum + point.value, 0);
+          const bTrendSum = b.trend.reduce((sum, point) => sum + point.value, 0);
+          return bTrendSum - aTrendSum;
+        });
+      case 'recent':
+        return [...searchFiltered].reverse();
+      case 'high-win-rate':
+        return [...searchFiltered].sort((a, b) => {
+          const aWinRate = a.wins / (a.wins + a.losses) * 100;
+          const bWinRate = b.wins / (b.wins + b.losses) * 100;
+          return bWinRate - aWinRate;
+        });
+      case 'verified':
+        return searchFiltered.filter((_, index) => index < 4);
+      default:
+        return searchFiltered;
+    }
+  }, [search, activeFilter]);
+
   const topRoulettes = useMemo(() => {
     return [...mockRoulettes].sort((a, b) => {
       const aWinRate = a.wins / (a.wins + a.losses) * 100;
@@ -313,11 +341,18 @@ const Index = () => {
         </div>
         
         <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] md:pr-[340px] w-full min-h-screen bg-[#100f13]">
+          <div className="mb-4">
+            <RouletteFilters 
+              activeFilter={activeFilter} 
+              onFilterChange={setActiveFilter} 
+              className="mt-4"
+            />
+          </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-2 md:mt-6">
             {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
           </div>
           
-          {/* Mobile Footer Space (to avoid content being hidden behind fixed elements) */}
           <div className="h-16 md:h-0"></div>
         </main>
       </div>
