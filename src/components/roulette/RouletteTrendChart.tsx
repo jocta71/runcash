@@ -49,7 +49,15 @@ interface RouletteTrendChartProps {
 const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
   // Transform the simple trend data into candle chart data
   const transformToCandleData = (data: { value: number }[]): CandleData[] => {
-    return data.map((item, index) => {
+    // If we have too many items, sample them to reduce density
+    let processedData = data;
+    if (data.length > 10) {
+      // Sample data to have maximum 10 candles
+      const step = Math.ceil(data.length / 10);
+      processedData = data.filter((_, index) => index % step === 0);
+    }
+    
+    return processedData.map((item, index) => {
       // For the first item, use the same value for open and close
       if (index === 0) {
         return {
@@ -62,7 +70,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
         };
       }
       
-      const previousClose = data[index - 1].value;
+      const previousClose = processedData[index - 1].value;
       const currentClose = item.value;
       const isUp = currentClose >= previousClose;
       
@@ -104,9 +112,9 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
       <ResponsiveContainer width="100%" height="90%">
         <BarChart
           data={candleData}
-          margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-          barGap={0}
-          barCategoryGap={4}
+          margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
+          barGap={1}
+          barCategoryGap={8}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#333" opacity={0.2} vertical={false} />
           <XAxis dataKey="name" hide={true} />
@@ -121,7 +129,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
             fill="transparent"
             stroke={upColor}
             yAxisId={0}
-            barSize={2}
+            barSize={3}
             isAnimationActive={false}
             name="Low (Up)"
             // Only render for up candles
@@ -133,7 +141,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
             fill="transparent"
             stroke={upColor}
             yAxisId={0}
-            barSize={2}
+            barSize={3}
             isAnimationActive={false}
             name="High (Up)"
             data={candleData.filter(d => d.isUp)}
@@ -144,7 +152,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
             fill={upColor}
             stroke={upColor}
             yAxisId={0}
-            barSize={10}
+            barSize={8}
             radius={[2, 2, 2, 2]}
             isAnimationActive={false}
             name="Body (Up)"
@@ -157,7 +165,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
             fill="transparent"
             stroke={downColor}
             yAxisId={0}
-            barSize={2}
+            barSize={3}
             isAnimationActive={false}
             name="Low (Down)"
             data={candleData.filter(d => !d.isUp)}
@@ -168,7 +176,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
             fill="transparent"
             stroke={downColor}
             yAxisId={0}
-            barSize={2}
+            barSize={3}
             isAnimationActive={false}
             name="High (Down)"
             data={candleData.filter(d => !d.isUp)}
@@ -179,7 +187,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
             fill={downColor}
             stroke={downColor}
             yAxisId={0}
-            barSize={10}
+            barSize={8}
             radius={[2, 2, 2, 2]}
             isAnimationActive={false}
             name="Body (Down)"
