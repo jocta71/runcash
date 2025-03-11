@@ -38,6 +38,8 @@ interface CandleData {
   close: number;
   high: number;
   low: number;
+  // Add isUp property to determine color
+  isUp: boolean;
 }
 
 interface RouletteTrendChartProps {
@@ -55,12 +57,14 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
           open: item.value,
           close: item.value,
           high: item.value + (Math.random() * 0.5),
-          low: item.value - (Math.random() * 0.5)
+          low: item.value - (Math.random() * 0.5),
+          isUp: true // No movement for first item, default to up
         };
       }
       
       const previousClose = data[index - 1].value;
       const currentClose = item.value;
+      const isUp = currentClose >= previousClose;
       
       // For remaining items, use the previous close as the open
       return {
@@ -68,7 +72,8 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
         open: previousClose,
         close: currentClose,
         high: Math.max(previousClose, currentClose) + (Math.random() * 0.3),
-        low: Math.min(previousClose, currentClose) - (Math.random() * 0.3)
+        low: Math.min(previousClose, currentClose) - (Math.random() * 0.3),
+        isUp
       };
     });
   };
@@ -110,35 +115,75 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
           
           <ReferenceLine y={averageValue} stroke="#ffffff" strokeDasharray="3 3" opacity={0.3} />
           
-          {/* Low to High line (wick) */}
+          {/* Up Bars */}
           <Bar
             dataKey="low"
             fill="transparent"
-            stroke={(data) => (data.open <= data.close ? upColor : downColor)}
+            stroke={upColor}
             yAxisId={0}
             barSize={2}
             isAnimationActive={false}
+            name="Low (Up)"
+            // Only render for up candles
+            data={candleData.filter(d => d.isUp)}
           />
           
-          {/* High to Low line (wick) */}
           <Bar
             dataKey="high"
             fill="transparent"
-            stroke={(data) => (data.open <= data.close ? upColor : downColor)}
+            stroke={upColor}
             yAxisId={0}
             barSize={2}
             isAnimationActive={false}
+            name="High (Up)"
+            data={candleData.filter(d => d.isUp)}
           />
           
-          {/* Open to Close solid bar (body) */}
           <Bar
-            dataKey={(data) => Math.abs(data.close - data.open)}
-            fill={(data) => (data.open <= data.close ? upColor : downColor)}
-            stroke={(data) => (data.open <= data.close ? upColor : downColor)}
+            dataKey="close"
+            fill={upColor}
+            stroke={upColor}
             yAxisId={0}
             barSize={10}
             radius={[2, 2, 2, 2]}
             isAnimationActive={false}
+            name="Body (Up)"
+            data={candleData.filter(d => d.isUp)}
+          />
+          
+          {/* Down Bars */}
+          <Bar
+            dataKey="low"
+            fill="transparent"
+            stroke={downColor}
+            yAxisId={0}
+            barSize={2}
+            isAnimationActive={false}
+            name="Low (Down)"
+            data={candleData.filter(d => !d.isUp)}
+          />
+          
+          <Bar
+            dataKey="high"
+            fill="transparent"
+            stroke={downColor}
+            yAxisId={0}
+            barSize={2}
+            isAnimationActive={false}
+            name="High (Down)"
+            data={candleData.filter(d => !d.isUp)}
+          />
+          
+          <Bar
+            dataKey="close"
+            fill={downColor}
+            stroke={downColor}
+            yAxisId={0}
+            barSize={10}
+            radius={[2, 2, 2, 2]}
+            isAnimationActive={false}
+            name="Body (Down)"
+            data={candleData.filter(d => !d.isUp)}
           />
         </BarChart>
       </ResponsiveContainer>
