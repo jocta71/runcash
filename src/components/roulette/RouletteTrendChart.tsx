@@ -9,7 +9,8 @@ import {
   YAxis,
   CartesianGrid,
   Legend,
-  ReferenceLine
+  ReferenceLine,
+  Line
 } from 'recharts';
 
 interface CustomTooltipProps {
@@ -88,6 +89,34 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
   
   const candleData = transformToCandleData(trend);
   
+  // Calculate trend line values - linear regression
+  const calculateTrendLine = (data: CandleData[]): { name: string, value: number }[] => {
+    if (data.length < 2) return [];
+    
+    // Extract x and y values for regression
+    const n = data.length;
+    const xs = Array.from({ length: n }, (_, i) => i);
+    const ys = data.map(d => d.close);
+    
+    // Calculate sums for linear regression formula
+    const sumX = xs.reduce((sum, x) => sum + x, 0);
+    const sumY = ys.reduce((sum, y) => sum + y, 0);
+    const sumXY = xs.reduce((sum, x, i) => sum + x * ys[i], 0);
+    const sumXX = xs.reduce((sum, x) => sum + x * x, 0);
+    
+    // Calculate slope (m) and y-intercept (b) for y = mx + b
+    const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    const yIntercept = (sumY - slope * sumX) / n;
+    
+    // Generate trend line points
+    return xs.map(x => ({
+      name: `${x}`,
+      value: slope * x + yIntercept
+    }));
+  };
+  
+  const trendLineData = calculateTrendLine(candleData);
+  
   // Calculate average value for reference line
   const averageValue = trend.reduce((sum, item) => sum + item.value, 0) / trend.length;
   
@@ -99,6 +128,7 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
   // Define colors for up and down candles
   const upColor = "#00ff00";
   const downColor = "#ff0000";
+  const trendLineColor = "#ffffff";
   
   return (
     <div className="h-36 w-full mt-2 bg-[#17161e]/40 rounded-md p-2">
@@ -121,7 +151,20 @@ const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
           <YAxis domain={['auto', 'auto']} hide={true} />
           <Tooltip content={<CustomTooltip />} />
           
+          {/* Average line */}
           <ReferenceLine y={averageValue} stroke="#ffffff" strokeDasharray="3 3" opacity={0.3} />
+          
+          {/* Trend line */}
+          <Line
+            dataKey="value"
+            data={trendLineData}
+            type="monotone"
+            stroke={trendLineColor}
+            strokeWidth={2}
+            dot={false}
+            activeDot={false}
+            isAnimationActive={false}
+          />
           
           {/* Up Bars */}
           <Bar
