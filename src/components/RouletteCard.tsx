@@ -52,12 +52,13 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
   useEffect(() => {
     const checkAndSeedData = async () => {
       try {
+        // Check if data exists in roleta_numeros table instead of roletas table
         const { data, error, count } = await supabase
-          .from('roletas')
-          .select('numeros', { count: 'exact', head: true });
+          .from('roleta_numeros')
+          .select('numero', { count: 'exact', head: true });
         
         if (!count || count === 0) {
-          console.log('No data found in roletas table, using mock data');
+          console.log('No data found in roleta_numeros table, using mock data');
           setLastNumbers(initialLastNumbers);
           setDataSeeded(true);
           toast({
@@ -83,19 +84,21 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     const fetchRouletteNumbers = async () => {
       try {
         setIsLoading(true);
+        // Query from roleta_numeros table instead of roletas
         const { data, error } = await supabase
-          .from('roletas')
-          .select('numeros')
-          .eq('nome', name)
-          .single();
+          .from('roleta_numeros')
+          .select('numero')
+          .eq('roleta_nome', name)
+          .order('timestamp', { ascending: false })
+          .limit(5);
 
         if (error) {
           console.error('Error fetching roulette numbers:', error);
           return;
         }
 
-        if (data && data.numeros && data.numeros.length > 0) {
-          const recentNumbers = data.numeros.slice(0, 5);
+        if (data && data.length > 0) {
+          const recentNumbers = data.map(item => item.numero);
           setLastNumbers(recentNumbers);
         }
       } catch (error) {
@@ -292,7 +295,7 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm font-medium">{currentStrategy?.name || 'Padrão'}</div>
-                  <div className="text-xs text-white/50">{currentStrategy?.description || 'Estratégia baseada nos últimos números'}</div>
+                  <div className="text-xs text-white/50">{currentStrategy?.name || 'Estratégia baseada nos últimos números'}</div>
                 </div>
                 <ChevronRight size={20} className="text-[#00ff00]" />
               </div>
