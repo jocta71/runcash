@@ -1,3 +1,4 @@
+
 import { TrendingUp, ChevronRight, PieChart, Zap } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
@@ -52,11 +53,11 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     const checkAndSeedData = async () => {
       try {
         const { data, error, count } = await supabase
-          .from('roleta_numeros')
-          .select('*', { count: 'exact', head: true });
+          .from('roletas')
+          .select('numeros', { count: 'exact', head: true });
         
         if (!count || count === 0) {
-          console.log('No data found in roleta_numeros table, using mock data');
+          console.log('No data found in roletas table, using mock data');
           setLastNumbers(initialLastNumbers);
           setDataSeeded(true);
           toast({
@@ -83,19 +84,18 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       try {
         setIsLoading(true);
         const { data, error } = await supabase
-          .from('roleta_numeros')
-          .select('numero')
-          .eq('roleta_nome', name)
-          .order('timestamp', { ascending: false })
-          .limit(5);
+          .from('roletas')
+          .select('numeros')
+          .eq('nome', name)
+          .single();
 
         if (error) {
           console.error('Error fetching roulette numbers:', error);
           return;
         }
 
-        if (data && data.length > 0) {
-          const recentNumbers = data.map(item => item.numero);
+        if (data && data.numeros && data.numeros.length > 0) {
+          const recentNumbers = data.numeros.slice(0, 5);
           setLastNumbers(recentNumbers);
         }
       } catch (error) {

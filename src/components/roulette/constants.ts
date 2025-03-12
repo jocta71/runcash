@@ -1,11 +1,11 @@
 
 // Constants for roulette strategies and number groups
 export const strategies = [
-  { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], color: "bg-purple-600", description: "Estratégia baseada em números pares de cores alternadas" },
-  { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-600", description: "Estratégia com foco em números terminados em 1, 2 e 3" },
-  { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-600", description: "Estratégia com foco em números terminados em 4, 7 e 8" },
-  { name: 'Terminal 5,9,6', numbers: [5, 9, 6, 15, 16, 19, 25, 26, 29, 35], color: "bg-amber-600", description: "Estratégia com foco em números terminados em 5, 9 e 6" },
-  { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36], color: "bg-rose-600", description: "Estratégia com foco em números terminados em 3, 6 e 9" },
+  { name: 'Pares de Cor', numbers: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36], color: "bg-purple-600" },
+  { name: 'Terminal 1,2,3', numbers: [1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33], color: "bg-blue-600" },
+  { name: 'Terminal 4,7,8', numbers: [4, 7, 8, 14, 17, 18, 24, 27, 28, 34], color: "bg-emerald-600" },
+  { name: 'Terminal 5,9,6', numbers: [5, 9, 6, 15, 16, 19, 25, 26, 29, 35], color: "bg-amber-600" },
+  { name: 'Terminal 3,6,9', numbers: [3, 6, 9, 13, 16, 19, 23, 26, 29, 33, 36], color: "bg-rose-600" },
 ];
 
 export const numberGroups = {
