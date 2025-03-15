@@ -62,6 +62,8 @@ export default {
 					gold: '#00ff00',
 					blue: '#36B5FF',
 					red: '#FF4560',
+					purple: '#9b87f5',
+					dark: '#1A1F2C',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -136,7 +138,33 @@ export default {
 				'ticker': {
 					'0%': { transform: 'translateX(100%)' },
 					'100%': { transform: 'translateX(-100%)' }
-				}
+				},
+				'shimmer': {
+					'100%': { transform: 'translateX(100%)' },
+				},
+				'spin-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' },
+				},
+				'card-flip': {
+					'0%, 100%': { transform: 'rotateY(0deg)' },
+					'50%': { transform: 'rotateY(180deg)' },
+				},
+				'chip-bounce': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				'jackpot-lights': {
+					'0%, 100%': { 
+						'box-shadow': '0 0 5px 2px rgba(0,255,0,0.7), 0 0 10px 4px rgba(0,255,0,0.5), 0 0 15px 6px rgba(0,255,0,0.3)'
+					},
+					'33%': { 
+						'box-shadow': '0 0 5px 2px rgba(255,215,0,0.7), 0 0 10px 4px rgba(255,215,0,0.5), 0 0 15px 6px rgba(255,215,0,0.3)'
+					},
+					'66%': { 
+						'box-shadow': '0 0 5px 2px rgba(54,181,255,0.7), 0 0 10px 4px rgba(54,181,255,0.5), 0 0 15px 6px rgba(54,181,255,0.3)'
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -152,7 +180,12 @@ export default {
 				'slide-up': 'slide-up 0.5s ease-out',
 				'slide-left': 'slide-left 0.5s ease-out',
 				'slide-right': 'slide-right 0.5s ease-out',
-				'ticker': 'ticker 15s linear infinite'
+				'ticker': 'ticker 15s linear infinite',
+				'shimmer': 'shimmer 1.5s infinite',
+				'spin-slow': 'spin-slow 8s linear infinite',
+				'card-flip': 'card-flip 2s ease-in-out',
+				'chip-bounce': 'chip-bounce 1s ease-in-out infinite',
+				'jackpot-lights': 'jackpot-lights 4s ease-in-out infinite',
 			}
 		}
 	},
