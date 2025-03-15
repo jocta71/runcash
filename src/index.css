@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,33 +7,33 @@
 
 @layer base {
   :root {
-    --background: 225 22% 6%;
-    --foreground: 210 20% 98%;
+    --background: 220 14% 4%;
+    --foreground: 38 92% 95%;
 
-    --card: 229 20% 10%;
-    --card-foreground: 210 20% 98%;
+    --card: 220 17% 8%;
+    --card-foreground: 38 92% 95%;
 
-    --popover: 229 25% 8%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 220 17% 6%;
+    --popover-foreground: 38 92% 95%;
 
-    --primary: 120 100% 50%;
-    --primary-foreground: 229 20% 10%;
+    --primary: 38 92% 50%;
+    --primary-foreground: 220 17% 6%;
 
-    --secondary: 229 15% 15%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 220 17% 12%;
+    --secondary-foreground: 38 92% 95%;
 
-    --muted: 229 15% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 220 17% 12%;
+    --muted-foreground: 38 92% 65%;
 
-    --accent: 120 100% 50%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 220 17% 6%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive-foreground: 38 92% 95%;
 
-    --border: 229 20% 18%;
-    --input: 229 20% 18%;
-    --ring: 120 100% 50%;
+    --border: 220 17% 15%;
+    --input: 220 17% 15%;
+    --ring: 38 92% 50%;
 
     --radius: 0.75rem;
   }
@@ -44,6 +44,7 @@
 
   body {
     @apply bg-vegas-black text-foreground antialiased overflow-x-hidden font-sans;
+    background-image: radial-gradient(circle at 10% 20%, rgba(30, 30, 45, 0.8) 0%, rgba(10, 10, 20, 1) 90%);
   }
 
   /* Custom Scrollbar */
@@ -53,29 +54,25 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-vegas-darkgray rounded-full;
+    @apply bg-slate-800 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-vegas-green/60 rounded-full transition-all duration-300;
+    @apply bg-amber-500/60 rounded-full transition-all duration-300;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-vegas-green;
+    @apply bg-amber-500;
   }
 }
 
 @layer components {
-  .neon-border-green {
-    @apply border border-vegas-green shadow-[0_0_10px_rgba(0,255,0,0.5)];
-  }
-  
   .neon-border-gold {
-    @apply border border-vegas-gold shadow-[0_0_10px_rgba(0,255,0,0.5)];
+    @apply border border-amber-500 shadow-[0_0_10px_rgba(251,191,36,0.5)];
   }
   
   .neon-border-blue {
-    @apply border border-vegas-blue shadow-[0_0_10px_rgba(54,181,255,0.5)];
+    @apply border border-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)];
   }
 
   .glass-card {
@@ -83,32 +80,28 @@
   }
 
   .menu-item {
-    @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-[#22202a] transition-all duration-200 cursor-pointer text-sm;
+    @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-300 hover:text-amber-300 hover:bg-[#1d1812] transition-all duration-200 cursor-pointer text-sm;
   }
 
   .menu-item.active {
-    @apply bg-[#22202a] text-white;
+    @apply bg-[#1d1812] text-amber-300;
   }
 
   .hover-scale {
     @apply transition-all duration-200 hover:scale-105;
   }
 
-  .hover-neon-green {
-    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(0,255,0,0.7)];
-  }
-
   .hover-neon-gold {
-    @apply transition-all duration-200 hover:text-vegas-gold hover:shadow-[0_0_10px_rgba(0,255,0,0.7)];
+    @apply transition-all duration-200 hover:text-amber-500 hover:shadow-[0_0_10px_rgba(251,191,36,0.7)];
   }
-
+  
   .hover-neon-blue {
-    @apply transition-all duration-200 hover:text-vegas-blue hover:shadow-[0_0_10px_rgba(54,181,255,0.7)];
+    @apply transition-all duration-200 hover:text-blue-500 hover:shadow-[0_0_10px_rgba(59,130,246,0.7)];
   }
   
   /* Mobile responsive styles */
   .mobile-menu-toggle {
-    @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
+    @apply md:hidden block p-2 text-white hover:text-amber-500 transition-colors;
   }
   
   .mobile-sidebar {
@@ -116,15 +109,38 @@
   }
   
   .mobile-sidebar-inner {
-    @apply w-3/4 max-w-xs h-full bg-[#0B0A0F] overflow-auto border-r border-[#33333359];
+    @apply w-3/4 max-w-xs h-full bg-[#0B0A0F] overflow-auto border-r border-amber-900/30;
   }
   
   .mobile-header {
-    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-[#100f13] border-b border-[#33333359] md:hidden;
+    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-[#0F0D14] border-b border-amber-900/30 md:hidden;
   }
   
   .mobile-chat-toggle {
-    @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
+    @apply md:hidden block p-2 text-white hover:text-amber-500 transition-colors;
+  }
+
+  /* Casino theme styles */
+  .casino-card {
+    @apply bg-gradient-to-br from-slate-900 to-slate-950 border border-amber-500/20 rounded-xl shadow-lg;
+  }
+  
+  .gold-gradient-text {
+    @apply bg-gradient-to-br from-amber-300 to-amber-600 bg-clip-text text-transparent;
+  }
+  
+  .gold-button {
+    @apply bg-gradient-to-br from-amber-500 to-amber-700 text-slate-900 font-medium shadow-lg shadow-amber-500/20 
+    hover:from-amber-400 hover:to-amber-600 active:scale-95 transition-all duration-200;
+  }
+  
+  .chip-stack {
+    @apply relative inline-flex items-center justify-center;
+  }
+  
+  .chip-stack::before {
+    @apply content-[''] absolute -inset-0.5 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 opacity-75 
+    rounded-full blur transition duration-1000 animate-pulse;
   }
 }
 
@@ -138,4 +154,3 @@
     @apply p-3;
   }
 }
-

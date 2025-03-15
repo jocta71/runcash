@@ -12,16 +12,16 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-10">
-        <Loader2 size={20} className="animate-spin text-[#00ff00]" />
+        <Loader2 size={20} className="animate-spin text-amber-500" />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-3 rounded-xl border border-amber-500/20 shadow-lg shadow-amber-500/5">
       <div className="flex items-center mb-2">
-        <span className="text-sm text-white/90 font-medium uppercase tracking-wide">Últimos Números</span>
-        <span className="ml-2 text-xs bg-[#1d1b26] text-[#00ff00] px-2 py-0.5 rounded-full border border-[#00ff00]/30 shadow-sm shadow-[#00ff00]/10">
+        <span className="text-sm text-amber-300 font-medium uppercase tracking-wide">Últimos Números</span>
+        <span className="ml-2 text-xs bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/20 shadow-sm">
           {numbers.length} resultados
         </span>
       </div>
@@ -30,7 +30,7 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
           <RouletteNumber 
             key={i} 
             number={num} 
-            className={`shadow-md transition-transform ${i === 0 ? 'ring-2 ring-[#00ff00] ring-offset-1 ring-offset-black' : ''}`}
+            className={`shadow-md transition-transform ${i === 0 ? 'ring-2 ring-amber-500 ring-offset-1 ring-offset-black' : ''}`}
           />
         ))}
       </div>

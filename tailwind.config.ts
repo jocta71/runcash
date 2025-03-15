@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -19,7 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Poppins', 'sans-serif'],
+				sans: ['Roboto', 'sans-serif'],
+				display: ['Playfair Display', 'serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -56,12 +58,11 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				vegas: {
-					black: '#0A0C14',
+					black: '#0A0914',
 					darkgray: '#161A26',
-					green: '#00ff00',
-					gold: '#00ff00',
-					blue: '#36B5FF',
-					red: '#FF4560',
+					gold: '#FAB005',
+					blue: '#3B82F6',
+					red: '#EF4444',
 					purple: '#9b87f5',
 					dark: '#1A1F2C',
 				},
@@ -95,16 +96,16 @@ export default {
 					'100%': { opacity: '1', transform: 'translateY(0)' }
 				},
 				'pulse-neon': {
-					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(59, 255, 161, 0.15)' },
-					'50%': { boxShadow: '0 0 20px 5px rgba(59, 255, 161, 0.25)' }
+					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(251, 191, 36, 0.4)' },
+					'50%': { boxShadow: '0 0 20px 5px rgba(251, 191, 36, 0.6)' }
 				},
 				'pulse-gold': {
-					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(255, 203, 71, 0.7)' },
-					'50%': { boxShadow: '0 0 20px 5px rgba(255, 203, 71, 0.9)' }
+					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(251, 191, 36, 0.7)' },
+					'50%': { boxShadow: '0 0 20px 5px rgba(251, 191, 36, 0.9)' }
 				},
 				'pulse-blue': {
-					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(54, 181, 255, 0.7)' },
-					'50%': { boxShadow: '0 0 20px 5px rgba(54, 181, 255, 0.9)' }
+					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(59, 130, 246, 0.7)' },
+					'50%': { boxShadow: '0 0 20px 5px rgba(59, 130, 246, 0.9)' }
 				},
 				'float': {
 					'0%, 100%': { transform: 'translateY(0)' },
@@ -156,13 +157,13 @@ export default {
 				},
 				'jackpot-lights': {
 					'0%, 100%': { 
-						'box-shadow': '0 0 5px 2px rgba(0,255,0,0.7), 0 0 10px 4px rgba(0,255,0,0.5), 0 0 15px 6px rgba(0,255,0,0.3)'
+						'box-shadow': '0 0 5px 2px rgba(251,191,36,0.7), 0 0 10px 4px rgba(251,191,36,0.5), 0 0 15px 6px rgba(251,191,36,0.3)'
 					},
 					'33%': { 
-						'box-shadow': '0 0 5px 2px rgba(255,215,0,0.7), 0 0 10px 4px rgba(255,215,0,0.5), 0 0 15px 6px rgba(255,215,0,0.3)'
+						'box-shadow': '0 0 5px 2px rgba(220,38,38,0.7), 0 0 10px 4px rgba(220,38,38,0.5), 0 0 15px 6px rgba(220,38,38,0.3)'
 					},
 					'66%': { 
-						'box-shadow': '0 0 5px 2px rgba(54,181,255,0.7), 0 0 10px 4px rgba(54,181,255,0.5), 0 0 15px 6px rgba(54,181,255,0.3)'
+						'box-shadow': '0 0 5px 2px rgba(59,130,246,0.7), 0 0 10px 4px rgba(59,130,246,0.5), 0 0 15px 6px rgba(59,130,246,0.3)'
 					},
 				},
 			},

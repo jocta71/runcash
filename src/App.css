@@ -13,7 +13,7 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #FAB005AA);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
@@ -47,7 +47,7 @@
   position: relative;
   border-radius: 50%;
   background: linear-gradient(145deg, #1a1a1a, #333);
-  box-shadow: 0 0 10px rgba(0,255,0,0.4);
+  box-shadow: 0 0 10px rgba(251,191,36,0.4);
   overflow: hidden;
 }
 
@@ -60,23 +60,23 @@
   bottom: 0;
   background: repeating-conic-gradient(
     from 0deg,
-    rgba(0, 255, 0, 0.8) 0deg 10deg,
+    rgba(251, 191, 36, 0.8) 0deg 10deg,
     transparent 10deg 20deg
   );
   border-radius: 50%;
   opacity: 0.5;
 }
 
-.neon-text {
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.7),
-               0 0 10px rgba(0, 255, 0, 0.5),
-               0 0 15px rgba(0, 255, 0, 0.3);
+.gold-text {
+  text-shadow: 0 0 5px rgba(251, 191, 36, 0.7),
+               0 0 10px rgba(251, 191, 36, 0.5),
+               0 0 15px rgba(251, 191, 36, 0.3);
 }
 
-.neon-border {
-  box-shadow: 0 0 5px rgba(0, 255, 0, 0.7),
-              0 0 10px rgba(0, 255, 0, 0.5),
-              0 0 15px rgba(0, 255, 0, 0.3);
+.gold-border {
+  box-shadow: 0 0 5px rgba(251, 191, 36, 0.7),
+              0 0 10px rgba(251, 191, 36, 0.5),
+              0 0 15px rgba(251, 191, 36, 0.3);
 }
 
 .jackpot-light {
@@ -90,6 +90,48 @@
     radial-gradient(#0a3119 20%, transparent 20%);
   background-size: 10px 10px;
   background-position: 0 0, 5px 5px;
+}
+
+/* Updated roulette table */
+.roulette-table {
+  background-color: #0C2723;
+  background-image: linear-gradient(rgba(251, 191, 36, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(251, 191, 36, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 2px solid #964B00;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(251, 191, 36, 0.3);
+}
+
+.button-gold {
+  background: linear-gradient(45deg, #d4af37, #f9d777, #d4af37);
+  color: #442a00;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5), 
+              inset 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s;
+}
+
+.button-gold:hover {
+  background: linear-gradient(45deg, #f9d777, #d4af37, #f9d777);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.7),
+              inset 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.flicker {
+  animation: flicker 2s linear infinite;
+}
+
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 0.99;
+    filter: drop-shadow(0 0 1px rgba(251, 191, 36, 0.8))
+            drop-shadow(0 0 5px rgba(251, 191, 36, 0.5));
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.4;
+    filter: none;
+  }
 }
 
 /* Mobile responsive styles */
