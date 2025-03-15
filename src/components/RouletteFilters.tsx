@@ -92,12 +92,12 @@ const RouletteFilters = ({
         </TabsList>
       </Tabs>
 
-      {/* Advanced Filters Section - based on the provided images */}
-      <div className="bg-gray-100 dark:bg-[#1A191F] rounded-lg p-4">
+      {/* Advanced Filters Section - casino themed */}
+      <div className="bg-gradient-to-br from-slate-900 to-slate-950 border border-amber-500/20 rounded-lg p-4 shadow-md shadow-amber-500/10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {/* First Row */}
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Tempo real</span>
+            <span className="text-sm text-amber-300 font-medium">Tempo real</span>
             <Switch 
               checked={advancedFilters.realTime} 
               onCheckedChange={(checked) => onAdvancedFilterChange('realTime', checked)}
@@ -106,7 +106,7 @@ const RouletteFilters = ({
           </div>
           
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Criação</span>
+            <span className="text-sm text-amber-300 font-medium">Criação</span>
             <Switch 
               checked={advancedFilters.creation} 
               onCheckedChange={(checked) => onAdvancedFilterChange('creation', checked)}
@@ -115,7 +115,7 @@ const RouletteFilters = ({
           </div>
           
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Sentido inverso</span>
+            <span className="text-sm text-amber-300 font-medium">Sentido inverso</span>
             <Switch 
               checked={advancedFilters.reverseDirection} 
               onCheckedChange={(checked) => onAdvancedFilterChange('reverseDirection', checked)}
@@ -124,7 +124,7 @@ const RouletteFilters = ({
           </div>
           
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm text-gray-700 dark:text-gray-300">Numerado</span>
+            <span className="text-sm text-amber-300 font-medium">Numerado</span>
             <Switch 
               checked={advancedFilters.numbered} 
               onCheckedChange={(checked) => onAdvancedFilterChange('numbered', checked)}
@@ -139,7 +139,7 @@ const RouletteFilters = ({
               onCheckedChange={(checked) => onAdvancedFilterChange('countColumns', checked)}
               className="data-[state=checked]:bg-[#00ff00]"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Contar colunas</span>
+            <span className="text-sm text-amber-300 font-medium">Contar colunas</span>
           </div>
           
           <div className="flex items-center gap-2">
@@ -148,7 +148,7 @@ const RouletteFilters = ({
               onCheckedChange={(checked) => onAdvancedFilterChange('countLines', checked)}
               className="data-[state=checked]:bg-[#00ff00]"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Contar linhas</span>
+            <span className="text-sm text-amber-300 font-medium">Contar linhas</span>
           </div>
           
           <div className="flex items-center gap-2">
@@ -157,23 +157,23 @@ const RouletteFilters = ({
               onCheckedChange={(checked) => onAdvancedFilterChange('surf', checked)}
               className="data-[state=checked]:bg-[#00ff00]"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Surf</span>
+            <span className="text-sm text-amber-300 font-medium">Surf</span>
           </div>
           
           <div className="flex items-center gap-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="bg-blue-500 text-white hover:bg-blue-600 h-8">
+                <Button variant="outline" size="sm" className="bg-gradient-to-br from-amber-500 to-amber-700 hover:from-amber-400 hover:to-amber-600 text-black font-medium hover:text-black border-amber-400 h-8 transition-all duration-200 shadow-md shadow-amber-500/20">
                   <Copy size={14} className="mr-2" />
                   Múltipla seleção
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="z-[9999] bg-white dark:bg-[#1e1d24] border-gray-200 dark:border-gray-800">
+              <DropdownMenuContent className="z-[9999] bg-slate-900 border-amber-500/30 text-amber-100">
                 <DropdownMenuItem 
                   onClick={() => onAdvancedFilterChange('multipleSelection', 'same-number')}
                   className={cn(
-                    "cursor-pointer text-sm",
-                    advancedFilters.multipleSelection === 'same-number' ? "bg-gray-100 dark:bg-gray-800" : ""
+                    "cursor-pointer text-sm hover:bg-amber-500/10",
+                    advancedFilters.multipleSelection === 'same-number' ? "bg-amber-500/20" : ""
                   )}
                 >
                   Mesmo número
@@ -181,8 +181,8 @@ const RouletteFilters = ({
                 <DropdownMenuItem 
                   onClick={() => onAdvancedFilterChange('multipleSelection', 'same-color')}
                   className={cn(
-                    "cursor-pointer text-sm",
-                    advancedFilters.multipleSelection === 'same-color' ? "bg-gray-100 dark:bg-gray-800" : ""
+                    "cursor-pointer text-sm hover:bg-amber-500/10",
+                    advancedFilters.multipleSelection === 'same-color' ? "bg-amber-500/20" : ""
                   )}
                 >
                   Mesma cor
@@ -190,8 +190,8 @@ const RouletteFilters = ({
                 <DropdownMenuItem 
                   onClick={() => onAdvancedFilterChange('multipleSelection', 'same-hour')}
                   className={cn(
-                    "cursor-pointer text-sm",
-                    advancedFilters.multipleSelection === 'same-hour' ? "bg-gray-100 dark:bg-gray-800" : ""
+                    "cursor-pointer text-sm hover:bg-amber-500/10",
+                    advancedFilters.multipleSelection === 'same-hour' ? "bg-amber-500/20" : ""
                   )}
                 >
                   Mesma hora
@@ -199,16 +199,16 @@ const RouletteFilters = ({
                 <DropdownMenuItem 
                   onClick={() => onAdvancedFilterChange('multipleSelection', 'same-minute')}
                   className={cn(
-                    "cursor-pointer text-sm",
-                    advancedFilters.multipleSelection === 'same-minute' ? "bg-gray-100 dark:bg-gray-800" : ""
+                    "cursor-pointer text-sm hover:bg-amber-500/10",
+                    advancedFilters.multipleSelection === 'same-minute' ? "bg-amber-500/20" : ""
                   )}
                 >
                   Mesmo minuto
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-amber-500/20" />
                 <DropdownMenuItem 
                   onClick={() => onAdvancedFilterChange('multipleSelection', null)}
-                  className="cursor-pointer text-sm"
+                  className="cursor-pointer text-sm hover:bg-amber-500/10"
                 >
                   NÃO destacar
                 </DropdownMenuItem>
