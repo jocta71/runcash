@@ -162,52 +162,65 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
   return (
     <>
       <div 
-        className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
+        className="bg-gradient-to-br from-[#1a1923] to-[#13121a] backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-5 space-y-4 animate-fade-in hover-scale cursor-pointer h-auto shadow-lg shadow-black/30 hover:shadow-[#00ff00]/10 transition-all duration-300"
         onClick={handleDetailsClick}
       >
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{name}</h3>
+          <h3 className="text-lg font-semibold text-white/90 flex items-center gap-2">
+            <span className="inline-block h-2 w-2 rounded-full bg-[#00ff00] animate-pulse mr-1"></span>
+            {name}
+          </h3>
           <div className="flex gap-2">
             <button 
               onClick={handleInsightsClick} 
-              className="text-[#00ff00] hover:bg-[#00ff00]/10 rounded-full p-1 transition-colors"
+              className="text-[#00ff00] hover:bg-[#00ff00]/10 rounded-full p-1.5 transition-all duration-300 border border-[#00ff00]/30"
             >
               <PieChart size={18} />
             </button>
-            <TrendingUp size={20} className="text-[#00ff00]" />
+            <div className="bg-[#1d1b26] p-1.5 rounded-full border border-[#00ff00]/20">
+              <TrendingUp size={18} className="text-[#00ff00]" />
+            </div>
           </div>
         </div>
         
-        <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
+        <div className="bg-[#12111a]/60 rounded-lg p-3 border border-white/5">
+          <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
+        </div>
         
-        <SuggestionDisplay 
-          suggestion={suggestion}
-          selectedGroup={selectedGroup}
-          isBlurred={isBlurred}
-          toggleVisibility={toggleVisibility}
-          numberGroups={numberGroups}
-        />
+        <div className="bg-[#12111a]/60 rounded-lg p-3 border border-white/5">
+          <SuggestionDisplay 
+            suggestion={suggestion}
+            selectedGroup={selectedGroup}
+            isBlurred={isBlurred}
+            toggleVisibility={toggleVisibility}
+            numberGroups={numberGroups}
+          />
+        </div>
         
-        <WinRateDisplay wins={wins} losses={losses} />
+        <div className="bg-[#12111a]/60 rounded-lg p-3 border border-white/5">
+          <WinRateDisplay wins={wins} losses={losses} />
+        </div>
         
-        <RouletteTrendChart trend={trend} />
+        <div className="h-24 mt-1">
+          <RouletteTrendChart trend={trend} />
+        </div>
         
-        <div className="flex items-center justify-between text-xs text-white/70 mt-2">
+        <div className="flex items-center justify-between text-xs text-white/70 mt-2 bg-[#12111a]/60 rounded-lg p-2.5 border border-white/5">
           <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-red-500"></span>
+            <span className="h-3 w-3 rounded-full bg-red-500 flex items-center justify-center text-[9px] font-bold">R</span>
             <span>{redCount}</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-black border border-white/20"></span>
+            <span className="h-3 w-3 rounded-full bg-black border border-white/20 flex items-center justify-center text-[9px] font-bold">P</span>
             <span>{blackCount}</span>
           </div>
           <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-green-500"></span>
+            <span className="h-3 w-3 rounded-full bg-green-500 flex items-center justify-center text-[9px] font-bold">0</span>
             <span>{zeroCount}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <Zap size={12} className="text-[#00ff00]" />
-            <span>{mostFrequentNumber || '-'}</span>
+          <div className="flex items-center gap-1 bg-[#1d1b26] px-2 py-0.5 rounded-full border border-[#00ff00]/20">
+            <Zap size={10} className="text-[#00ff00]" />
+            <span className="font-medium">{mostFrequentNumber || '-'}</span>
           </div>
         </div>
         
@@ -218,21 +231,21 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       </div>
 
       <Dialog open={showInsightsDialog} onOpenChange={setShowInsightsDialog}>
-        <DialogContent className="bg-[#17161e] border-white/10 text-white max-w-md">
+        <DialogContent className="bg-gradient-to-br from-[#1a1923] to-[#13121a] border-[#00ff00]/20 text-white max-w-md shadow-xl shadow-black/50">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-xl">
-              <PieChart size={18} className="text-[#00ff00]" />
-              <span>Insights da Roleta: {name}</span>
+            <DialogTitle className="flex items-center gap-2 text-xl font-bold text-white">
+              <PieChart size={20} className="text-[#00ff00]" />
+              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Insights da Roleta: {name}</span>
             </DialogTitle>
           </DialogHeader>
           
           <div className="space-y-4 mt-4">
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-[#1A191F] rounded-lg p-3 border border-white/5">
-                <div className="text-xs text-white/70 mb-1">Distribuição de Cores</div>
+              <div className="bg-[#1d1b26] rounded-lg p-3 border border-white/5 hover:border-[#00ff00]/20 transition-all duration-300 hover:shadow-md hover:shadow-[#00ff00]/5">
+                <div className="text-xs text-[#00ff00]/70 mb-1 font-medium">Distribuição de Cores</div>
                 <div className="flex items-center justify-around">
                   <div className="text-center">
-                    <div className="text-red-500 font-semibold text-lg">{redCount}</div>
+                    <div className="text-red-400 font-semibold text-lg">{redCount}</div>
                     <div className="text-xs text-white/50">Vermelhos</div>
                   </div>
                   <div className="text-center">
@@ -240,14 +253,14 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
                     <div className="text-xs text-white/50">Pretos</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-green-500 font-semibold text-lg">{zeroCount}</div>
+                    <div className="text-green-400 font-semibold text-lg">{zeroCount}</div>
                     <div className="text-xs text-white/50">Zeros</div>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-[#1A191F] rounded-lg p-3 border border-white/5">
-                <div className="text-xs text-white/70 mb-1">Paridade</div>
+              <div className="bg-[#1d1b26] rounded-lg p-3 border border-white/5 hover:border-[#00ff00]/20 transition-all duration-300 hover:shadow-md hover:shadow-[#00ff00]/5">
+                <div className="text-xs text-[#00ff00]/70 mb-1 font-medium">Paridade</div>
                 <div className="flex items-center justify-around">
                   <div className="text-center">
                     <div className="text-[#00ff00] font-semibold text-lg">{evenCount}</div>
@@ -261,52 +274,53 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
               </div>
             </div>
             
-            <div className="bg-[#1A191F] rounded-lg p-3 border border-white/5">
-              <div className="text-xs text-white/70 mb-1">Número mais frequente</div>
+            <div className="bg-[#1d1b26] rounded-lg p-3 border border-white/5 hover:border-[#00ff00]/20 transition-all duration-300 hover:shadow-md hover:shadow-[#00ff00]/5">
+              <div className="text-xs text-[#00ff00]/70 mb-1 font-medium">Número mais frequente</div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="h-10 w-10 rounded-full bg-[#1d4ed8] flex items-center justify-center text-white font-bold">
+                <div className="flex items-center gap-3">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-br from-[#1d4ed8] to-[#2563eb] flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/20">
                     {mostFrequentNumber || '-'}
                   </div>
                   <div>
-                    <div className="text-sm font-medium">Número {mostFrequentNumber || '-'}</div>
+                    <div className="text-sm font-medium text-white/90">Número {mostFrequentNumber || '-'}</div>
                     <div className="text-xs text-white/50">
                       {mostFrequentNumber ? `${numberFrequency[mostFrequentNumber]} ocorrências` : 'N/A'}
                     </div>
                   </div>
                 </div>
-                <Zap size={20} className="text-[#00ff00]" />
+                <Zap size={22} className="text-[#00ff00] animate-pulse" />
               </div>
             </div>
             
-            <div className="bg-[#1A191F] rounded-lg p-3 border border-white/5">
-              <div className="text-xs text-white/70 mb-1">Análise de Desempenho</div>
+            <div className="bg-[#1d1b26] rounded-lg p-3 border border-white/5 hover:border-[#00ff00]/20 transition-all duration-300 hover:shadow-md hover:shadow-[#00ff00]/5">
+              <div className="text-xs text-[#00ff00]/70 mb-1 font-medium">Análise de Desempenho</div>
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium">Taxa de vitória: {(wins / (wins + losses) * 100).toFixed(1)}%</div>
+                  <div className="text-sm font-medium text-white/90">Taxa de vitória: {wins + losses > 0 ? (wins / (wins + losses) * 100).toFixed(1) : '0'}%</div>
                   <div className="text-xs text-white/50">{wins} vitórias, {losses} derrotas</div>
                 </div>
-                <TrendingUp size={20} className="text-[#00ff00]" />
+                <TrendingUp size={22} className="text-[#00ff00]" />
               </div>
             </div>
             
-            <div className="bg-[#1A191F] rounded-lg p-3 border border-white/5">
-              <div className="text-xs text-white/70 mb-1">Estratégia Recomendada</div>
+            <div className="bg-[#1d1b26] rounded-lg p-3 border border-white/5 hover:border-[#00ff00]/20 transition-all duration-300 hover:shadow-md hover:shadow-[#00ff00]/5">
+              <div className="text-xs text-[#00ff00]/70 mb-1 font-medium">Estratégia Recomendada</div>
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-sm font-medium">{currentStrategy?.name || 'Padrão'}</div>
+                  <div className="text-sm font-medium text-white/90">{currentStrategy?.name || 'Padrão'}</div>
                   <div className="text-xs text-white/50">{currentStrategy?.name || 'Estratégia baseada nos últimos números'}</div>
                 </div>
-                <ChevronRight size={20} className="text-[#00ff00]" />
+                <ChevronRight size={22} className="text-[#00ff00]" />
               </div>
             </div>
           </div>
           
           <div className="mt-4">
             <button 
-              className="w-full py-2 bg-[#00ff00] text-black font-medium rounded-md hover:bg-[#00ff00]/90 transition-colors"
+              className="w-full py-2.5 bg-gradient-to-r from-[#00ff00] to-[#00cc00] text-black font-medium rounded-md hover:opacity-90 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-[#00ff00]/20"
               onClick={() => navigate(`/simulator`)}
             >
+              <Zap size={18} /> 
               Testar no Simulador
             </button>
           </div>

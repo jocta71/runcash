@@ -10,21 +10,21 @@ interface RouletteActionButtonsProps {
 
 const RouletteActionButtons = ({ onDetailsClick, onPlayClick }: RouletteActionButtonsProps) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-2">
+    <div className="flex flex-col sm:flex-row gap-3">
       <Button 
         onClick={onDetailsClick}
-        className="w-full sm:flex-1 bg-[#00baff] hover:bg-[#00baff]/80 text-black font-medium text-xs sm:text-sm"
+        className="w-full sm:flex-1 bg-gradient-to-r from-[#00baff] to-[#0096cc] hover:opacity-90 text-black font-medium text-xs sm:text-sm shadow-lg shadow-blue-500/10 border-none transition-all duration-300"
       >
         <Dices size={16} className="mr-1 sm:mr-2" />
-        Ver Página de Estatísticas
+        Ver Estatísticas
       </Button>
       
       <Button 
-        className="w-full sm:flex-1 text-black font-medium animate-pulse-neon bg-gradient-to-b from-[#00ff00] to-[#8bff00] hover:from-[#00ff00]/90 hover:to-[#8bff00]/90 text-xs sm:text-sm truncate"
+        className="w-full sm:flex-1 text-black font-medium animate-pulse-neon bg-gradient-to-r from-[#00ff00] to-[#00cc00] hover:opacity-90 text-xs sm:text-sm truncate shadow-lg shadow-[#00ff00]/20 border-none transition-all duration-300"
         onClick={onPlayClick}
       >
         <Play size={16} className="mr-1 sm:mr-2 shrink-0" />
-        <span className="truncate">Ir para a Roleta</span>
+        <span className="truncate">Jogar Agora</span>
       </Button>
     </div>
   );

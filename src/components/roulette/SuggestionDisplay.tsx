@@ -30,17 +30,19 @@ const SuggestionDisplay = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <WandSparkles size={18} className="text-[#00ff00]" />
-          <span className="text-sm text-[#00ff00] font-medium">Sugestão de Jogada</span>
-          <span className="text-xs text-[#00ff00]/70">({numberGroups[selectedGroup as keyof typeof numberGroups].name})</span>
+          <span className="text-sm text-white font-medium">Sugestão de Jogada</span>
+          <span className="text-xs bg-[#00ff00]/10 text-[#00ff00] px-2 py-0.5 rounded-full">
+            {numberGroups[selectedGroup as keyof typeof numberGroups].name}
+          </span>
         </div>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <button 
                 onClick={toggleVisibility} 
-                className="text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
+                className="text-[#00ff00] hover:text-[#00ff00]/80 transition-colors bg-[#1d1b26] p-1.5 rounded-full border border-[#00ff00]/20"
               >
-                {isBlurred ? <EyeOff size={18} /> : <Eye size={18} />}
+                {isBlurred ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
             </TooltipTrigger>
             <TooltipContent>
@@ -49,12 +51,12 @@ const SuggestionDisplay = ({
           </Tooltip>
         </TooltipProvider>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-center">
         {suggestion.map((num, i) => (
           <RouletteNumber
             key={i}
             number={num}
-            className={`border border-[#00ff00] ${getSuggestionColor(num)} ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
+            className={`border border-[#00ff00] ${getSuggestionColor(num)} ${isBlurred ? 'blur-sm' : 'animate-pulse shadow-lg shadow-[#00ff00]/10'}`}
           />
         ))}
       </div>
