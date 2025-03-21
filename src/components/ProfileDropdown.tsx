@@ -56,14 +56,14 @@ const ProfileDropdown = () => {
             <ChevronDown size={12} className="text-gray-400" />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 bg-vegas-darkgray border-vegas-black text-white">
-          <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+        <DropdownMenuContent align="end" className="w-[230px] bg-vegas-darkgray border-vegas-black text-white z-[9999]">
+          <DropdownMenuLabel className="font-medium text-vegas-gold">Minha Conta</DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-gray-700" />
           
           {/* Editar perfil */}
           <Dialog open={isEditProfileOpen} onOpenChange={setIsEditProfileOpen}>
             <DialogTrigger asChild>
-              <DropdownMenuItem className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white">
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
                 <User size={16} />
                 <span>Editar Perfil</span>
               </DropdownMenuItem>
@@ -100,7 +100,7 @@ const ProfileDropdown = () => {
           {/* Senha */}
           <Dialog open={isPasswordOpen} onOpenChange={setIsPasswordOpen}>
             <DialogTrigger asChild>
-              <DropdownMenuItem className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white">
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
                 <Lock size={16} />
                 <span>Alterar Senha</span>
               </DropdownMenuItem>
@@ -139,7 +139,7 @@ const ProfileDropdown = () => {
           </Dialog>
           
           {/* Configurações */}
-          <DropdownMenuItem className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white">
+          <DropdownMenuItem className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
             <UserCog size={16} />
             <span>Configurações</span>
           </DropdownMenuItem>
@@ -149,7 +149,7 @@ const ProfileDropdown = () => {
           {/* Depositar */}
           <Dialog open={isDepositOpen} onOpenChange={setIsDepositOpen}>
             <DialogTrigger asChild>
-              <DropdownMenuItem className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white">
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
                 <CreditCard size={16} />
                 <span>Depositar</span>
               </DropdownMenuItem>
@@ -190,7 +190,7 @@ const ProfileDropdown = () => {
           {/* Sacar */}
           <Dialog open={isWithdrawOpen} onOpenChange={setIsWithdrawOpen}>
             <DialogTrigger asChild>
-              <DropdownMenuItem className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white">
+              <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
                 <Wallet size={16} />
                 <span>Sacar</span>
               </DropdownMenuItem>
@@ -234,7 +234,7 @@ const ProfileDropdown = () => {
           <DropdownMenuSeparator className="bg-gray-700" />
           
           <DropdownMenuItem 
-            className="cursor-pointer flex items-center gap-2 text-red-500 focus:bg-[#262626] focus:text-red-500"
+            className="cursor-pointer flex items-center gap-2 text-red-500 focus:bg-[#262626] focus:text-red-500 hover:bg-[#262626] hover:text-red-500"
             onClick={handleSignOut}
           >
             <LogOut size={16} />
