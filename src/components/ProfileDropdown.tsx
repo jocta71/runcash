@@ -56,7 +56,7 @@ const ProfileDropdown = () => {
             <ChevronDown size={12} className="text-gray-400" />
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[230px] bg-vegas-darkgray border-vegas-black text-white z-[9999]">
+        <DropdownMenuContent align="end" className="w-[230px] bg-vegas-darkgray border border-vegas-black/80 text-white shadow-lg z-[9999]">
           <DropdownMenuLabel className="font-medium text-vegas-gold">Minha Conta</DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-gray-700" />
           
