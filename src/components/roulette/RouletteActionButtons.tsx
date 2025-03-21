@@ -10,23 +10,21 @@ interface RouletteActionButtonsProps {
 
 const RouletteActionButtons = ({ onDetailsClick, onPlayClick }: RouletteActionButtonsProps) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-3">
+    <div className="flex flex-col sm:flex-row gap-2">
       <Button 
         onClick={onDetailsClick}
-        className="w-full sm:flex-1 bg-gradient-to-r from-blue-600 to-blue-800 hover:opacity-90 text-white font-medium text-xs sm:text-sm shadow-lg shadow-blue-500/20 border-none transition-all duration-300 group relative overflow-hidden"
+        className="w-full sm:flex-1 bg-[#00baff] hover:bg-[#00baff]/80 text-black font-medium text-xs sm:text-sm"
       >
-        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none"></span>
-        <Dices size={16} className="mr-1 sm:mr-2 animate-bounce" />
-        Ver Estatísticas
+        <Dices size={16} className="mr-1 sm:mr-2" />
+        Ver Página de Estatísticas
       </Button>
       
       <Button 
-        className="w-full sm:flex-1 text-slate-900 font-medium animate-pulse-gold bg-gradient-to-r from-amber-500 to-amber-400 hover:opacity-90 text-xs sm:text-sm truncate shadow-lg shadow-amber-500/20 border-none transition-all duration-300 group relative overflow-hidden"
+        className="w-full sm:flex-1 text-black font-medium animate-pulse-neon bg-gradient-to-b from-[#00ff00] to-[#8bff00] hover:from-[#00ff00]/90 hover:to-[#8bff00]/90 text-xs sm:text-sm truncate"
         onClick={onPlayClick}
       >
-        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_1.5s_infinite] pointer-events-none"></span>
         <Play size={16} className="mr-1 sm:mr-2 shrink-0" />
-        <span className="truncate">Jogar Agora</span>
+        <span className="truncate">Ir para a Roleta</span>
       </Button>
     </div>
   );

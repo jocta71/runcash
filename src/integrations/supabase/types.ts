@@ -9,165 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      roleta_estatisticas_diarias: {
-        Row: {
-          data: string
-          frequencia_maxima: number | null
-          id: number
-          numero_mais_frequente: number | null
-          numeros_impares: number | null
-          numeros_pares: number | null
-          numeros_pretos: number | null
-          numeros_vermelhos: number | null
-          roleta_id: string | null
-          total_numeros: number | null
-          zeros: number | null
-        }
-        Insert: {
-          data: string
-          frequencia_maxima?: number | null
-          id?: number
-          numero_mais_frequente?: number | null
-          numeros_impares?: number | null
-          numeros_pares?: number | null
-          numeros_pretos?: number | null
-          numeros_vermelhos?: number | null
-          roleta_id?: string | null
-          total_numeros?: number | null
-          zeros?: number | null
-        }
-        Update: {
-          data?: string
-          frequencia_maxima?: number | null
-          id?: number
-          numero_mais_frequente?: number | null
-          numeros_impares?: number | null
-          numeros_pares?: number | null
-          numeros_pretos?: number | null
-          numeros_vermelhos?: number | null
-          roleta_id?: string | null
-          total_numeros?: number | null
-          zeros?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "roleta_estatisticas_diarias_roleta_id_fkey"
-            columns: ["roleta_id"]
-            isOneToOne: false
-            referencedRelation: "roletas"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      roleta_numeros: {
-        Row: {
-          cor: string | null
-          dezena: string | null
-          id: number
-          metade: string | null
-          numero: number
-          paridade: string | null
-          roleta_id: string | null
-          roleta_nome: string
-          timestamp: string | null
-        }
-        Insert: {
-          cor?: string | null
-          dezena?: string | null
-          id?: number
-          metade?: string | null
-          numero: number
-          paridade?: string | null
-          roleta_id?: string | null
-          roleta_nome: string
-          timestamp?: string | null
-        }
-        Update: {
-          cor?: string | null
-          dezena?: string | null
-          id?: number
-          metade?: string | null
-          numero?: number
-          paridade?: string | null
-          roleta_id?: string | null
-          roleta_nome?: string
-          timestamp?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "roleta_numeros_roleta_id_fkey"
-            columns: ["roleta_id"]
-            isOneToOne: false
-            referencedRelation: "roletas"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      roleta_sequencias: {
-        Row: {
-          comprimento: number
-          fim_timestamp: string
-          id: number
-          inicio_timestamp: string
-          roleta_id: string | null
-          tipo: string
-          valor: string
-        }
-        Insert: {
-          comprimento: number
-          fim_timestamp: string
-          id?: number
-          inicio_timestamp: string
-          roleta_id?: string | null
-          tipo: string
-          valor: string
-        }
-        Update: {
-          comprimento?: number
-          fim_timestamp?: string
-          id?: number
-          inicio_timestamp?: string
-          roleta_id?: string | null
-          tipo?: string
-          valor?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "roleta_sequencias_roleta_id_fkey"
-            columns: ["roleta_id"]
-            isOneToOne: false
-            referencedRelation: "roletas"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       roletas: {
         Row: {
-          ativa: boolean | null
-          atualizado_em: string | null
-          criado_em: string | null
+          derrotas: number | null
+          estado_estrategia: string | null
           id: string
           nome: string
-          provedor: string
-          tipo: string
+          numero_gatilho: number | null
+          numero_gatilho_anterior: number | null
+          numeros: number[] | null
+          sugestao_display: string | null
+          terminais_gatilho: number[] | null
+          terminais_gatilho_anterior: number[] | null
+          updated_at: string | null
+          vitorias: number | null
         }
         Insert: {
-          ativa?: boolean | null
-          atualizado_em?: string | null
-          criado_em?: string | null
-          id?: string
+          derrotas?: number | null
+          estado_estrategia?: string | null
+          id: string
           nome: string
-          provedor: string
-          tipo: string
+          numero_gatilho?: number | null
+          numero_gatilho_anterior?: number | null
+          numeros?: number[] | null
+          sugestao_display?: string | null
+          terminais_gatilho?: number[] | null
+          terminais_gatilho_anterior?: number[] | null
+          updated_at?: string | null
+          vitorias?: number | null
         }
         Update: {
-          ativa?: boolean | null
-          atualizado_em?: string | null
-          criado_em?: string | null
+          derrotas?: number | null
+          estado_estrategia?: string | null
           id?: string
           nome?: string
-          provedor?: string
-          tipo?: string
+          numero_gatilho?: number | null
+          numero_gatilho_anterior?: number | null
+          numeros?: number[] | null
+          sugestao_display?: string | null
+          terminais_gatilho?: number[] | null
+          terminais_gatilho_anterior?: number[] | null
+          updated_at?: string | null
+          vitorias?: number | null
         }
         Relationships: []
       }
@@ -176,50 +59,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_color_distribution: {
-        Args: {
-          roleta_nome_param: string
-          limit_param: number
-        }
-        Returns: {
-          cor: string
-          total: number
-          porcentagem: number
-        }[]
-      }
-      get_current_streak: {
-        Args: {
-          roleta_nome_param: string
-        }
-        Returns: {
-          type: string
-          value: string
-          count: number
-        }[]
-      }
-      get_missing_dozens: {
-        Args: {
-          roleta_nome_param: string
-          limit_param: number
-        }
-        Returns: {
-          dezena: string
-          ultima_aparicao: number
-          ausencia: number
-        }[]
-      }
-      get_number_frequency: {
-        Args: {
-          roleta_nome_param: string
-          limit_param: number
-        }
-        Returns: {
-          numero: number
-          total: number
-          porcentagem: number
-          cor: string
-        }[]
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never

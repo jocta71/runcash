@@ -26,42 +26,36 @@ const SuggestionDisplay = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-3 rounded-xl border border-amber-500/20 shadow-lg space-y-2">
+    <div className="space-y-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <WandSparkles size={18} className="text-amber-500 animate-pulse" />
-          <span className="text-sm text-amber-300 font-medium uppercase tracking-wide">Sugestão de Jogada</span>
-          <span className="text-xs bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30 shadow-sm">
-            {numberGroups[selectedGroup as keyof typeof numberGroups].name}
-          </span>
+          <WandSparkles size={18} className="text-[#00ff00]" />
+          <span className="text-sm text-[#00ff00] font-medium">Sugestão de Jogada</span>
+          <span className="text-xs text-[#00ff00]/70">({numberGroups[selectedGroup as keyof typeof numberGroups].name})</span>
         </div>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <button 
                 onClick={toggleVisibility} 
-                className="text-amber-500 hover:text-amber-400 transition-colors bg-slate-800 p-1.5 rounded-full border border-amber-500/20 hover:border-amber-500/50 hover:shadow-[0_0_10px_rgba(251,191,36,0.3)]"
+                className="text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
               >
-                {isBlurred ? <EyeOff size={16} /> : <Eye size={16} />}
+                {isBlurred ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </TooltipTrigger>
-            <TooltipContent className="bg-slate-800 border border-amber-500/30 shadow-[0_0_10px_rgba(251,191,36,0.2)]">
+            <TooltipContent>
               <p>{isBlurred ? "Mostrar números" : "Ocultar números"}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>
-      <div className="flex gap-2 justify-center">
+      <div className="flex gap-2">
         {suggestion.map((num, i) => (
-          <div key={i} className="relative">
-            <RouletteNumber
-              number={num}
-              className={`border border-amber-500 ${getSuggestionColor(num)} ${isBlurred ? 'blur-sm' : 'shadow-lg'}`}
-            />
-            {!isBlurred && (
-              <div className="absolute -inset-0.5 rounded-full animate-jackpot-lights -z-10"></div>
-            )}
-          </div>
+          <RouletteNumber
+            key={i}
+            number={num}
+            className={`border border-[#00ff00] ${getSuggestionColor(num)} ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
+          />
         ))}
       </div>
     </div>
