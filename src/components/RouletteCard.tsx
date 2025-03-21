@@ -1,3 +1,4 @@
+
 import { TrendingUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
@@ -9,6 +10,7 @@ import RouletteTrendChart from './roulette/RouletteTrendChart';
 import SuggestionDisplay from './roulette/SuggestionDisplay';
 import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
+import HotNumbers from './roulette/HotNumbers';
 
 interface RouletteCardProps {
   name: string;
@@ -28,16 +30,22 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
   const [dataSeeded, setDataSeeded] = useState(false);
+  const [hotNumbers, setHotNumbers] = useState<{numbers: number[], occurrences: number[]}>({
+    numbers: [], 
+    occurrences: []
+  });
 
   useEffect(() => {
     const checkAndSeedData = async () => {
       try {
+        // Check for data in roleta_numeros table instead of roletas
         const { data, error, count } = await supabase
-          .from('roletas')
-          .select('numeros', { count: 'exact', head: true });
+          .from('roleta_numeros')
+          .select('numero', { count: 'exact', head: true })
+          .eq('roleta_nome', name);
         
         if (!count || count === 0) {
-          console.log('No data found in roletas table, using mock data');
+          console.log('No data found in roleta_numeros table, using mock data');
           setLastNumbers(initialLastNumbers);
           setDataSeeded(true);
           toast({
@@ -57,26 +65,46 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     };
 
     checkAndSeedData();
-  }, [initialLastNumbers]);
+  }, [initialLastNumbers, name]);
 
   useEffect(() => {
     const fetchRouletteNumbers = async () => {
       try {
         setIsLoading(true);
+        // Query roleta_numeros table with the correct column 'numero'
         const { data, error } = await supabase
-          .from('roletas')
-          .select('numeros')
-          .eq('nome', name)
-          .single();
+          .from('roleta_numeros')
+          .select('numero')
+          .eq('roleta_nome', name)
+          .order('timestamp', { ascending: false })
+          .limit(5);
 
         if (error) {
           console.error('Error fetching roulette numbers:', error);
           return;
         }
 
-        if (data && data.numeros && data.numeros.length > 0) {
-          const recentNumbers = data.numeros.slice(0, 5);
+        if (data && data.length > 0) {
+          const recentNumbers = data.map(item => item.numero);
           setLastNumbers(recentNumbers);
+        }
+
+        // Also fetch hot numbers (most frequent in last 100 spins)
+        const { data: frequencyData, error: frequencyError } = await supabase
+          .rpc('get_number_frequency', { 
+            roleta_nome_param: name, 
+            limit_param: 100 
+          });
+
+        if (frequencyError) {
+          console.error('Error fetching number frequency:', frequencyError);
+        } else if (frequencyData && frequencyData.length > 0) {
+          // Get top 5 most frequent numbers
+          const topNumbers = frequencyData.slice(0, 5);
+          setHotNumbers({
+            numbers: topNumbers.map(item => item.numero),
+            occurrences: topNumbers.map(item => Number(item.total))
+          });
         }
       } catch (error) {
         console.error('Error in fetching roulette numbers:', error);
@@ -142,6 +170,13 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       </div>
       
       <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
+      
+      {hotNumbers.numbers.length > 0 && (
+        <HotNumbers 
+          numbers={hotNumbers.numbers}
+          occurrences={hotNumbers.occurrences}
+        />
+      )}
       
       <SuggestionDisplay 
         suggestion={suggestion}
