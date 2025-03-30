@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Search, Wallet, Menu, MessageSquare } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -239,7 +238,7 @@ const Index = () => {
             <Menu size={24} className="text-[#00ff00]" />
           </button>
           
-          <span className="text-white text-xl font-bold">RunCash</span>
+          <div className="flex-1"></div>
           
           <div className="flex items-center gap-2">
             {showMobileSearch ? (
@@ -331,7 +330,6 @@ const Index = () => {
             {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
           </div>
           
-          {/* Mobile Footer Space (to avoid content being hidden behind fixed elements) */}
           <div className="h-16 md:h-0"></div>
         </main>
       </div>

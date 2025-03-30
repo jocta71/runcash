@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X } from 'lucide-react';
 
@@ -17,7 +18,8 @@ const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) =>
   const content = (
     <div className="p-3 flex flex-col h-full justify-between">
       {isMobile && (
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-white text-xl font-bold">RunCash</span>
           <button onClick={onClose} className="p-1 rounded-md text-gray-400 hover:text-white">
             <X size={24} />
           </button>
