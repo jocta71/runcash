@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { Search, Wallet, Menu, MessageSquare } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -240,12 +241,47 @@ const Index = () => {
           
           <span className="text-white text-xl font-bold">RunCash</span>
           
-          <button 
-            className="p-2"
-            onClick={() => setChatOpen(true)}
-          >
-            <MessageSquare size={24} className="text-[#00ff00]" />
-          </button>
+          <div className="flex items-center gap-2">
+            {showMobileSearch ? (
+              <div className="absolute top-0 left-0 right-0 z-50 p-2 bg-[#100f13] border-b border-[#33333359]">
+                <div className="relative flex items-center w-full">
+                  <Search size={16} className="absolute left-3 text-gray-400" />
+                  <Input 
+                    type="text" 
+                    placeholder="Pesquisar roleta..." 
+                    className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+                    value={search} 
+                    onChange={e => setSearch(e.target.value)}
+                    autoFocus
+                    onBlur={() => setShowMobileSearch(false)}
+                  />
+                </div>
+              </div>
+            ) : (
+              <>
+                <button 
+                  className="p-2 bg-[#1A191F] rounded-full"
+                  onClick={() => setShowMobileSearch(true)}
+                >
+                  <Search size={16} className="text-gray-400" />
+                </button>
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90"
+                >
+                  <Wallet size={14} className="mr-1" /> Saldo
+                </Button>
+                <ProfileDropdown />
+              </>
+            )}
+            <button 
+              className="p-2"
+              onClick={() => setChatOpen(true)}
+            >
+              <MessageSquare size={24} className="text-[#00ff00]" />
+            </button>
+          </div>
         </div>
         
         {/* Desktop Header */}
@@ -283,44 +319,8 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Mobile User Info with Search Icon */}
-        <div className="md:hidden flex justify-between items-center px-4 py-3 pt-20">
-          {showMobileSearch ? (
-            <div className="flex-1 mr-2">
-              <div className="relative flex items-center w-full">
-                <Search size={16} className="absolute left-3 text-gray-400" />
-                <Input 
-                  type="text" 
-                  placeholder="Pesquisar roleta..." 
-                  className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
-                  value={search} 
-                  onChange={e => setSearch(e.target.value)}
-                  autoFocus
-                  onBlur={() => setShowMobileSearch(false)}
-                />
-              </div>
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center gap-2">
-                <ProfileDropdown />
-                <button 
-                  className="p-2 bg-[#1A191F] rounded-full"
-                  onClick={() => setShowMobileSearch(true)}
-                >
-                  <Search size={16} className="text-gray-400" />
-                </button>
-              </div>
-              
-              <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
-                <Wallet size={14} className="mr-1" /> Saldo
-              </Button>
-            </>
-          )}
-        </div>
-        
         {/* Mobile Insights */}
-        <div className="md:hidden px-4 py-2">
+        <div className="md:hidden px-4 py-2 mt-14">
           <div className="bg-[#1A191F]/50 rounded-lg p-3">
             <AnimatedInsights />
           </div>
