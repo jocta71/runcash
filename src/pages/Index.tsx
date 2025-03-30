@@ -7,7 +7,6 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import AnimatedInsights from '@/components/AnimatedInsights';
 import ProfileDropdown from '@/components/ProfileDropdown';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatMessage {
   id: string;
@@ -210,7 +209,6 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
-  const isMobile = useIsMobile();
   
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
   const topRoulettes = useMemo(() => {
@@ -231,21 +229,21 @@ const Index = () => {
       
       <div className="flex-1 relative">
         {/* Mobile Header */}
-        <div className="md:hidden flex items-center justify-between px-3 py-2 fixed top-0 left-0 right-0 z-50 bg-[#0A0C14] border-b border-[#33333359]">
+        <div className="mobile-header">
           <button 
-            className="p-1"
+            className="p-2"
             onClick={() => setSidebarOpen(true)}
           >
-            <Menu size={20} className="text-[#00ff00]" />
+            <Menu size={24} className="text-[#00ff00]" />
           </button>
           
-          <span className="text-white text-lg font-bold">RunCash</span>
+          <span className="text-white text-xl font-bold">RunCash</span>
           
           <button 
-            className="p-1"
+            className="p-2"
             onClick={() => setChatOpen(true)}
           >
-            <MessageSquare size={20} className="text-[#00ff00]" />
+            <MessageSquare size={24} className="text-[#00ff00]" />
           </button>
         </div>
         
@@ -285,36 +283,42 @@ const Index = () => {
         </div>
         
         {/* Mobile Search Bar */}
-        <div className="md:hidden px-3 pt-14 pb-1">
+        <div className="md:hidden px-4 pt-20 pb-2">
           <div className="relative flex items-center w-full">
-            <Search size={14} className="absolute left-2 text-gray-400" />
+            <Search size={16} className="absolute left-3 text-gray-400" />
             <Input 
               type="text" 
               placeholder="Pesquisar roleta..." 
-              className="w-full pl-7 py-1 pr-2 text-xs h-7 bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+              className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
               value={search} 
               onChange={e => setSearch(e.target.value)} 
             />
           </div>
         </div>
         
-        {/* Mobile User Balance - Simplified */}
-        <div className="md:hidden flex justify-end items-center px-3 py-1">
-          <div className="flex items-center gap-1 bg-[#1A191F] rounded-full py-0.5 px-2 text-[10px]">
-            <span className="text-white">R$ 1.346,34</span>
-            <Wallet size={12} className="text-[#00ff00]" />
+        {/* Mobile User Info */}
+        <div className="md:hidden flex justify-between items-center px-4 py-3">
+          <ProfileDropdown />
+          
+          <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
+            <Wallet size={14} className="mr-1" /> Saldo
+          </Button>
+        </div>
+        
+        {/* Mobile Insights */}
+        <div className="md:hidden px-4 py-2">
+          <div className="bg-[#1A191F]/50 rounded-lg p-3">
+            <AnimatedInsights />
           </div>
         </div>
         
-        <main className="pt-2 md:pt-[70px] pb-4 md:pb-8 px-2 md:px-6 md:pl-[280px] md:pr-[340px] w-full min-h-screen bg-[#100f13]">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 mt-1 md:mt-6">
-            {filteredRoulettes.map((roulette, index) => (
-              <RouletteCard key={index} {...roulette} />
-            ))}
+        <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] md:pr-[340px] w-full min-h-screen bg-[#100f13]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-2 md:mt-6">
+            {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
           </div>
           
           {/* Mobile Footer Space (to avoid content being hidden behind fixed elements) */}
-          <div className="h-12 md:h-0"></div>
+          <div className="h-16 md:h-0"></div>
         </main>
       </div>
       
