@@ -14,19 +14,19 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
   
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-6">
-        <Loader2 size={16} className="animate-spin text-vegas-gold" />
+      <div className="flex justify-center items-center h-5">
+        <Loader2 size={12} className="animate-spin text-vegas-gold" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-wrap justify-center gap-1 max-w-full">
+    <div className="flex justify-center gap-1 max-w-full">
       {numbers.map((num, i) => (
         <RouletteNumber 
           key={i} 
           number={num} 
-          size={isMobile ? "xs" : "sm"} 
+          size="xs" 
         />
       ))}
     </div>
