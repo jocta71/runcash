@@ -16,7 +16,7 @@ const RouletteNumber = ({ number, size = 'sm', className }: RouletteNumberProps)
   };
   
   const sizeClasses = {
-    xs: 'w-4 h-4 text-[8px]',
+    xs: 'w-5 h-5 text-[9px]',
     sm: 'w-6 h-6 text-xs',
     md: 'w-8 h-8 text-sm',
     lg: 'w-10 h-10 text-base'
