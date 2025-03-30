@@ -5,12 +5,8 @@ import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { strategies, numberGroups } from './roulette/constants';
 import LastNumbers from './roulette/LastNumbers';
-import WinRateDisplay from './roulette/WinRateDisplay';
-import RouletteTrendChart from './roulette/RouletteTrendChart';
-import SuggestionDisplay from './roulette/SuggestionDisplay';
-import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
-import HotNumbers from './roulette/HotNumbers';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface RouletteCardProps {
   name: string;
@@ -22,9 +18,8 @@ interface RouletteCardProps {
 
 const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const navigate = useNavigate();
-  const [showSuggestions, setShowSuggestions] = useState(true);
+  const isMobile = useIsMobile();
   const [suggestion, setSuggestion] = useState<number[]>([]);
-  const [isBlurred, setIsBlurred] = useState(false);
   const [currentStrategy, setCurrentStrategy] = useState(strategies[0]);
   const [selectedGroup, setSelectedGroup] = useState<string>("grupo-123");
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
@@ -48,11 +43,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
           console.log('No data found in roleta_numeros table, using mock data');
           setLastNumbers(initialLastNumbers);
           setDataSeeded(true);
-          toast({
-            title: 'Usando Dados Locais',
-            description: 'Conecte um raspador para dados em tempo real',
-            variant: 'default',
-          });
         } else {
           console.log('Data already exists, using database data');
           setDataSeeded(true);
@@ -99,8 +89,9 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
         if (frequencyError) {
           console.error('Error fetching number frequency:', frequencyError);
         } else if (frequencyData && frequencyData.length > 0) {
-          // Get top 5 most frequent numbers
-          const topNumbers = frequencyData.slice(0, 5);
+          // Get top 3 most frequent numbers for mobile
+          const topCount = isMobile ? 3 : 5;
+          const topNumbers = frequencyData.slice(0, topCount);
           setHotNumbers({
             numbers: topNumbers.map(item => item.numero),
             occurrences: topNumbers.map(item => Number(item.total))
@@ -116,7 +107,7 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     if (dataSeeded) {
       fetchRouletteNumbers();
     }
-  }, [name, dataSeeded]);
+  }, [name, dataSeeded, isMobile]);
 
   useEffect(() => {
     generateSuggestion();
@@ -132,21 +123,9 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     
     setSuggestion([...selectedGroup.numbers]);
     setSelectedGroup(randomGroupKey);
-    
-    toast({
-      title: "Sugestão Gerada",
-      description: `Grupo: ${selectedGroup.name}`,
-      variant: "default"
-    });
   };
 
-  const toggleVisibility = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsBlurred(!isBlurred);
-  };
-
-  const handleDetailsClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleDetailsClick = () => {
     navigate(`/roulette/${encodeURIComponent(name)}`);
   };
 
@@ -159,41 +138,36 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     });
   };
 
+  // Calculate win rate percentage
+  const winRate = Math.round((wins / (wins + losses)) * 100);
+
   return (
     <div 
-      className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
+      className="bg-[#17161e]/80 border border-white/5 rounded-lg p-2 space-y-1.5 hover:border-white/20 cursor-pointer transition-all"
       onClick={handleDetailsClick}
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">{name}</h3>
-        <TrendingUp size={20} className="text-[#00ff00]" />
+        <h3 className="text-sm font-medium truncate">{name}</h3>
+        <TrendingUp size={14} className="text-[#00ff00] flex-shrink-0" />
       </div>
       
       <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
       
-      {hotNumbers.numbers.length > 0 && (
-        <HotNumbers 
-          numbers={hotNumbers.numbers}
-          occurrences={hotNumbers.occurrences}
-        />
-      )}
+      {/* Simple Win Rate */}
+      <div className="flex items-center justify-between text-[10px]">
+        <span className="text-gray-400">Win Rate:</span>
+        <span className={`font-medium ${winRate >= 70 ? 'text-[#00ff00]' : winRate >= 50 ? 'text-yellow-400' : 'text-red-400'}`}>
+          {winRate}%
+        </span>
+      </div>
       
-      <SuggestionDisplay 
-        suggestion={suggestion}
-        selectedGroup={selectedGroup}
-        isBlurred={isBlurred}
-        toggleVisibility={toggleVisibility}
-        numberGroups={numberGroups}
-      />
-      
-      <WinRateDisplay wins={wins} losses={losses} />
-      
-      <RouletteTrendChart trend={trend} />
-      
-      <RouletteActionButtons 
-        onDetailsClick={handleDetailsClick}
-        onPlayClick={handlePlayClick}
-      />
+      {/* Play Button Only */}
+      <button
+        onClick={handlePlayClick}
+        className="w-full py-1 text-black text-xs font-medium rounded bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90 transition-colors"
+      >
+        Jogar
+      </button>
     </div>
   );
 };
