@@ -209,6 +209,7 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
   const topRoulettes = useMemo(() => {
@@ -282,27 +283,40 @@ const Index = () => {
           </div>
         </div>
         
-        {/* Mobile Search Bar */}
-        <div className="md:hidden px-4 pt-20 pb-2">
-          <div className="relative flex items-center w-full">
-            <Search size={16} className="absolute left-3 text-gray-400" />
-            <Input 
-              type="text" 
-              placeholder="Pesquisar roleta..." 
-              className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
-              value={search} 
-              onChange={e => setSearch(e.target.value)} 
-            />
-          </div>
-        </div>
-        
-        {/* Mobile User Info */}
-        <div className="md:hidden flex justify-between items-center px-4 py-3">
-          <ProfileDropdown />
-          
-          <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
-            <Wallet size={14} className="mr-1" /> Saldo
-          </Button>
+        {/* Mobile User Info with Search Icon */}
+        <div className="md:hidden flex justify-between items-center px-4 py-3 pt-20">
+          {showMobileSearch ? (
+            <div className="flex-1 mr-2">
+              <div className="relative flex items-center w-full">
+                <Search size={16} className="absolute left-3 text-gray-400" />
+                <Input 
+                  type="text" 
+                  placeholder="Pesquisar roleta..." 
+                  className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+                  value={search} 
+                  onChange={e => setSearch(e.target.value)}
+                  autoFocus
+                  onBlur={() => setShowMobileSearch(false)}
+                />
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-2">
+                <ProfileDropdown />
+                <button 
+                  className="p-2 bg-[#1A191F] rounded-full"
+                  onClick={() => setShowMobileSearch(true)}
+                >
+                  <Search size={16} className="text-gray-400" />
+                </button>
+              </div>
+              
+              <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
+                <Wallet size={14} className="mr-1" /> Saldo
+              </Button>
+            </>
+          )}
         </div>
         
         {/* Mobile Insights */}
