@@ -1,9 +1,8 @@
-
 import { TrendingUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
-import { strategies, numberGroups } from './roulette/constants';
+import { numberGroups } from './roulette/constants';
 import LastNumbers from './roulette/LastNumbers';
 import WinRateDisplay from './roulette/WinRateDisplay';
 import RouletteTrendChart from './roulette/RouletteTrendChart';
@@ -11,6 +10,7 @@ import SuggestionDisplay from './roulette/SuggestionDisplay';
 import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
 import HotNumbers from './roulette/HotNumbers';
+import { defaultStrategies, Strategy } from './strategies/types';
 
 interface RouletteCardProps {
   name: string;
@@ -22,11 +22,8 @@ interface RouletteCardProps {
 
 const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, trend }: RouletteCardProps) => {
   const navigate = useNavigate();
-  const [showSuggestions, setShowSuggestions] = useState(true);
-  const [suggestion, setSuggestion] = useState<number[]>([]);
-  const [isBlurred, setIsBlurred] = useState(false);
-  const [currentStrategy, setCurrentStrategy] = useState(strategies[0]);
-  const [selectedGroup, setSelectedGroup] = useState<string>("grupo-123");
+  const [selectedStrategyId, setSelectedStrategyId] = useState<string | null>(null);
+  const [userStrategies, setUserStrategies] = useState<Strategy[]>(defaultStrategies);
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
   const [dataSeeded, setDataSeeded] = useState(false);
@@ -38,7 +35,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
   useEffect(() => {
     const checkAndSeedData = async () => {
       try {
-        // Check for data in roleta_numeros table instead of roletas
         const { data, error, count } = await supabase
           .from('roleta_numeros')
           .select('numero', { count: 'exact', head: true })
@@ -71,7 +67,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     const fetchRouletteNumbers = async () => {
       try {
         setIsLoading(true);
-        // Query roleta_numeros table with the correct column 'numero'
         const { data, error } = await supabase
           .from('roleta_numeros')
           .select('numero')
@@ -89,7 +84,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
           setLastNumbers(recentNumbers);
         }
 
-        // Also fetch hot numbers (most frequent in last 100 spins)
         const { data: frequencyData, error: frequencyError } = await supabase
           .rpc('get_number_frequency', { 
             roleta_nome_param: name, 
@@ -99,7 +93,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
         if (frequencyError) {
           console.error('Error fetching number frequency:', frequencyError);
         } else if (frequencyData && frequencyData.length > 0) {
-          // Get top 5 most frequent numbers
           const topNumbers = frequencyData.slice(0, 5);
           setHotNumbers({
             numbers: topNumbers.map(item => item.numero),
@@ -118,31 +111,18 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     }
   }, [name, dataSeeded]);
 
-  useEffect(() => {
-    generateSuggestion();
-  }, []);
-
-  const generateSuggestion = () => {
-    const groupKeys = Object.keys(numberGroups);
-    const randomGroupKey = groupKeys[Math.floor(Math.random() * groupKeys.length)];
-    const selectedGroup = numberGroups[randomGroupKey as keyof typeof numberGroups];
+  const handleSelectStrategy = (strategyId: string) => {
+    setSelectedStrategyId(strategyId);
     
-    const relatedStrategy = strategies.find(s => s.name.includes(selectedGroup.numbers.join(',')));
-    setCurrentStrategy(relatedStrategy || strategies[0]);
+    const selectedStrategy = userStrategies.find(s => s.id === strategyId);
     
-    setSuggestion([...selectedGroup.numbers]);
-    setSelectedGroup(randomGroupKey);
-    
-    toast({
-      title: "Sugestão Gerada",
-      description: `Grupo: ${selectedGroup.name}`,
-      variant: "default"
-    });
-  };
-
-  const toggleVisibility = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsBlurred(!isBlurred);
+    if (selectedStrategy) {
+      toast({
+        title: "Estratégia Selecionada",
+        description: `${selectedStrategy.name}`,
+        variant: "default"
+      });
+    }
   };
 
   const handleDetailsClick = (e: React.MouseEvent) => {
@@ -179,11 +159,9 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
       )}
       
       <SuggestionDisplay 
-        suggestion={suggestion}
-        selectedGroup={selectedGroup}
-        isBlurred={isBlurred}
-        toggleVisibility={toggleVisibility}
-        numberGroups={numberGroups}
+        strategies={userStrategies}
+        selectedStrategyId={selectedStrategyId}
+        onSelectStrategy={handleSelectStrategy}
       />
       
       <WinRateDisplay wins={wins} losses={losses} />
