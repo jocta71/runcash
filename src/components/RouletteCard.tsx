@@ -2,7 +2,6 @@ import { TrendingUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
-import { numberGroups } from './roulette/constants';
 import LastNumbers from './roulette/LastNumbers';
 import WinRateDisplay from './roulette/WinRateDisplay';
 import RouletteTrendChart from './roulette/RouletteTrendChart';
@@ -125,11 +124,6 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
     }
   };
 
-  const handleDetailsClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    navigate(`/roulette/${encodeURIComponent(name)}`);
-  };
-
   const handlePlayClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     toast({
@@ -141,12 +135,11 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
 
   return (
     <div 
-      className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-4 space-y-3 animate-fade-in hover-scale cursor-pointer h-auto"
-      onClick={handleDetailsClick}
+      className="bg-[#17161e]/90 backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-3 space-y-2 animate-fade-in h-auto"
     >
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold">{name}</h3>
-        <TrendingUp size={20} className="text-[#00ff00]" />
+        <h3 className="text-sm font-semibold">{name}</h3>
+        <TrendingUp size={18} className="text-[#00ff00]" />
       </div>
       
       <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
@@ -164,14 +157,12 @@ const RouletteCard = ({ name, lastNumbers: initialLastNumbers, wins, losses, tre
         onSelectStrategy={handleSelectStrategy}
       />
       
-      <WinRateDisplay wins={wins} losses={losses} />
+      <div className="grid grid-cols-2 gap-2">
+        <WinRateDisplay wins={wins} losses={losses} />
+        <RouletteTrendChart trend={trend} />
+      </div>
       
-      <RouletteTrendChart trend={trend} />
-      
-      <RouletteActionButtons 
-        onDetailsClick={handleDetailsClick}
-        onPlayClick={handlePlayClick}
-      />
+      <RouletteActionButtons onPlayClick={handlePlayClick} />
     </div>
   );
 };
