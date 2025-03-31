@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X } from 'lucide-react';
+import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -54,8 +55,15 @@ const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) =>
         </div>
         
         <div>
-          <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Bônus</h3>
+          <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Estratégias</h3>
           <div className="space-y-1">
+            <Link to="/strategies" className="menu-item">
+              <div className="bg-[#1A191F] p-1.5 rounded-md">
+                <Target size={18} className="text-[#00ff00]" />
+              </div>
+              <span>Minhas Estratégias</span>
+            </Link>
+            
             <div className="menu-item">
               <div className="bg-[#1A191F] p-1.5 rounded-md">
                 <Gift size={18} className="text-green-500" />
