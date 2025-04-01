@@ -21,7 +21,7 @@ const RouletteNumber = ({ number, className = '' }: RouletteNumberProps) => {
 
   return (
     <div
-      className={`w-8 h-8 rounded-full ${getRouletteNumberColor(number)} flex items-center justify-center text-sm font-medium ${className}`}
+      className={`w-8 h-8 rounded-md ${getRouletteNumberColor(number)} flex items-center justify-center text-sm font-medium ${className}`}
     >
       {number}
     </div>
