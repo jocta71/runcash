@@ -25,12 +25,12 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
     <div className="flex flex-col items-center gap-2 max-w-full">
       <div className="flex justify-center gap-2">
         {firstRow.map((num, i) => (
-          <RouletteNumber key={i} number={num} />
+          <RouletteNumber key={i} number={num} size="sm" />
         ))}
       </div>
       <div className="flex justify-center gap-2">
         {secondRow.map((num, i) => (
-          <RouletteNumber key={i + firstRow.length} number={num} />
+          <RouletteNumber key={i + firstRow.length} number={num} size="sm" />
         ))}
       </div>
     </div>
