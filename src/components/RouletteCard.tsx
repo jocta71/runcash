@@ -1,4 +1,3 @@
-
 import { TrendingUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
@@ -86,7 +85,7 @@ const RouletteCard = ({
           error
         } = await supabase.from('roleta_numeros').select('numero').eq('roleta_nome', name).order('timestamp', {
           ascending: false
-        }).limit(10);
+        }).limit(24);
         
         if (error) {
           console.error('Error fetching roulette numbers:', error);

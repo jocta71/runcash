@@ -23,7 +23,7 @@ interface ChatMessage {
 
 const mockRoulettes = [{
   name: "Roleta Brasileira",
-  lastNumbers: [7, 11, 23, 5, 18],
+  lastNumbers: [7, 11, 23, 5, 18, 36, 14, 9, 32, 0, 27, 1, 13, 6, 17, 34, 22, 29, 15, 3, 24, 10, 19, 31],
   wins: 150,
   losses: 50,
   trend: Array.from({
@@ -33,7 +33,7 @@ const mockRoulettes = [{
   }))
 }, {
   name: "Roleta Europeia",
-  lastNumbers: [32, 15, 3, 26, 8],
+  lastNumbers: [32, 15, 3, 26, 8, 12, 29, 18, 0, 35, 4, 10, 22, 7, 28, 19, 33, 14, 31, 9, 20, 2, 25, 17],
   wins: 180,
   losses: 70,
   trend: Array.from({
