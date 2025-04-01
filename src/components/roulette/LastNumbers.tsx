@@ -17,11 +17,22 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
     );
   }
 
+  // Split numbers into two rows
+  const firstRow = numbers.slice(0, Math.ceil(numbers.length / 2));
+  const secondRow = numbers.slice(Math.ceil(numbers.length / 2));
+
   return (
-    <div className="flex flex-wrap justify-center gap-2 max-w-full">
-      {numbers.map((num, i) => (
-        <RouletteNumber key={i} number={num} />
-      ))}
+    <div className="flex flex-col items-center gap-2 max-w-full">
+      <div className="flex justify-center gap-2">
+        {firstRow.map((num, i) => (
+          <RouletteNumber key={i} number={num} />
+        ))}
+      </div>
+      <div className="flex justify-center gap-2">
+        {secondRow.map((num, i) => (
+          <RouletteNumber key={i + firstRow.length} number={num} />
+        ))}
+      </div>
     </div>
   );
 };
