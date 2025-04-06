@@ -23,18 +23,18 @@ const RouletteNumber = ({ number, className = '', size = 'md' }: RouletteNumberP
   const getSizeClasses = () => {
     switch (size) {
       case 'sm':
-        return 'w-6 h-6 text-xs';
+        return 'w-7 h-7 text-xs';
       case 'lg':
-        return 'w-10 h-10 text-base';
+        return 'w-16 h-16 text-xl';
       case 'md':
       default:
-        return 'w-8 h-8 text-sm';
+        return 'w-9 h-9 text-sm';
     }
   };
 
   return (
     <div
-      className={`${getSizeClasses()} rounded-md ${getRouletteNumberColor(number)} flex items-center justify-center font-medium ${className}`}
+      className={`${getSizeClasses()} rounded-full ${getRouletteNumberColor(number)} flex items-center justify-center font-medium shadow-md ${className}`}
     >
       {number}
     </div>

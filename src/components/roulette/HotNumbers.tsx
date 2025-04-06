@@ -11,26 +11,26 @@ interface HotNumbersProps {
 
 const HotNumbers = ({ numbers, occurrences }: HotNumbersProps) => {
   return (
-    <div className="glass-card p-3 rounded-xl border border-vegas-gold/30">
-      <div className="flex items-center gap-2 mb-3">
-        <Flame size={18} className="text-orange-500" />
-        <h3 className="text-vegas-gold text-sm font-semibold">Números Quentes</h3>
+    <div className="glass-card p-2 rounded-lg border border-vegas-gold/20">
+      <div className="flex items-center gap-2 mb-2">
+        <Flame size={16} className="text-orange-500" />
+        <h3 className="text-vegas-gold text-xs font-semibold">Números Quentes</h3>
       </div>
       
-      <div className="flex gap-2 justify-center flex-wrap">
+      <div className="flex gap-1.5 justify-center flex-wrap">
         {numbers.map((num, i) => (
           <TooltipProvider key={i}>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="relative animate-pulse-gold">
-                  <RouletteNumber number={num} className="hover:scale-110 transition-transform duration-300" />
-                  <div className="absolute -top-1 -right-1 bg-orange-500 text-black text-xs w-4 h-4 rounded-full flex items-center justify-center">
+                <div className="relative">
+                  <RouletteNumber number={num} size="sm" className="hover:scale-110 transition-transform duration-300" />
+                  <div className="absolute -top-1 -right-1 bg-orange-500 text-black text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center">
                     {occurrences[i]}
                   </div>
                 </div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Saiu {occurrences[i]} vezes nas últimas 100 rodadas</p>
+                <p className="text-xs">Saiu {occurrences[i]} vezes nas últimas 100 rodadas</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

@@ -34,9 +34,9 @@ const LastNumbers = ({
   }
 
   return (
-    <div className="flex flex-col items-center gap-1 max-w-full">
+    <div className="flex flex-col items-center gap-1.5 max-w-full">
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex justify-center gap-1 flex-wrap">
+        <div key={rowIndex} className="flex justify-center gap-1.5 flex-wrap">
           {row.map((num, i) => (
             <RouletteNumber 
               key={i + rowIndex * numbersPerRow} 

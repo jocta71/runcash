@@ -20,6 +20,8 @@ interface RouletteCardProps {
   trend: {
     value: number;
   }[];
+  isSelected?: boolean;
+  onClick?: () => void;
 }
 
 const RouletteCard = ({
@@ -27,7 +29,9 @@ const RouletteCard = ({
   lastNumbers: initialLastNumbers,
   wins,
   losses,
-  trend
+  trend,
+  isSelected = false,
+  onClick
 }: RouletteCardProps) => {
   const navigate = useNavigate();
   const [selectedStrategyId, setSelectedStrategyId] = useState<string | null>(null);
@@ -148,18 +152,42 @@ const RouletteCard = ({
   };
 
   // Calculate the displayable number of rows to avoid overflow
-  const maxRows = 6; // Maximum number of rows to display in the card
+  const maxRows = 3; // Maximum number of rows to display in the card
   const numbersPerRow = 6; // Number of elements per row
   const displayNumbers = lastNumbers.slice(0, maxRows * numbersPerRow);
+  
+  // Function to handle card click
+  const handleCardClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  // Get the latest number
+  const latestNumber = lastNumbers.length > 0 ? lastNumbers[0] : null;
 
   return (
-    <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-3 space-y-2 animate-fade-in h-full bg-zinc-950">
+    <div 
+      className={`backdrop-filter backdrop-blur-sm border ${isSelected ? 'border-[#00ff00]' : 'border-white/10'} rounded-xl p-3 space-y-2 animate-fade-in h-full bg-[#121212] cursor-pointer transition-all duration-300 hover:border-[#00ff00]/50`}
+      onClick={handleCardClick}
+    >
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold">{name}</h3>
+        <h3 className="text-sm font-semibold text-gray-200">{name}</h3>
         <div className="flex items-center gap-2">
           <TrendingUp size={18} className="text-[#00ff00]" />
         </div>
       </div>
+      
+      {/* Latest Number Display */}
+      {latestNumber !== null && (
+        <div className="flex justify-center my-2">
+          <RouletteNumber 
+            number={latestNumber}
+            size="lg" 
+            className="animate-pulse-soft"
+          />
+        </div>
+      )}
       
       <div className="overflow-hidden">
         <LastNumbers 
@@ -175,12 +203,6 @@ const RouletteCard = ({
           <HotNumbers numbers={hotNumbers.numbers} occurrences={hotNumbers.occurrences} />
         </div>
       )}
-      
-      <SuggestionDisplay 
-        strategies={userStrategies} 
-        selectedStrategyId={selectedStrategyId} 
-        onSelectStrategy={handleSelectStrategy} 
-      />
       
       <div className="grid grid-cols-2 gap-2">
         <WinRateDisplay wins={wins} losses={losses} />
