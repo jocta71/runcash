@@ -147,7 +147,13 @@ const RouletteCard = ({
     });
   };
 
-  return <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-3 space-y-2 animate-fade-in h-auto bg-zinc-950">
+  // Calculate the displayable number of rows to avoid overflow
+  const maxRows = 6; // Maximum number of rows to display in the card
+  const numbersPerRow = 6; // Number of elements per row
+  const displayNumbers = lastNumbers.slice(0, maxRows * numbersPerRow);
+
+  return (
+    <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-3 space-y-2 animate-fade-in h-full bg-zinc-950">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold">{name}</h3>
         <div className="flex items-center gap-2">
@@ -155,11 +161,26 @@ const RouletteCard = ({
         </div>
       </div>
       
-      <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
+      <div className="overflow-hidden">
+        <LastNumbers 
+          numbers={displayNumbers} 
+          isLoading={isLoading} 
+          maxRows={maxRows}
+          numbersPerRow={numbersPerRow}
+        />
+      </div>
       
-      {hotNumbers.numbers.length > 0 && <HotNumbers numbers={hotNumbers.numbers} occurrences={hotNumbers.occurrences} />}
+      {hotNumbers.numbers.length > 0 && (
+        <div className="overflow-hidden">
+          <HotNumbers numbers={hotNumbers.numbers} occurrences={hotNumbers.occurrences} />
+        </div>
+      )}
       
-      <SuggestionDisplay strategies={userStrategies} selectedStrategyId={selectedStrategyId} onSelectStrategy={handleSelectStrategy} />
+      <SuggestionDisplay 
+        strategies={userStrategies} 
+        selectedStrategyId={selectedStrategyId} 
+        onSelectStrategy={handleSelectStrategy} 
+      />
       
       <div className="grid grid-cols-2 gap-2">
         <WinRateDisplay wins={wins} losses={losses} />
@@ -167,7 +188,8 @@ const RouletteCard = ({
       </div>
       
       <RouletteActionButtons onPlayClick={handlePlayClick} />
-    </div>;
+    </div>
+  );
 };
 
 export default RouletteCard;
