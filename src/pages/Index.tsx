@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Search, Wallet, Menu, MessageSquare } from 'lucide-react';
+import { useState, useMemo, useCallback } from 'react';
+import { Search, Wallet, Menu, MessageSquare, BarChart2 } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
 import RouletteCard from '@/components/RouletteCard';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import ChatUI from '@/components/ChatUI';
 import { Button } from '@/components/ui/button';
 import AnimatedInsights from '@/components/AnimatedInsights';
 import ProfileDropdown from '@/components/ProfileDropdown';
+import RouletteStatsDialog from '@/components/roulette/RouletteStatsDialog';
 
 interface ChatMessage {
   id: string;
@@ -210,14 +211,20 @@ const Index = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [selectedRoulette, setSelectedRoulette] = useState(mockRoulettes[0]);
+  const [statsOpen, setStatsOpen] = useState(false);
   
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
   const topRoulettes = useMemo(() => {
     return [...mockRoulettes].sort((a, b) => {
       const aWinRate = a.wins / (a.wins + a.losses) * 100;
-      const bWinRate = b.wins / (b.wins + b.losses) * 100;
+      const bWinRate = b.wins / (b.wins + a.losses) * 100;
       return bWinRate - aWinRate;
     }).slice(0, 3);
+  }, []);
+
+  const handleCardClick = useCallback((roulette) => {
+    setSelectedRoulette(roulette);
   }, []);
 
   return (
@@ -284,7 +291,7 @@ const Index = () => {
         </div>
         
         {/* Desktop Header */}
-        <div className="hidden md:flex fixed top-0 left-0 right-0 md:left-64 md:right-80 z-40 h-[70px] items-center justify-between px-4 border-b border-[#33333359] bg-[#100f13]">
+        <div className="hidden md:flex fixed top-0 left-0 right-0 md:left-64 md:right-0 z-40 h-[70px] items-center justify-between px-4 border-b border-[#33333359] bg-[#100f13]">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">RunCash</span>
             <div className="relative flex items-center ml-4 max-w-[180px]">
@@ -325,9 +332,81 @@ const Index = () => {
           </div>
         </div>
         
-        <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] md:pr-[340px] w-full min-h-screen bg-[#100f13]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-2 md:mt-6">
-            {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
+        {/* Main content with new side-by-side layout */}
+        <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] w-full min-h-screen bg-[#100f13] flex flex-col lg:flex-row">
+          {/* Left side: Roulette cards */}
+          <div className="w-full lg:w-2/3 lg:pr-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-2 md:mt-6">
+              {filteredRoulettes.map((roulette, index) => (
+                <div key={index} onClick={() => handleCardClick(roulette)} className="cursor-pointer">
+                  <RouletteCard {...roulette} />
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Right side: Statistics panel */}
+          <div className="w-full lg:w-1/3 mt-6 lg:mt-2 lg:pl-4 lg:border-l lg:border-white/10">
+            <div className="sticky top-[85px]">
+              <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-5 space-y-4 animate-fade-in h-auto bg-zinc-950">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-semibold text-[#00ff00] flex items-center gap-2">
+                    <BarChart2 size={18} />
+                    Estatísticas
+                  </h3>
+                </div>
+                
+                {selectedRoulette && (
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h4 className="text-vegas-gold text-sm">{selectedRoulette.name}</h4>
+                      <p className="text-xs text-gray-400">Clique para detalhes completos</p>
+                      
+                      <Button 
+                        onClick={() => setStatsOpen(true)}
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-2 border-[#00ff00]/30 text-[#00ff00] hover:bg-[#00ff00]/10"
+                      >
+                        Ver estatísticas completas
+                      </Button>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h4 className="text-sm text-white/80">Últimos números</h4>
+                      <div className="flex flex-wrap gap-1 justify-center">
+                        {selectedRoulette.lastNumbers.slice(0, 12).map((num, idx) => (
+                          <div 
+                            key={idx} 
+                            className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium
+                              ${num === 0 ? 'bg-vegas-green text-white' : 
+                              [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(num) ? 
+                              'bg-red-600 text-white' : 'bg-black text-white'}`}
+                          >
+                            {num}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="text-sm text-white/80 mb-1">Taxa de vitória</h4>
+                        <div className="text-[#00ff00] font-bold text-lg">
+                          {((selectedRoulette.wins / (selectedRoulette.wins + selectedRoulette.losses)) * 100).toFixed(1)}%
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="text-sm text-white/80 mb-1">Total jogos</h4>
+                        <div className="text-white font-bold text-lg">
+                          {selectedRoulette.wins + selectedRoulette.losses}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
           
           <div className="h-16 md:h-0"></div>
@@ -339,6 +418,19 @@ const Index = () => {
       
       {/* Mobile Chat (drawer) */}
       <ChatUI isOpen={chatOpen} onClose={() => setChatOpen(false)} isMobile={true} />
+      
+      {/* Stats Dialog */}
+      {selectedRoulette && (
+        <RouletteStatsDialog 
+          open={statsOpen} 
+          onOpenChange={setStatsOpen} 
+          name={selectedRoulette.name}
+          lastNumbers={selectedRoulette.lastNumbers}
+          wins={selectedRoulette.wins}
+          losses={selectedRoulette.losses}
+          trend={selectedRoulette.trend}
+        />
+      )}
     </div>
   );
 };
