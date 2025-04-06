@@ -1,4 +1,5 @@
-import { TrendingUp } from 'lucide-react';
+
+import { TrendingUp, BarChart2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +11,8 @@ import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
 import HotNumbers from './roulette/HotNumbers';
 import { defaultStrategies, Strategy } from './strategies/types';
+import { Button } from './ui/button';
+import RouletteStatsDialog from './roulette/RouletteStatsDialog';
 
 interface RouletteCardProps {
   name: string;
@@ -34,6 +37,7 @@ const RouletteCard = ({
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
   const [dataSeeded, setDataSeeded] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
   const [hotNumbers, setHotNumbers] = useState<{
     numbers: number[];
     occurrences: number[];
@@ -149,7 +153,17 @@ const RouletteCard = ({
   return <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-3 space-y-2 animate-fade-in h-auto bg-zinc-950">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold">{name}</h3>
-        <TrendingUp size={18} className="text-[#00ff00]" />
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-6 w-6 text-[#00ff00] hover:text-[#00ff00]/80 hover:bg-white/10"
+            onClick={() => setStatsOpen(true)}
+          >
+            <BarChart2 size={18} />
+          </Button>
+          <TrendingUp size={18} className="text-[#00ff00]" />
+        </div>
       </div>
       
       <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
@@ -164,6 +178,16 @@ const RouletteCard = ({
       </div>
       
       <RouletteActionButtons onPlayClick={handlePlayClick} />
+      
+      <RouletteStatsDialog 
+        open={statsOpen} 
+        onOpenChange={setStatsOpen} 
+        name={name}
+        lastNumbers={lastNumbers}
+        wins={wins}
+        losses={losses}
+        trend={trend}
+      />
     </div>;
 };
 
