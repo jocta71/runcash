@@ -1,10 +1,10 @@
 
 import React from 'react';
-import { BarChart2, Pie as PieIcon, Percent } from 'lucide-react';
+import { BarChart2, PieChart, Percent } from 'lucide-react';
 import RouletteNumber from './RouletteNumber';
 import { Button } from '@/components/ui/button';
 import {
-  PieChart,
+  PieChart as ReChartsPie,
   Pie,
   Cell,
   ResponsiveContainer,
@@ -95,11 +95,11 @@ const RouletteStatsPanel = ({
         
         <div className="space-y-3">
           <h4 className="text-sm text-white/80 flex items-center gap-1">
-            <PieIcon size={14} /> Distribuição por Cor
+            <PieChart size={14} /> Distribuição por Cor
           </h4>
           <div className="h-[120px]">
             <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
+              <ReChartsPie>
                 <Pie
                   data={colorData}
                   cx="50%"
@@ -115,7 +115,7 @@ const RouletteStatsPanel = ({
                 </Pie>
                 <Tooltip />
                 <Legend />
-              </PieChart>
+              </ReChartsPie>
             </ResponsiveContainer>
           </div>
         </div>

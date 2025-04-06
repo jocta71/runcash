@@ -1,4 +1,3 @@
-
 import { TrendingUp, BarChart2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
@@ -11,6 +10,7 @@ import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
 import HotNumbers from './roulette/HotNumbers';
 import { defaultStrategies, Strategy } from './strategies/types';
+import RouletteNumber from './roulette/RouletteNumber';
 
 interface RouletteCardProps {
   name: string;
@@ -151,19 +151,16 @@ const RouletteCard = ({
     });
   };
 
-  // Calculate the displayable number of rows to avoid overflow
-  const maxRows = 3; // Maximum number of rows to display in the card
-  const numbersPerRow = 6; // Number of elements per row
+  const maxRows = 3;
+  const numbersPerRow = 6;
   const displayNumbers = lastNumbers.slice(0, maxRows * numbersPerRow);
-  
-  // Function to handle card click
+
   const handleCardClick = () => {
     if (onClick) {
       onClick();
     }
   };
 
-  // Get the latest number
   const latestNumber = lastNumbers.length > 0 ? lastNumbers[0] : null;
 
   return (
@@ -178,7 +175,6 @@ const RouletteCard = ({
         </div>
       </div>
       
-      {/* Latest Number Display */}
       {latestNumber !== null && (
         <div className="flex justify-center my-2">
           <RouletteNumber 
