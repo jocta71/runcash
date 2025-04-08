@@ -115,17 +115,25 @@ const RouletteStatsDialog = ({
     return [
       { name: 'Vermelhos', value: reds, porcentagem: (reds / total * 100).toFixed(1), color: '#ef4444' },
       { name: 'Pretos', value: blacks, porcentagem: (blacks / total * 100).toFixed(1), color: '#111827' },
-      { name: 'Zero', value: zeros, porcentagem: (zeros / total * 100).toFixed(1), color: '#059669' },
+      { name: 'Zero', value: zeros, porcentagem: (zeros / total * 100).toFixed(1), color: '#4ADE80' },
     ];
   }, [lastNumbers]);
   
   const winRate = wins + losses > 0 ? (wins / (wins + losses)) * 100 : 0;
   
+  // Convert trend data to the right format for charts
+  const trendChartData = useMemo(() => {
+    return trend.map((item, index) => ({
+      name: index,
+      value: item.value
+    }));
+  }, [trend]);
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-[80vw] md:max-w-[85vw] h-[90vh] overflow-y-auto bg-[#121212] border-[#00ff00]/20">
+      <DialogContent className="max-w-[95vw] sm:max-w-[80vw] md:max-w-[85vw] h-[90vh] overflow-y-auto bg-[#121212] border-vegas-green/20">
         <DialogHeader>
-          <DialogTitle className="flex items-center text-lg text-[#00ff00]">
+          <DialogTitle className="flex items-center text-lg text-vegas-green">
             <BarChart2 className="mr-2" size={20} /> Estatísticas da {name}
           </DialogTitle>
           <DialogDescription>
@@ -136,8 +144,8 @@ const RouletteStatsDialog = ({
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-full">
           {/* Left side - History takes up full height */}
           <div className="md:col-span-3 flex flex-col h-full">
-            <div className="bg-[#1a1a1a] p-4 rounded-lg border border-white/5 h-full overflow-y-auto">
-              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+            <div className="bg-[#1A1E1D] p-4 rounded-lg border border-white/5 h-full overflow-y-auto">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-vegas-green">
                 <TrendingUp size={16} className="mr-2" /> Histórico de Números
               </h3>
               <div className="grid grid-cols-10 sm:grid-cols-12 md:grid-cols-15 gap-1.5">
@@ -149,7 +157,7 @@ const RouletteStatsDialog = ({
               </div>
               
               {/* Frequency Chart */}
-              <h3 className="text-base font-semibold mt-6 mb-3 flex items-center text-[#00ff00]">
+              <h3 className="text-base font-semibold mt-6 mb-3 flex items-center text-vegas-green">
                 <BarChart2 size={16} className="mr-2" /> Frequência de Números
               </h3>
               <div className="h-[180px]">
@@ -159,11 +167,35 @@ const RouletteStatsDialog = ({
                     <XAxis dataKey="number" stroke="#ccc" />
                     <YAxis stroke="#ccc" />
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#222', borderColor: '#00ff00' }} 
-                      labelStyle={{ color: '#00ff00' }}
+                      contentStyle={{ backgroundColor: '#232323', borderColor: '#4ADE80' }} 
+                      labelStyle={{ color: '#4ADE80' }}
                     />
-                    <Bar dataKey="frequency" fill="#00ff00" />
+                    <Bar dataKey="frequency" fill="#4ADE80" />
                   </BarChart>
+                </ResponsiveContainer>
+              </div>
+              
+              {/* Trend Chart */}
+              <h3 className="text-base font-semibold mt-6 mb-3 flex items-center text-vegas-green">
+                <TrendingUp size={16} className="mr-2" /> Tendência
+              </h3>
+              <div className="h-[180px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={trendChartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                    <XAxis dataKey="name" stroke="#ccc" />
+                    <YAxis stroke="#ccc" />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#232323', borderColor: '#4ADE80' }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#4ADE80" 
+                      strokeWidth={2} 
+                      dot={{ fill: '#4ADE80', strokeWidth: 2 }}
+                    />
+                  </LineChart>
                 </ResponsiveContainer>
               </div>
             </div>
@@ -172,8 +204,8 @@ const RouletteStatsDialog = ({
           {/* Right side - Stacked charts */}
           <div className="md:col-span-1 flex flex-col gap-4 h-full">
             {/* Win Rate Chart */}
-            <div className="bg-[#1a1a1a] p-4 rounded-lg border border-white/5">
-              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+            <div className="bg-[#1A1E1D] p-4 rounded-lg border border-white/5">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-vegas-green">
                 <Percent size={16} className="mr-2" /> Taxa de Vitória
               </h3>
               <div className="h-[180px]">
@@ -192,19 +224,19 @@ const RouletteStatsDialog = ({
                       dataKey="value"
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
                     >
-                      <Cell key="wins" fill="#00ff00" />
+                      <Cell key="wins" fill="#4ADE80" />
                       <Cell key="losses" fill="#ef4444" />
                     </Pie>
                     <Legend />
-                    <Tooltip />
+                    <Tooltip contentStyle={{ backgroundColor: '#232323', borderColor: '#4ADE80' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>
             
             {/* Color Distribution */}
-            <div className="bg-[#1a1a1a] p-4 rounded-lg border border-white/5">
-              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+            <div className="bg-[#1A1E1D] p-4 rounded-lg border border-white/5">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-vegas-green">
                 <PieIcon size={16} className="mr-2" /> Distribuição por Cor
               </h3>
               <div className="h-[180px]">
@@ -224,22 +256,22 @@ const RouletteStatsDialog = ({
                       ))}
                     </Pie>
                     <Legend />
-                    <Tooltip />
+                    <Tooltip contentStyle={{ backgroundColor: '#232323', borderColor: '#4ADE80' }} />
                   </PieChart>
                 </ResponsiveContainer>
               </div>
             </div>
             
             {/* Hot & Cold Numbers */}
-            <div className="bg-[#1a1a1a] p-4 rounded-lg border border-white/5">
-              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+            <div className="bg-[#1A1E1D] p-4 rounded-lg border border-white/5">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-vegas-green">
                 <Flame size={16} className="mr-2" /> Números Mais Frequentes
               </h3>
               <div className="flex flex-wrap gap-2">
                 {hot.slice(0, 8).map((item, i) => (
                   <div key={i} className="flex items-center space-x-1">
                     <RouletteNumber number={item.number} size="sm" />
-                    <span className="text-vegas-gold text-xs">({item.frequency}x)</span>
+                    <span className="text-vegas-green text-xs">({item.frequency}x)</span>
                   </div>
                 ))}
               </div>

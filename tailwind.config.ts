@@ -59,14 +59,17 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				vegas: {
-					black: '#0A0C14',
-					darkgray: '#161A26',
-					green: '#00ff00',
+					black: '#121212',
+					darkgray: '#1A1A1A',
+					green: '#4ADE80',
+					brightgreen: '#4ADE80',
 					gold: '#D4AF37',
 					darkgold: '#B8860B',
 					blue: '#36B5FF',
 					red: '#FF4560',
 					darkgreen: '#0E3B28',
+					charcoal: '#232323',
+					lime: '#BBFF2D',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -185,7 +188,8 @@ export default {
 			backgroundImage: {
 				'gold-gradient': 'linear-gradient(135deg, #D4AF37 0%, #FCD978 50%, #D4AF37 100%)',
 				'dark-gradient': 'linear-gradient(135deg, #0A0C14 0%, #161A26 100%)',
-				'table-felt': 'linear-gradient(135deg, #0E3B28 0%, #0D2F20 100%)'
+				'table-felt': 'linear-gradient(135deg, #0E3B28 0%, #0D2F20 100%)',
+				'green-gradient': 'linear-gradient(135deg, #4ADE80 0%, #22c55e 100%)'
 			}
 		}
 	},

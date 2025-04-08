@@ -1,3 +1,4 @@
+
 import { useState, useMemo, useCallback } from 'react';
 import { Search, Wallet, Menu, MessageSquare } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -133,7 +134,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex bg-[#0a0a0a]">
+    <div className="min-h-screen flex bg-gradient-to-br from-[#121212] to-[#1C2622]">
       {/* Desktop Sidebar */}
       <Sidebar />
       
@@ -147,20 +148,20 @@ const Index = () => {
             className="p-2"
             onClick={() => setSidebarOpen(true)}
           >
-            <Menu size={24} className="text-[#00ff00]" />
+            <Menu size={24} className="text-vegas-green" />
           </button>
           
           <div className="flex-1"></div>
           
           <div className="flex items-center gap-2">
             {showMobileSearch ? (
-              <div className="absolute top-0 left-0 right-0 z-50 p-2 bg-[#100f13] border-b border-[#33333359]">
+              <div className="absolute top-0 left-0 right-0 z-50 p-2 bg-[#121212] border-b border-[#33333359]">
                 <div className="relative flex items-center w-full">
                   <Search size={16} className="absolute left-3 text-gray-400" />
                   <Input 
                     type="text" 
                     placeholder="Pesquisar roleta..." 
-                    className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+                    className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A1E1D] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
                     value={search} 
                     onChange={e => setSearch(e.target.value)}
                     autoFocus
@@ -171,7 +172,7 @@ const Index = () => {
             ) : (
               <>
                 <button 
-                  className="p-2 bg-[#1A191F] rounded-full"
+                  className="p-2 bg-[#1A1E1D] rounded-full"
                   onClick={() => setShowMobileSearch(true)}
                 >
                   <Search size={16} className="text-gray-400" />
@@ -179,7 +180,7 @@ const Index = () => {
                 <Button 
                   variant="default" 
                   size="sm" 
-                  className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90"
+                  className="h-8 text-black font-medium bg-gradient-to-b from-vegas-green to-[#22c55e] hover:from-vegas-green/90 hover:to-[#22c55e]/90"
                 >
                   <Wallet size={14} className="mr-1" /> Saldo
                 </Button>
@@ -190,13 +191,13 @@ const Index = () => {
               className="p-2"
               onClick={() => setChatOpen(true)}
             >
-              <MessageSquare size={24} className="text-[#00ff00]" />
+              <MessageSquare size={24} className="text-vegas-green" />
             </button>
           </div>
         </div>
         
         {/* Desktop Header */}
-        <div className="hidden md:flex fixed top-0 left-0 right-0 md:left-64 md:right-0 z-40 h-[70px] items-center justify-between px-4 border-b border-[#33333359] bg-[#0a0a0a]">
+        <div className="hidden md:flex fixed top-0 left-0 right-0 md:left-64 md:right-0 z-40 h-[70px] items-center justify-between px-4 border-b border-white/10 bg-[#121212]">
           <div className="flex items-center gap-2">
             <span className="text-white text-2xl font-bold">RunCash</span>
             <div className="relative flex items-center ml-4 max-w-[180px]">
@@ -204,7 +205,7 @@ const Index = () => {
               <Input 
                 type="text" 
                 placeholder="Pesquisar roleta..." 
-                className="h-8 pl-7 py-1 pr-2 text-xs bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+                className="h-8 pl-7 py-1 pr-2 text-xs bg-[#1A1E1D] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
                 value={search} 
                 onChange={e => setSearch(e.target.value)} 
               />
@@ -214,7 +215,7 @@ const Index = () => {
           <AnimatedInsights />
           
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-[#1A191F] rounded-full py-1 px-3">
+            <div className="flex items-center gap-2 bg-[#1A1E1D] rounded-full py-1 px-3">
               <span className="h-5 w-5 bg-vegas-blue rounded-full flex items-center justify-center">
                 <span className="text-[10px] text-white">R$</span>
               </span>
@@ -222,7 +223,7 @@ const Index = () => {
               <Wallet size={14} className="text-gray-400" />
             </div>
             
-            <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
+            <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-vegas-green to-[#22c55e] hover:from-vegas-green/90 hover:to-[#22c55e]/90">
               <Wallet size={14} className="mr-1" /> Saldo
             </Button>
             
@@ -232,13 +233,13 @@ const Index = () => {
         
         {/* Mobile Insights */}
         <div className="md:hidden px-4 py-2 mt-14">
-          <div className="bg-[#1A191F]/50 rounded-lg p-3">
+          <div className="bg-[#1A1E1D]/50 rounded-lg p-3">
             <AnimatedInsights />
           </div>
         </div>
         
         {/* Main content with side-by-side layout */}
-        <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] w-full min-h-screen bg-[#0a0a0a] flex flex-col lg:flex-row gap-4">
+        <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] w-full min-h-screen flex flex-col lg:flex-row gap-4">
           {/* Left side: Roulette cards */}
           <div className="w-full lg:w-2/3 lg:pr-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">

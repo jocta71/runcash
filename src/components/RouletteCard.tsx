@@ -1,3 +1,4 @@
+
 import { TrendingUp, BarChart2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
@@ -165,13 +166,13 @@ const RouletteCard = ({
 
   return (
     <div 
-      className={`backdrop-filter backdrop-blur-sm border ${isSelected ? 'border-[#00ff00]' : 'border-white/10'} rounded-xl p-3 space-y-2 animate-fade-in h-full bg-[#121212] cursor-pointer transition-all duration-300 hover:border-[#00ff00]/50`}
+      className={`backdrop-filter backdrop-blur-sm border ${isSelected ? 'border-vegas-green' : 'border-white/10'} rounded-xl p-3 space-y-2 animate-fade-in h-full bg-[#1A1E1D] cursor-pointer transition-all duration-300 hover:border-vegas-green/50`}
       onClick={handleCardClick}
     >
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-200">{name}</h3>
         <div className="flex items-center gap-2">
-          <TrendingUp size={18} className="text-[#00ff00]" />
+          <TrendingUp size={18} className="text-vegas-green" />
         </div>
       </div>
       

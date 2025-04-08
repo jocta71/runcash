@@ -13,7 +13,9 @@ import {
   BarChart,
   Bar,
   XAxis,
-  YAxis
+  YAxis,
+  LineChart,
+  Line
 } from 'recharts';
 
 interface RouletteStatsPanelProps {
@@ -50,16 +52,30 @@ const RouletteStatsPanel = ({
     return [
       { name: 'Vermelhos', value: reds, color: '#ef4444' },
       { name: 'Pretos', value: blacks, color: '#111827' },
-      { name: 'Zero', value: zeros, color: '#059669' },
+      { name: 'Zero', value: zeros, color: '#4ADE80' },
     ];
   };
   
   const colorData = generateColorDistribution();
   
+  // Generate trend data
+  const generateTrendData = () => {
+    const data = [];
+    for (let i = 0; i < 10; i++) {
+      data.push({
+        name: i,
+        value: Math.floor(Math.random() * 10) + 5
+      });
+    }
+    return data;
+  };
+  
+  const trendData = generateTrendData();
+  
   return (
-    <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-5 space-y-4 animate-fade-in h-auto bg-[#121212]">
+    <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-5 space-y-4 animate-fade-in h-auto bg-[#1A1E1D]">
       <div className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-[#00ff00] flex items-center gap-2">
+        <h3 className="text-base font-semibold text-vegas-green flex items-center gap-2">
           <BarChart2 size={18} />
           Estatísticas
         </h3>
@@ -67,14 +83,14 @@ const RouletteStatsPanel = ({
       
       <div className="space-y-5">
         <div className="text-center">
-          <h4 className="text-vegas-gold text-sm">{name}</h4>
+          <h4 className="text-vegas-lime text-sm">{name}</h4>
           <p className="text-xs text-gray-400 mt-1">Clique para detalhes completos</p>
           
           <Button 
             onClick={onOpenFullStats}
             variant="outline" 
             size="sm" 
-            className="mt-2 border-[#00ff00]/30 text-[#00ff00] hover:bg-[#00ff00]/10"
+            className="mt-2 border-vegas-green/30 bg-vegas-green/10 text-vegas-green hover:bg-vegas-green/20"
           >
             Ver estatísticas completas
           </Button>
@@ -93,7 +109,7 @@ const RouletteStatsPanel = ({
           </div>
         </div>
         
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h4 className="text-sm text-white/80 flex items-center gap-1">
             <PieChart size={14} /> Distribuição por Cor
           </h4>
@@ -113,9 +129,28 @@ const RouletteStatsPanel = ({
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={{ backgroundColor: '#232323', borderColor: '#4ADE80', borderRadius: '8px' }} />
                 <Legend />
               </ReChartsPie>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        
+        <div className="space-y-2">
+          <h4 className="text-sm text-white/80 flex items-center gap-1">
+            <Percent size={14} /> Tendência
+          </h4>
+          <div className="h-[80px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={trendData}>
+                <Line 
+                  type="monotone" 
+                  dataKey="value" 
+                  stroke="#4ADE80" 
+                  strokeWidth={2}
+                  dot={false}
+                />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -125,7 +160,7 @@ const RouletteStatsPanel = ({
             <h4 className="text-sm text-white/80 mb-1 flex items-center gap-1">
               <Percent size={14} /> Taxa de vitória
             </h4>
-            <div className="text-[#00ff00] font-bold text-lg">
+            <div className="text-vegas-green font-bold text-lg">
               {winRate.toFixed(1)}%
             </div>
           </div>

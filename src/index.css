@@ -9,33 +9,33 @@
 
 @layer base {
   :root {
-    --background: 225 22% 6%;
-    --foreground: 210 20% 98%;
+    --background: 140 10% 10%;
+    --foreground: 0 0% 98%;
 
-    --card: 229 20% 10%;
-    --card-foreground: 210 20% 98%;
+    --card: 145 10% 14%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 229 25% 8%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 145 10% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 45 76% 52%;
-    --primary-foreground: 229 20% 10%;
+    --primary: 142 70% 50%;
+    --primary-foreground: 145 10% 10%;
 
-    --secondary: 229 15% 15%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 145 8% 20%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 229 15% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 145 8% 20%;
+    --muted-foreground: 0 0% 70%;
 
-    --accent: 45 76% 52%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 84 80% 59%;
+    --accent-foreground: 145 10% 10%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 229 20% 18%;
-    --input: 229 20% 18%;
-    --ring: 45 76% 52%;
+    --border: 145 12% 20%;
+    --input: 145 12% 20%;
+    --ring: 142 70% 50%;
 
     --radius: 0.75rem;
   }
@@ -45,9 +45,7 @@
   }
 
   body {
-    @apply bg-vegas-black text-foreground antialiased overflow-x-hidden font-sans;
-    background-image: 
-      url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4AF37' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    @apply bg-gradient-to-br from-[#121212] to-[#1C2622] text-foreground antialiased overflow-x-hidden font-sans min-h-screen;
   }
 
   /* Custom Scrollbar */
@@ -61,17 +59,17 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-vegas-gold/60 rounded-full transition-all duration-300;
+    @apply bg-vegas-green/60 rounded-full transition-all duration-300;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-vegas-gold;
+    @apply bg-vegas-green;
   }
 }
 
 @layer components {
   .neon-border-green {
-    @apply border border-vegas-green shadow-[0_0_10px_rgba(0,255,0,0.5)];
+    @apply border border-vegas-green shadow-[0_0_10px_rgba(74,222,128,0.5)];
   }
   
   .neon-border-gold {
@@ -83,15 +81,15 @@
   }
 
   .glass-card {
-    @apply bg-white/5 backdrop-filter backdrop-blur-sm border border-vegas-gold/20 rounded-xl;
+    @apply bg-[#1A1E1D] backdrop-filter backdrop-blur-sm border border-white/5 rounded-xl;
   }
 
   .menu-item {
-    @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-300 hover:text-vegas-gold hover:bg-[#22202a] transition-all duration-200 cursor-pointer text-sm;
+    @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-300 hover:text-vegas-green hover:bg-[#1A1E1D] transition-all duration-200 cursor-pointer text-sm;
   }
 
   .menu-item.active {
-    @apply bg-[#22202a] text-vegas-gold;
+    @apply bg-[#1A1E1D] text-vegas-green;
   }
 
   .hover-scale {
@@ -99,7 +97,7 @@
   }
 
   .hover-neon-green {
-    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(0,255,0,0.7)];
+    @apply transition-all duration-200 hover:text-vegas-green hover:shadow-[0_0_10px_rgba(74,222,128,0.7)];
   }
 
   .hover-neon-gold {
@@ -115,24 +113,24 @@
   }
   
   .jackpot-border {
-    @apply border-2 border-vegas-gold rounded-xl animate-jackpot-lights;
+    @apply border-2 border-vegas-green rounded-xl animate-jackpot-lights;
   }
   
   .casino-gradient-bg {
-    @apply bg-gradient-to-b from-[#0A0C14] to-[#0A1716];
+    @apply bg-gradient-to-b from-[#121212] to-[#182921];
   }
   
   .casino-card {
-    @apply bg-gradient-to-b from-vegas-black/90 to-[#0A1716]/90 backdrop-blur-sm border border-vegas-gold/20 rounded-xl shadow-lg;
+    @apply bg-[#1A1E1D] backdrop-blur-sm border border-white/5 rounded-xl shadow-lg;
   }
   
   .table-felt {
-    @apply bg-table-felt border border-vegas-gold/20 rounded-xl;
+    @apply bg-table-felt border border-white/5 rounded-xl;
   }
   
   /* Mobile responsive styles */
   .mobile-menu-toggle {
-    @apply md:hidden block p-2 text-white hover:text-vegas-gold transition-colors;
+    @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
   }
   
   .mobile-sidebar {
@@ -140,15 +138,15 @@
   }
   
   .mobile-sidebar-inner {
-    @apply w-3/4 max-w-xs h-full bg-[#0B0A0F] overflow-auto border-r border-vegas-gold/20;
+    @apply w-3/4 max-w-xs h-full bg-[#121212] overflow-auto border-r border-white/10;
   }
   
   .mobile-header {
-    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-[#100f13] border-b border-vegas-gold/20 md:hidden;
+    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-[#121212] border-b border-white/10 md:hidden;
   }
   
   .mobile-chat-toggle {
-    @apply md:hidden block p-2 text-white hover:text-vegas-gold transition-colors;
+    @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
   }
 }
 
