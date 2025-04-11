@@ -1,8 +1,10 @@
 
 import React from 'react';
-import { BarChart2, PieChart, Percent } from 'lucide-react';
+import { BarChart2, PieChart, Percent, ChevronRight } from 'lucide-react';
 import RouletteNumber from './RouletteNumber';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   PieChart as ReChartsPie,
   Pie,
@@ -73,31 +75,34 @@ const RouletteStatsPanel = ({
   const trendData = generateTrendData();
   
   return (
-    <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-5 space-y-4 animate-fade-in h-auto bg-[#1A1E1D]">
-      <div className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-vegas-green flex items-center gap-2">
-          <BarChart2 size={18} />
-          Estatísticas
-        </h3>
-      </div>
+    <Card className="animate-fade-in bg-[#1A1E1D]/90 border border-vegas-green/20 rounded-xl shadow-lg shadow-vegas-green/5">
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base font-semibold text-vegas-green flex items-center gap-2">
+            <BarChart2 size={18} />
+            Estatísticas
+          </CardTitle>
+        </div>
+        <CardDescription className="text-gray-400">
+          {name}
+        </CardDescription>
+      </CardHeader>
       
-      <div className="space-y-5">
-        <div className="text-center">
-          <h4 className="text-vegas-lime text-sm">{name}</h4>
-          <p className="text-xs text-gray-400 mt-1">Clique para detalhes completos</p>
-          
+      <CardContent className="space-y-4">
+        <div className="flex justify-center">
           <Button 
             onClick={onOpenFullStats}
             variant="outline" 
             size="sm" 
-            className="mt-2 border-vegas-green/30 bg-vegas-green/10 text-vegas-green hover:bg-vegas-green/20"
+            className="w-full border-vegas-green/30 bg-vegas-green/10 text-vegas-green hover:bg-vegas-green/20 flex items-center justify-between"
           >
-            Ver estatísticas completas
+            <span>Ver estatísticas completas</span>
+            <ChevronRight size={16} />
           </Button>
         </div>
         
         <div className="space-y-2">
-          <h4 className="text-sm text-white/80">Últimos números</h4>
+          <h4 className="text-sm font-medium text-white/80 mb-1">Últimos números</h4>
           <div className="flex flex-wrap gap-1.5 justify-center">
             {lastNumbers.slice(0, 12).map((num, idx) => (
               <RouletteNumber 
@@ -110,9 +115,10 @@ const RouletteStatsPanel = ({
         </div>
         
         <div className="space-y-2">
-          <h4 className="text-sm text-white/80 flex items-center gap-1">
-            <PieChart size={14} /> Distribuição por Cor
-          </h4>
+          <div className="flex items-center gap-1 mb-1">
+            <PieChart size={14} className="text-white/80" />
+            <h4 className="text-sm font-medium text-white/80">Distribuição por Cor</h4>
+          </div>
           <div className="h-[120px]">
             <ResponsiveContainer width="100%" height="100%">
               <ReChartsPie>
@@ -129,7 +135,14 @@ const RouletteStatsPanel = ({
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip contentStyle={{ backgroundColor: '#232323', borderColor: '#4ADE80', borderRadius: '8px' }} />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#1A1E1D', 
+                    borderColor: '#4ADE80', 
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(74, 222, 128, 0.15)'
+                  }} 
+                />
                 <Legend />
               </ReChartsPie>
             </ResponsiveContainer>
@@ -137,10 +150,11 @@ const RouletteStatsPanel = ({
         </div>
         
         <div className="space-y-2">
-          <h4 className="text-sm text-white/80 flex items-center gap-1">
-            <Percent size={14} /> Tendência
-          </h4>
-          <div className="h-[80px]">
+          <div className="flex items-center gap-1 mb-1">
+            <Percent size={14} className="text-white/80" />
+            <h4 className="text-sm font-medium text-white/80">Tendência</h4>
+          </div>
+          <div className="h-[80px] p-1">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={trendData}>
                 <Line 
@@ -156,7 +170,7 @@ const RouletteStatsPanel = ({
         </div>
         
         <div className="grid grid-cols-2 gap-4">
-          <div>
+          <div className="bg-[#0E3B28]/50 p-3 rounded-lg border border-vegas-green/20">
             <h4 className="text-sm text-white/80 mb-1 flex items-center gap-1">
               <Percent size={14} /> Taxa de vitória
             </h4>
@@ -164,15 +178,19 @@ const RouletteStatsPanel = ({
               {winRate.toFixed(1)}%
             </div>
           </div>
-          <div>
+          <div className="bg-[#0E3B28]/50 p-3 rounded-lg border border-vegas-green/20">
             <h4 className="text-sm text-white/80 mb-1">Total jogos</h4>
             <div className="text-white font-bold text-lg">
               {wins + losses}
             </div>
+            <div className="flex gap-1 mt-1">
+              <Badge variant="default" className="bg-vegas-green text-xs">V: {wins}</Badge>
+              <Badge variant="outline" className="text-vegas-red text-xs">D: {losses}</Badge>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
