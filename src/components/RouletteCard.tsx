@@ -149,7 +149,7 @@ const RouletteCard = ({
     }
   };
   const latestNumber = lastNumbers.length > 0 ? lastNumbers[0] : null;
-  return <div onClick={handleCardClick} className="">
+  return <div onClick={handleCardClick} className="bg-zinc-900 py-[12px] px-[12px] rounded-md">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-gray-200">{name}</h3>
         <div className="flex items-center gap-2">
