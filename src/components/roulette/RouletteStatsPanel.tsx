@@ -75,7 +75,7 @@ const RouletteStatsPanel = ({
   const trendData = generateTrendData();
   
   return (
-    <Card className="animate-fade-in bg-[#1A1E1D]/90 border border-vegas-green/20 rounded-xl shadow-lg shadow-vegas-green/5">
+    <Card className="animate-fade-in bg-black border border-vegas-green/20 rounded-xl shadow-lg shadow-vegas-green/5">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base font-semibold text-vegas-green flex items-center gap-2">
@@ -137,7 +137,7 @@ const RouletteStatsPanel = ({
                 </Pie>
                 <Tooltip 
                   contentStyle={{ 
-                    backgroundColor: '#1A1E1D', 
+                    backgroundColor: '#000000', 
                     borderColor: '#4ADE80', 
                     borderRadius: '8px',
                     boxShadow: '0 4px 12px rgba(74, 222, 128, 0.15)'
@@ -170,7 +170,7 @@ const RouletteStatsPanel = ({
         </div>
         
         <div className="grid grid-cols-2 gap-4">
-          <div className="bg-[#0E3B28]/50 p-3 rounded-lg border border-vegas-green/20">
+          <div className="bg-black p-3 rounded-lg border border-vegas-green/20">
             <h4 className="text-sm text-white/80 mb-1 flex items-center gap-1">
               <Percent size={14} /> Taxa de vitória
             </h4>
@@ -178,7 +178,7 @@ const RouletteStatsPanel = ({
               {winRate.toFixed(1)}%
             </div>
           </div>
-          <div className="bg-[#0E3B28]/50 p-3 rounded-lg border border-vegas-green/20">
+          <div className="bg-black p-3 rounded-lg border border-vegas-green/20">
             <h4 className="text-sm text-white/80 mb-1">Total jogos</h4>
             <div className="text-white font-bold text-lg">
               {wins + losses}
