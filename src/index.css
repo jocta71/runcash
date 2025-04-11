@@ -9,32 +9,32 @@
 
 @layer base {
   :root {
-    --background: 140 10% 10%;
+    --background: 0 0% 0%;
     --foreground: 0 0% 98%;
 
-    --card: 145 10% 14%;
+    --card: 0 0% 5%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 145 10% 12%;
+    --popover: 0 0% 3%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 142 70% 50%;
-    --primary-foreground: 145 10% 10%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 145 8% 20%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 145 8% 20%;
+    --muted: 0 0% 10%;
     --muted-foreground: 0 0% 70%;
 
     --accent: 84 80% 59%;
-    --accent-foreground: 145 10% 10%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 145 12% 20%;
-    --input: 145 12% 20%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
     --ring: 142 70% 50%;
 
     --radius: 0.75rem;
@@ -45,7 +45,7 @@
   }
 
   body {
-    @apply bg-gradient-to-br from-[#121212] to-[#1C2622] text-foreground antialiased overflow-x-hidden font-sans min-h-screen;
+    @apply bg-black text-foreground antialiased overflow-x-hidden font-sans min-h-screen;
   }
 
   /* Custom Scrollbar */
@@ -81,15 +81,15 @@
   }
 
   .glass-card {
-    @apply bg-[#1A1E1D] backdrop-filter backdrop-blur-sm border border-white/5 rounded-xl;
+    @apply bg-vegas-darkgray backdrop-filter backdrop-blur-sm border border-white/5 rounded-xl;
   }
 
   .menu-item {
-    @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-300 hover:text-vegas-green hover:bg-[#1A1E1D] transition-all duration-200 cursor-pointer text-sm;
+    @apply flex items-center gap-3 px-4 py-2 rounded-lg text-gray-300 hover:text-vegas-green hover:bg-vegas-darkgray transition-all duration-200 cursor-pointer text-sm;
   }
 
   .menu-item.active {
-    @apply bg-[#1A1E1D] text-vegas-green;
+    @apply bg-vegas-darkgray text-vegas-green;
   }
 
   .hover-scale {
@@ -117,11 +117,11 @@
   }
   
   .casino-gradient-bg {
-    @apply bg-gradient-to-b from-[#121212] to-[#182921];
+    @apply bg-gradient-to-b from-black to-[#111111];
   }
   
   .casino-card {
-    @apply bg-[#1A1E1D] backdrop-blur-sm border border-white/5 rounded-xl shadow-lg;
+    @apply bg-vegas-darkgray backdrop-blur-sm border border-white/5 rounded-xl shadow-lg;
   }
   
   .table-felt {
@@ -134,15 +134,15 @@
   }
   
   .mobile-sidebar {
-    @apply fixed inset-0 z-50 bg-vegas-black/90 backdrop-blur-sm transition-all duration-300 md:hidden;
+    @apply fixed inset-0 z-50 bg-black/90 backdrop-blur-sm transition-all duration-300 md:hidden;
   }
   
   .mobile-sidebar-inner {
-    @apply w-3/4 max-w-xs h-full bg-[#121212] overflow-auto border-r border-white/10;
+    @apply w-3/4 max-w-xs h-full bg-black overflow-auto border-r border-white/10;
   }
   
   .mobile-header {
-    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-[#121212] border-b border-white/10 md:hidden;
+    @apply fixed top-0 left-0 right-0 z-40 flex items-center justify-between p-4 h-16 bg-black border-b border-white/10 md:hidden;
   }
   
   .mobile-chat-toggle {

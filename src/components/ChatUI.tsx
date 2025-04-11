@@ -121,17 +121,17 @@ const ChatUI = ({ isOpen = false, onClose, isMobile = false }: ChatUIProps) => {
 
   // Styles for mobile vs desktop
   const chatClasses = isMobile
-    ? "fixed inset-0 bg-vegas-darkgray z-50 flex flex-col"
+    ? "fixed inset-0 bg-black z-50 flex flex-col"
     : minimized
-      ? "fixed bottom-0 right-4 w-80 flex flex-col bg-vegas-darkgray z-50 border border-[#33333359] rounded-t-xl shadow-lg"
-      : "fixed bottom-0 right-4 h-[500px] max-h-[80vh] w-80 flex flex-col bg-vegas-darkgray z-50 border border-[#33333359] rounded-t-xl shadow-lg";
+      ? "fixed bottom-0 right-4 w-80 flex flex-col bg-black z-50 border border-[#33333359] rounded-t-xl shadow-lg"
+      : "fixed bottom-0 right-4 h-[500px] max-h-[80vh] w-80 flex flex-col bg-black z-50 border border-[#33333359] rounded-t-xl shadow-lg";
   
   // For mobile, if it's not open, don't render
   if (isMobile && !isOpen) return null;
   
   return (
     <div className={chatClasses}>
-      <div className="flex justify-between items-center p-2 bg-[#1A191F] border-b border-[#33333359] cursor-pointer" onClick={toggleMinimize}>
+      <div className="flex justify-between items-center p-2 bg-vegas-darkgray border-b border-[#33333359] cursor-pointer" onClick={toggleMinimize}>
         <div className="flex-1">
           {!minimized && <ChatHeader />}
           {minimized && <h3 className="text-white font-medium ml-2">Chat ao Vivo</h3>}

@@ -9,7 +9,7 @@ interface ChatMessageListProps {
 
 const ChatMessageList = ({ messages }: ChatMessageListProps) => {
   return (
-    <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none bg-[#0b0a0f]">
+    <div className="flex-1 overflow-y-auto p-3 space-y-4 scrollbar-none bg-black">
       {messages.map((msg) => (
         <ChatMessage key={msg.id} message={msg} />
       ))}
