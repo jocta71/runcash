@@ -4,7 +4,7 @@ import ChatHeader from './chat/ChatHeader';
 import ChatMessageList from './chat/ChatMessageList';
 import ChatInput from './chat/ChatInput';
 import { ChatMessage } from './chat/types';
-import { X } from 'lucide-react';
+import { X, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ChatUIProps {
   isOpen?: boolean;
@@ -96,6 +96,7 @@ const ChatUI = ({ isOpen = false, onClose, isMobile = false }: ChatUIProps) => {
   ]);
   
   const [newMessage, setNewMessage] = useState('');
+  const [minimized, setMinimized] = useState(false);
   
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,33 +115,51 @@ const ChatUI = ({ isOpen = false, onClose, isMobile = false }: ChatUIProps) => {
     setNewMessage('');
   };
 
+  const toggleMinimize = () => {
+    setMinimized(!minimized);
+  };
+
   // Styles for mobile vs desktop
   const chatClasses = isMobile
     ? "fixed inset-0 bg-vegas-darkgray z-50 flex flex-col"
-    : "fixed top-0 right-0 h-screen w-80 flex flex-col bg-vegas-darkgray z-50 border-l border-[#33333359] md:block hidden";
+    : minimized
+      ? "fixed bottom-0 right-4 w-80 flex flex-col bg-vegas-darkgray z-50 border border-[#33333359] rounded-t-xl shadow-lg"
+      : "fixed bottom-0 right-4 h-[500px] max-h-[80vh] w-80 flex flex-col bg-vegas-darkgray z-50 border border-[#33333359] rounded-t-xl shadow-lg";
   
   // For mobile, if it's not open, don't render
   if (isMobile && !isOpen) return null;
   
   return (
     <div className={chatClasses}>
-      {isMobile && (
-        <div className="flex justify-end p-2">
-          <button onClick={onClose} className="p-1 rounded-md text-gray-400 hover:text-white">
-            <X size={24} />
-          </button>
+      <div className="flex justify-between items-center p-2 bg-[#1A191F] border-b border-[#33333359] cursor-pointer" onClick={toggleMinimize}>
+        <div className="flex-1">
+          {!minimized && <ChatHeader />}
+          {minimized && <h3 className="text-white font-medium ml-2">Chat ao Vivo</h3>}
         </div>
+        <div className="flex items-center">
+          <button onClick={toggleMinimize} className="p-1 rounded-md text-gray-400 hover:text-white">
+            {minimized ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </button>
+          {isMobile && (
+            <button onClick={onClose} className="p-1 ml-1 rounded-md text-gray-400 hover:text-white">
+              <X size={20} />
+            </button>
+          )}
+        </div>
+      </div>
+      
+      {!minimized && (
+        <>
+          <ChatMessageList messages={messages} />
+          <ChatInput 
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            handleSendMessage={handleSendMessage}
+          />
+        </>
       )}
-      <ChatHeader />
-      <ChatMessageList messages={messages} />
-      <ChatInput 
-        newMessage={newMessage}
-        setNewMessage={setNewMessage}
-        handleSendMessage={handleSendMessage}
-      />
     </div>
   );
 };
 
 export default ChatUI;
-

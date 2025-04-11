@@ -1,4 +1,3 @@
-
 import { useState, useMemo, useCallback } from 'react';
 import { Search, Wallet, Menu, MessageSquare } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
@@ -11,97 +10,99 @@ import ProfileDropdown from '@/components/ProfileDropdown';
 import RouletteStatsDialog from '@/components/roulette/RouletteStatsDialog';
 import RouletteStatsPanel from '@/components/roulette/RouletteStatsPanel';
 
-const mockRoulettes = [{
-  name: "Roleta Brasileira",
-  lastNumbers: [7, 11, 23, 5, 18, 36, 14, 9, 32, 0, 27, 1, 13, 6, 17, 34, 22, 29, 15, 3, 24, 10, 19, 31],
-  wins: 150,
-  losses: 50,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Europeia",
-  lastNumbers: [32, 15, 3, 26, 8, 12, 29, 18, 0, 35, 4, 10, 22, 7, 28, 19, 33, 14, 31, 9, 20, 2, 25, 17],
-  wins: 180,
-  losses: 70,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Americana",
-  lastNumbers: [0, 12, 28, 35, 14],
-  wins: 200,
-  losses: 90,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Platinum VIP",
-  lastNumbers: [17, 22, 9, 31, 4],
-  wins: 220,
-  losses: 65,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Diamond",
-  lastNumbers: [19, 6, 27, 13, 36],
-  wins: 190,
-  losses: 55,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Gold",
-  lastNumbers: [2, 10, 20, 33, 16],
-  wins: 170,
-  losses: 60,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Lightning",
-  lastNumbers: [29, 24, 1, 30, 21],
-  wins: 210,
-  losses: 75,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Premium",
-  lastNumbers: [5, 18, 34, 11, 25],
-  wins: 230,
-  losses: 85,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}, {
-  name: "Roleta Turbo",
-  lastNumbers: [8, 17, 29, 2, 19],
-  wins: 185,
-  losses: 65,
-  trend: Array.from({
-    length: 20
-  }, () => ({
-    value: Math.random() * 100
-  }))
-}];
+const mockRoulettes = [
+  {
+    name: "Roleta Brasileira",
+    lastNumbers: [7, 11, 23, 5, 18, 36, 14, 9, 32, 0, 27, 1, 13, 6, 17, 34, 22, 29, 15, 3, 24, 10, 19, 31],
+    wins: 150,
+    losses: 50,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Europeia",
+    lastNumbers: [32, 15, 3, 26, 8, 12, 29, 18, 0, 35, 4, 10, 22, 7, 28, 19, 33, 14, 31, 9, 20, 2, 25, 17],
+    wins: 180,
+    losses: 70,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Americana",
+    lastNumbers: [0, 12, 28, 35, 14],
+    wins: 200,
+    losses: 90,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Platinum VIP",
+    lastNumbers: [17, 22, 9, 31, 4],
+    wins: 220,
+    losses: 65,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Diamond",
+    lastNumbers: [19, 6, 27, 13, 36],
+    wins: 190,
+    losses: 55,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Gold",
+    lastNumbers: [2, 10, 20, 33, 16],
+    wins: 170,
+    losses: 60,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Lightning",
+    lastNumbers: [29, 24, 1, 30, 21],
+    wins: 210,
+    losses: 75,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Premium",
+    lastNumbers: [5, 18, 34, 11, 25],
+    wins: 230,
+    losses: 85,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }, {
+    name: "Roleta Turbo",
+    lastNumbers: [8, 17, 29, 2, 19],
+    wins: 185,
+    losses: 65,
+    trend: Array.from({
+      length: 20
+    }, () => ({
+      value: Math.random() * 100
+    }))
+  }
+];
 
 const Index = () => {
   const [search, setSearch] = useState("");
@@ -274,7 +275,7 @@ const Index = () => {
         </main>
       </div>
       
-      {/* Desktop Chat */}
+      {/* Fixed Chat UI (desktop & mobile) */}
       <ChatUI />
       
       {/* Mobile Chat (drawer) */}
