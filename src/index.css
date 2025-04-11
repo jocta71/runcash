@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap');
@@ -147,6 +148,51 @@
   .mobile-chat-toggle {
     @apply md:hidden block p-2 text-white hover:text-vegas-green transition-colors;
   }
+
+  /* Racetrack styles */
+  .racetrack-card {
+    @apply relative overflow-hidden hover:scale-[1.02] transition-all duration-300;
+  }
+
+  .racetrack-border {
+    @apply border border-gray-700 rounded-md;
+  }
+
+  .racetrack-corner {
+    @apply absolute w-6 h-6 border-2 border-vegas-gold;
+  }
+  
+  .racetrack-stripe {
+    @apply absolute h-1 w-full opacity-0;
+    animation: shine 3s ease-in-out infinite alternate;
+  }
+  
+  @keyframes shine {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    50% {
+      opacity: 0.7;
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-pulse-soft {
+    animation: pulse-soft 2s infinite ease-in-out;
+  }
+  
+  @keyframes pulse-soft {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.03);
+    }
+  }
 }
 
 /* Mobile first media queries */
@@ -159,3 +205,4 @@
     @apply p-3;
   }
 }
+
