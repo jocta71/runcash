@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import RouletteRacetrack from './RouletteRacetrack';
 import { Button } from '@/components/ui/button';
-import { Dice } from 'lucide-react';
+import { Dice1 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 import RouletteNumber from './RouletteNumber';
 
@@ -67,7 +67,7 @@ const HomeRoulette = ({ className = "" }: HomeRouletteProps) => {
           disabled={spinning || !selectedNumber}
           className="bg-vegas-gold hover:bg-vegas-gold/90 text-black font-bold"
         >
-          <Dice className="mr-2" />
+          <Dice1 className="mr-2" />
           {spinning ? "Girando..." : "Girar Roleta"}
         </Button>
       </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -70,6 +69,14 @@ const RouletteDetailsPage = () => {
     });
   };
   
+  const handleBetPlaced = (type: string, numbers: number[], amount: number) => {
+    toast({
+      title: "Aposta Realizada",
+      description: `Você apostou ${amount} em ${type}`,
+      variant: "default"
+    });
+  };
+  
   return (
     <div className="container mx-auto py-6 px-4 md:px-6">
       <h1 className="text-2xl font-bold mb-4 text-vegas-gold">Detalhes da Roleta {id}</h1>
@@ -112,7 +119,7 @@ const RouletteDetailsPage = () => {
               <CardTitle className="text-vegas-gold text-lg">Mesa de Apostas</CardTitle>
             </CardHeader>
             <CardContent>
-              <BettingTable onSelectNumber={handleNumberClick} selectedNumber={selectedNumber} />
+              <BettingTable onBetPlaced={handleBetPlaced} />
             </CardContent>
           </Card>
         </div>
