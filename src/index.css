@@ -1,4 +1,5 @@
 
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap');
@@ -126,6 +127,11 @@
   
   .table-felt {
     @apply bg-black border border-white/5 rounded-xl;
+  }
+
+  /* Racetrack layout */
+  .racetrack-layout {
+    @apply relative rounded-lg overflow-hidden bg-black;
   }
   
   /* Mobile responsive styles */

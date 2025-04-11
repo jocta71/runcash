@@ -1,3 +1,4 @@
+
 import { TrendingUp, BarChart2 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
@@ -11,6 +12,7 @@ import { supabase } from '@/integrations/supabase/client';
 import HotNumbers from './roulette/HotNumbers';
 import { defaultStrategies, Strategy } from './strategies/types';
 import RouletteNumber from './roulette/RouletteNumber';
+import RouletteRacetrack from './roulette/RouletteRacetrack';
 
 interface RouletteCardProps {
   name: string;
@@ -39,6 +41,7 @@ const RouletteCard = ({
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
   const [dataSeeded, setDataSeeded] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState<number | null>(null);
   const [hotNumbers, setHotNumbers] = useState<{
     numbers: number[];
     occurrences: number[];
@@ -147,14 +150,19 @@ const RouletteCard = ({
     });
   };
 
-  const maxRows = 3;
-  const numbersPerRow = 6;
-  const displayNumbers = lastNumbers.slice(0, maxRows * numbersPerRow);
-
   const handleCardClick = () => {
     if (onClick) {
       onClick();
     }
+  };
+
+  const handleNumberClick = (number: number) => {
+    setSelectedNumber(number);
+    toast({
+      title: "Número Selecionado",
+      description: `Você selecionou o número ${number}`,
+      variant: "default"
+    });
   };
 
   const latestNumber = lastNumbers.length > 0 ? lastNumbers[0] : null;
@@ -185,6 +193,15 @@ const RouletteCard = ({
         </div>
       </div>
       
+      {/* Roulette Racetrack */}
+      <div className="my-4">
+        <RouletteRacetrack 
+          onNumberClick={handleNumberClick} 
+          selectedNumber={selectedNumber}
+          size="sm"
+        />
+      </div>
+      
       {latestNumber !== null && (
         <div className="flex justify-center my-2">
           <RouletteNumber number={latestNumber} size="lg" className="animate-pulse-soft" />
@@ -192,7 +209,7 @@ const RouletteCard = ({
       )}
       
       <div className="overflow-hidden">
-        <LastNumbers numbers={displayNumbers} isLoading={isLoading} maxRows={maxRows} numbersPerRow={numbersPerRow} />
+        <LastNumbers numbers={lastNumbers.slice(0, 18)} isLoading={isLoading} maxRows={3} numbersPerRow={6} />
       </div>
       
       {hotNumbers.numbers.length > 0 && (

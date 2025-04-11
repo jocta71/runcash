@@ -9,6 +9,7 @@ import AnimatedInsights from '@/components/AnimatedInsights';
 import ProfileDropdown from '@/components/ProfileDropdown';
 import RouletteStatsDialog from '@/components/roulette/RouletteStatsDialog';
 import RouletteStatsPanel from '@/components/roulette/RouletteStatsPanel';
+import HomeRoulette from '@/components/roulette/HomeRoulette';
 
 const mockRoulettes = [
   {
@@ -21,7 +22,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Europeia",
     lastNumbers: [32, 15, 3, 26, 8, 12, 29, 18, 0, 35, 4, 10, 22, 7, 28, 19, 33, 14, 31, 9, 20, 2, 25, 17],
     wins: 180,
@@ -31,7 +33,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Americana",
     lastNumbers: [0, 12, 28, 35, 14],
     wins: 200,
@@ -41,7 +44,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Platinum VIP",
     lastNumbers: [17, 22, 9, 31, 4],
     wins: 220,
@@ -51,7 +55,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Diamond",
     lastNumbers: [19, 6, 27, 13, 36],
     wins: 190,
@@ -61,7 +66,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Gold",
     lastNumbers: [2, 10, 20, 33, 16],
     wins: 170,
@@ -71,7 +77,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Lightning",
     lastNumbers: [29, 24, 1, 30, 21],
     wins: 210,
@@ -81,7 +88,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Premium",
     lastNumbers: [5, 18, 34, 11, 25],
     wins: 230,
@@ -91,7 +99,8 @@ const mockRoulettes = [
     }, () => ({
       value: Math.random() * 100
     }))
-  }, {
+  },
+  {
     name: "Roleta Turbo",
     lastNumbers: [8, 17, 29, 2, 19],
     wins: 185,
@@ -243,6 +252,11 @@ const Index = () => {
         <main className="pt-4 md:pt-[70px] pb-8 px-4 md:px-6 md:pl-[280px] w-full min-h-screen flex flex-col lg:flex-row gap-4 bg-black">
           {/* Left side: Roulette cards */}
           <div className="w-full lg:w-2/3 lg:pr-4">
+            {/* Featured Roulette */}
+            <div className="mb-6">
+              <HomeRoulette />
+            </div>
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
               {filteredRoulettes.map((roulette, index) => (
                 <div key={index} className="h-full">
