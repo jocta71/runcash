@@ -1,5 +1,7 @@
+
 import { useState } from 'react';
-import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X } from 'lucide-react';
+import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -9,6 +11,21 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) => {
   const [otherExpanded, setOtherExpanded] = useState(false);
+  const [activeSettingsTab, setActiveSettingsTab] = useState('account-information');
+  const navigate = useNavigate();
+  
+  const settingsOptions = [
+    { id: 'account-information', label: 'Account Information' },
+    { id: 'change-password', label: 'Change Password' },
+    { id: 'notification', label: 'Notification' },
+    { id: 'personalization', label: 'Personalization' },
+    { id: 'security-privacy', label: 'Security & Privacy' },
+  ];
+  
+  const handleSettingsItemClick = (id: string) => {
+    setActiveSettingsTab(id);
+    navigate('/profile');
+  };
   
   const sidebarClasses = isMobile
     ? "h-full w-full mobile-sidebar-inner animate-slide-right"
@@ -81,6 +98,24 @@ const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) =>
               </div>
               <span>Loteria</span>
             </div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 className="text-gray-500 text-xs font-medium px-4 mb-2">Settings</h3>
+          <div className="space-y-1">
+            {settingsOptions.map((option) => (
+              <div 
+                key={option.id}
+                className={`menu-item ${activeSettingsTab === option.id ? 'active' : ''}`}
+                onClick={() => handleSettingsItemClick(option.id)}
+              >
+                <div className="bg-[#1A191F] p-1.5 rounded-md">
+                  <Settings size={18} className={activeSettingsTab === option.id ? "text-vegas-gold" : "text-white"} />
+                </div>
+                <span>{option.label}</span>
+              </div>
+            ))}
           </div>
         </div>
         
