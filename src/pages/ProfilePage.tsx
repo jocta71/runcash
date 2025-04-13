@@ -61,7 +61,9 @@ const ProfilePage = () => {
 
   return (
     <div className="flex min-h-screen bg-[#0B0A0F]">
-      <Sidebar />
+      <div className="w-64 flex-shrink-0">
+        <Sidebar />
+      </div>
       
       <div className="flex-1 p-6 md:p-10 overflow-auto">
         <div className="max-w-4xl mx-auto bg-[#1A191F] rounded-xl p-6 text-white shadow-lg">
