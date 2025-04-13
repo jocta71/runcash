@@ -125,142 +125,106 @@ const RouletteStatsDialog = ({
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] md:max-w-4xl max-h-[90vh] overflow-y-auto bg-zinc-950 border-[#00ff00]/20">
+      <DialogContent className="max-w-[95vw] sm:max-w-[80vw] md:max-w-[85vw] h-[90vh] overflow-y-auto bg-zinc-950 border-[#00ff00]/20">
         <DialogHeader>
           <DialogTitle className="flex items-center text-lg text-[#00ff00]">
             <BarChart2 className="mr-2" size={20} /> Estatísticas da {name}
           </DialogTitle>
           <DialogDescription>
-            Análise detalhada dos últimos {lastNumbers.length} números e tendências
+            Análise detalhada dos números e tendências
           </DialogDescription>
         </DialogHeader>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Last Numbers Section */}
-          <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
-            <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
-              <TrendingUp size={16} className="mr-2" /> Últimos Números
-            </h3>
-            <div className="grid grid-cols-6 sm:grid-cols-8 gap-2">
-              {lastNumbers.map((num, i) => (
-                <div key={i} className="flex justify-center">
-                  <RouletteNumber number={num} />
-                </div>
-              ))}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-full">
+          {/* Left side - History takes up full height */}
+          <div className="md:col-span-3 flex flex-col h-full">
+            <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5 h-full overflow-y-auto">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+                <TrendingUp size={16} className="mr-2" /> Histórico de Números
+              </h3>
+              <div className="grid grid-cols-8 sm:grid-cols-12 md:grid-cols-15 lg:grid-cols-20 gap-2">
+                {lastNumbers.map((num, i) => (
+                  <div key={i} className="flex justify-center mb-2">
+                    <RouletteNumber number={num} />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Win Rate Chart */}
-          <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
-            <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
-              <Percent size={16} className="mr-2" /> Taxa de Vitória
-            </h3>
-            <div className="h-[180px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <ReChartPie>
-                  <Pie
-                    data={[
-                      { name: "Vitórias", value: wins },
-                      { name: "Derrotas", value: losses }
-                    ]}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={40}
-                    outerRadius={60}
-                    paddingAngle={5}
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    <Cell key="wins" fill="#00ff00" />
-                    <Cell key="losses" fill="#ef4444" />
-                  </Pie>
-                  <Legend />
-                  <Tooltip />
-                </ReChartPie>
-              </ResponsiveContainer>
-            </div>
-          </div>
-          
-          {/* Frequency Chart */}
-          <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
-            <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
-              <BarChart2 size={16} className="mr-2" /> Frequência de Números
-            </h3>
-            <div className="h-[180px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={frequencyData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                  <XAxis dataKey="number" stroke="#888" />
-                  <YAxis stroke="#888" />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#222', borderColor: '#00ff00' }} 
-                  />
-                  <Bar dataKey="frequency" fill="#00ff00" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-          
-          {/* Color Distribution */}
-          <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
-            <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
-              <PieChart size={16} className="mr-2" /> Distribuição por Cor
-            </h3>
-            <div className="h-[180px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <ReChartPie>
-                  <Pie
-                    data={colorDistribution}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={60}
-                    fill="#8884d8"
-                    dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  >
-                    {colorDistribution.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Legend />
-                  <Tooltip />
-                </ReChartPie>
-              </ResponsiveContainer>
-            </div>
-          </div>
-          
-          {/* Hot & Cold Numbers */}
-          <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5 col-span-1 md:col-span-2">
-            <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
-              <Flame size={16} className="mr-2" /> Números Quentes & Frios
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-3 bg-zinc-900 rounded-lg border border-white/5">
-                <h4 className="text-sm font-semibold flex items-center text-orange-500 mb-2">
-                  <ChevronRight size={14} className="mr-1" /> Números Quentes (Mais Frequentes)
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {hot.map((item, i) => (
-                    <div key={i} className="flex items-center space-x-1">
-                      <RouletteNumber number={item.number} size="sm" />
-                      <span className="text-vegas-gold text-xs">({item.frequency}x)</span>
-                    </div>
-                  ))}
-                </div>
+          {/* Right side - Stacked charts */}
+          <div className="md:col-span-1 flex flex-col gap-4 h-full">
+            {/* Win Rate Chart */}
+            <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+                <Percent size={16} className="mr-2" /> Taxa de Vitória
+              </h3>
+              <div className="h-[180px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ReChartPie>
+                    <Pie
+                      data={[
+                        { name: "Vitórias", value: wins },
+                        { name: "Derrotas", value: losses }
+                      ]}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={40}
+                      outerRadius={60}
+                      paddingAngle={5}
+                      dataKey="value"
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    >
+                      <Cell key="wins" fill="#00ff00" />
+                      <Cell key="losses" fill="#ef4444" />
+                    </Pie>
+                    <Legend />
+                    <Tooltip />
+                  </ReChartPie>
+                </ResponsiveContainer>
               </div>
-              
-              <div className="p-3 bg-zinc-900 rounded-lg border border-white/5">
-                <h4 className="text-sm font-semibold flex items-center text-blue-500 mb-2">
-                  <ChevronRight size={14} className="mr-1" /> Números Frios (Menos Frequentes)
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {cold.map((item, i) => (
-                    <div key={i} className="flex items-center space-x-1">
-                      <RouletteNumber number={item.number} size="sm" />
-                      <span className="text-vegas-gold text-xs">({item.frequency}x)</span>
-                    </div>
-                  ))}
-                </div>
+            </div>
+            
+            {/* Color Distribution */}
+            <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+                <PieChart size={16} className="mr-2" /> Distribuição por Cor
+              </h3>
+              <div className="h-[180px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ReChartPie>
+                    <Pie
+                      data={colorDistribution}
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={60}
+                      fill="#8884d8"
+                      dataKey="value"
+                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    >
+                      {colorDistribution.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Legend />
+                    <Tooltip />
+                  </ReChartPie>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            
+            {/* Hot & Cold Numbers */}
+            <div className="bg-zinc-900/50 p-4 rounded-lg border border-white/5">
+              <h3 className="text-base font-semibold mb-3 flex items-center text-[#00ff00]">
+                <Flame size={16} className="mr-2" /> Números Mais Frequentes
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {hot.slice(0, 8).map((item, i) => (
+                  <div key={i} className="flex items-center space-x-1">
+                    <RouletteNumber number={item.number} size="sm" />
+                    <span className="text-vegas-gold text-xs">({item.frequency}x)</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -271,3 +235,4 @@ const RouletteStatsDialog = ({
 };
 
 export default RouletteStatsDialog;
+

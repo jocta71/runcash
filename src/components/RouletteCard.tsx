@@ -89,7 +89,7 @@ const RouletteCard = ({
           error
         } = await supabase.from('roleta_numeros').select('numero').eq('roleta_nome', name).order('timestamp', {
           ascending: false
-        }).limit(24);
+        }).limit(600); // Increased limit to fetch up to 600 numbers
         
         if (error) {
           console.error('Error fetching roulette numbers:', error);
@@ -192,3 +192,4 @@ const RouletteCard = ({
 };
 
 export default RouletteCard;
+
