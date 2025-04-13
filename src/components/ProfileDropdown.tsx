@@ -19,10 +19,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ChevronDown, User, UserCog, CreditCard, Wallet, LogOut, Lock, Mail, Edit } from "lucide-react";
+import { ChevronDown, User, UserCog, CreditCard, Wallet, LogOut, Lock, Edit } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ProfileDropdown = () => {
   const { user, signOut } = useAuth();
@@ -60,11 +61,19 @@ const ProfileDropdown = () => {
           <DropdownMenuLabel className="font-medium text-vegas-gold">Minha Conta</DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-gray-700" />
           
+          {/* Profile Page Link */}
+          <DropdownMenuItem asChild className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
+            <Link to="/profile">
+              <User size={16} />
+              <span>Meu Perfil</span>
+            </Link>
+          </DropdownMenuItem>
+          
           {/* Editar perfil */}
           <Dialog open={isEditProfileOpen} onOpenChange={setIsEditProfileOpen}>
             <DialogTrigger asChild>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="cursor-pointer flex items-center gap-2 focus:bg-[#262626] focus:text-white hover:bg-[#262626] hover:text-white">
-                <User size={16} />
+                <Edit size={16} />
                 <span>Editar Perfil</span>
               </DropdownMenuItem>
             </DialogTrigger>
