@@ -23,7 +23,7 @@ interface ChatMessage {
 
 const mockRoulettes = [{
   name: "Roleta Brasileira",
-  lastNumbers: [7, 11, 23, 5, 18, 36, 14, 9, 32, 0, 27, 1, 13, 6, 17, 34, 22, 29, 15, 3, 24, 10, 19, 31],
+  lastNumbers: [7, 11, 23, 5, 18],
   wins: 150,
   losses: 50,
   trend: Array.from({
@@ -33,7 +33,7 @@ const mockRoulettes = [{
   }))
 }, {
   name: "Roleta Europeia",
-  lastNumbers: [32, 15, 3, 26, 8, 12, 29, 18, 0, 35, 4, 10, 22, 7, 28, 19, 33, 14, 31, 9, 20, 2, 25, 17],
+  lastNumbers: [32, 15, 3, 26, 8],
   wins: 180,
   losses: 70,
   trend: Array.from({
@@ -209,7 +209,6 @@ const Index = () => {
   const [search, setSearch] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
   
   const filteredRoulettes = mockRoulettes.filter(roulette => roulette.name.toLowerCase().includes(search.toLowerCase()));
   const topRoulettes = useMemo(() => {
@@ -238,49 +237,14 @@ const Index = () => {
             <Menu size={24} className="text-[#00ff00]" />
           </button>
           
-          <div className="flex-1"></div>
+          <span className="text-white text-xl font-bold">RunCash</span>
           
-          <div className="flex items-center gap-2">
-            {showMobileSearch ? (
-              <div className="absolute top-0 left-0 right-0 z-50 p-2 bg-[#100f13] border-b border-[#33333359]">
-                <div className="relative flex items-center w-full">
-                  <Search size={16} className="absolute left-3 text-gray-400" />
-                  <Input 
-                    type="text" 
-                    placeholder="Pesquisar roleta..." 
-                    className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
-                    value={search} 
-                    onChange={e => setSearch(e.target.value)}
-                    autoFocus
-                    onBlur={() => setShowMobileSearch(false)}
-                  />
-                </div>
-              </div>
-            ) : (
-              <>
-                <button 
-                  className="p-2 bg-[#1A191F] rounded-full"
-                  onClick={() => setShowMobileSearch(true)}
-                >
-                  <Search size={16} className="text-gray-400" />
-                </button>
-                <Button 
-                  variant="default" 
-                  size="sm" 
-                  className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90"
-                >
-                  <Wallet size={14} className="mr-1" /> Saldo
-                </Button>
-                <ProfileDropdown />
-              </>
-            )}
-            <button 
-              className="p-2"
-              onClick={() => setChatOpen(true)}
-            >
-              <MessageSquare size={24} className="text-[#00ff00]" />
-            </button>
-          </div>
+          <button 
+            className="p-2"
+            onClick={() => setChatOpen(true)}
+          >
+            <MessageSquare size={24} className="text-[#00ff00]" />
+          </button>
         </div>
         
         {/* Desktop Header */}
@@ -318,8 +282,31 @@ const Index = () => {
           </div>
         </div>
         
+        {/* Mobile Search Bar */}
+        <div className="md:hidden px-4 pt-20 pb-2">
+          <div className="relative flex items-center w-full">
+            <Search size={16} className="absolute left-3 text-gray-400" />
+            <Input 
+              type="text" 
+              placeholder="Pesquisar roleta..." 
+              className="w-full pl-9 py-2 pr-3 text-sm bg-[#1A191F] border-none rounded-full text-white focus-visible:ring-0 focus-visible:ring-offset-0" 
+              value={search} 
+              onChange={e => setSearch(e.target.value)} 
+            />
+          </div>
+        </div>
+        
+        {/* Mobile User Info */}
+        <div className="md:hidden flex justify-between items-center px-4 py-3">
+          <ProfileDropdown />
+          
+          <Button variant="default" size="sm" className="h-8 text-black font-medium bg-gradient-to-b from-[#00ff00] to-[#00ff00] hover:from-[#00ff00]/90 hover:to-[#00ff00]/90">
+            <Wallet size={14} className="mr-1" /> Saldo
+          </Button>
+        </div>
+        
         {/* Mobile Insights */}
-        <div className="md:hidden px-4 py-2 mt-14">
+        <div className="md:hidden px-4 py-2">
           <div className="bg-[#1A191F]/50 rounded-lg p-3">
             <AnimatedInsights />
           </div>
@@ -330,6 +317,7 @@ const Index = () => {
             {filteredRoulettes.map((roulette, index) => <RouletteCard key={index} {...roulette} />)}
           </div>
           
+          {/* Mobile Footer Space (to avoid content being hidden behind fixed elements) */}
           <div className="h-16 md:h-0"></div>
         </main>
       </div>

@@ -4,10 +4,9 @@ import React from 'react';
 interface RouletteNumberProps {
   number: number;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
 }
 
-const RouletteNumber = ({ number, className = '', size = 'md' }: RouletteNumberProps) => {
+const RouletteNumber = ({ number, className = '' }: RouletteNumberProps) => {
   const getRouletteNumberColor = (num: number) => {
     if (num === 0) return "bg-vegas-green text-black";
     
@@ -20,21 +19,9 @@ const RouletteNumber = ({ number, className = '', size = 'md' }: RouletteNumberP
     }
   };
 
-  const getSizeClasses = () => {
-    switch (size) {
-      case 'sm':
-        return 'w-6 h-6 text-xs';
-      case 'lg':
-        return 'w-10 h-10 text-base';
-      case 'md':
-      default:
-        return 'w-8 h-8 text-sm';
-    }
-  };
-
   return (
     <div
-      className={`${getSizeClasses()} rounded-md ${getRouletteNumberColor(number)} flex items-center justify-center font-medium ${className}`}
+      className={`w-8 h-8 rounded-full ${getRouletteNumberColor(number)} flex items-center justify-center text-sm font-medium ${className}`}
     >
       {number}
     </div>

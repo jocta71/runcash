@@ -17,25 +17,10 @@ const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
     );
   }
 
-  // Split numbers into four rows for better display
-  const numRows = 4;
-  const itemsPerRow = Math.ceil(numbers.length / numRows);
-  const rows = Array.from({ length: numRows }, (_, i) =>
-    numbers.slice(i * itemsPerRow, (i + 1) * itemsPerRow)
-  );
-
   return (
-    <div className="flex flex-col items-center gap-1 max-w-full">
-      {rows.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex justify-center gap-1">
-          {row.map((num, i) => (
-            <RouletteNumber 
-              key={i + rowIndex * itemsPerRow} 
-              number={num} 
-              size="sm" 
-            />
-          ))}
-        </div>
+    <div className="flex flex-wrap justify-center gap-2 max-w-full">
+      {numbers.map((num, i) => (
+        <RouletteNumber key={i} number={num} />
       ))}
     </div>
   );

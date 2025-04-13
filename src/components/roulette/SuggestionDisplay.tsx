@@ -1,56 +1,63 @@
 
 import React from 'react';
-import { Target } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Strategy } from '@/components/strategies/types';
+import { WandSparkles, Eye, EyeOff } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import RouletteNumber from './RouletteNumber';
 
 interface SuggestionDisplayProps {
-  strategies: Strategy[];
-  selectedStrategyId: string | null;
-  onSelectStrategy: (strategyId: string) => void;
+  suggestion: number[];
+  selectedGroup: string;
+  isBlurred: boolean;
+  toggleVisibility: (e: React.MouseEvent) => void;
+  numberGroups: Record<string, { name: string; numbers: number[]; color: string }>;
 }
 
 const SuggestionDisplay = ({ 
-  strategies,
-  selectedStrategyId,
-  onSelectStrategy
+  suggestion, 
+  selectedGroup, 
+  isBlurred, 
+  toggleVisibility,
+  numberGroups 
 }: SuggestionDisplayProps) => {
   
-  if (strategies.length === 0) {
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Target size={18} className="text-[#00ff00]" />
-          <span className="text-sm text-[#00ff00] font-medium">Sem estratégias disponíveis</span>
-        </div>
-        <div className="text-xs text-gray-400">
-          Crie estratégias na página de estratégias para usar aqui
-        </div>
-      </div>
-    );
-  }
+  const getSuggestionColor = (num: number) => {
+    const groupKey = selectedGroup as keyof typeof numberGroups;
+    return numberGroups[groupKey].color;
+  };
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <Target size={18} className="text-[#00ff00]" />
-        <span className="text-sm text-[#00ff00] font-medium">Selecionar Estratégia</span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <WandSparkles size={18} className="text-[#00ff00]" />
+          <span className="text-sm text-[#00ff00] font-medium">Sugestão de Jogada</span>
+          <span className="text-xs text-[#00ff00]/70">({numberGroups[selectedGroup as keyof typeof numberGroups].name})</span>
+        </div>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button 
+                onClick={toggleVisibility} 
+                className="text-[#00ff00] hover:text-[#00ff00]/80 transition-colors"
+              >
+                {isBlurred ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{isBlurred ? "Mostrar números" : "Ocultar números"}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
-      <Select 
-        value={selectedStrategyId || ""} 
-        onValueChange={onSelectStrategy}
-      >
-        <SelectTrigger className="bg-[#2A2933] border-[#33333359] text-white">
-          <SelectValue placeholder="Escolha uma estratégia" />
-        </SelectTrigger>
-        <SelectContent className="bg-[#2A2933] border-[#33333359] text-white">
-          {strategies.map((strategy) => (
-            <SelectItem key={strategy.id} value={strategy.id}>
-              {strategy.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex gap-2">
+        {suggestion.map((num, i) => (
+          <RouletteNumber
+            key={i}
+            number={num}
+            className={`border border-[#00ff00] ${getSuggestionColor(num)} ${isBlurred ? 'blur-sm' : 'animate-pulse'}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };
