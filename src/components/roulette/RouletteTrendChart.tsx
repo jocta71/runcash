@@ -4,6 +4,12 @@ import {
   LineChart,
   Line,
   ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  ReferenceLine
 } from 'recharts';
 
 interface RouletteTrendChartProps {
@@ -12,7 +18,7 @@ interface RouletteTrendChartProps {
 
 const RouletteTrendChart = ({ trend }: RouletteTrendChartProps) => {
   return (
-    <div className="h-14 w-full pt-2">
+    <div className="h-16 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={trend}>
           <defs>

@@ -6,16 +6,9 @@ import { Loader2 } from 'lucide-react';
 interface LastNumbersProps {
   numbers: number[];
   isLoading?: boolean;
-  maxRows?: number;
-  numbersPerRow?: number;
 }
 
-const LastNumbers = ({ 
-  numbers, 
-  isLoading = false, 
-  maxRows = 4,
-  numbersPerRow = 6
-}: LastNumbersProps) => {
+const LastNumbers = ({ numbers, isLoading = false }: LastNumbersProps) => {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-10">
@@ -24,22 +17,20 @@ const LastNumbers = ({
     );
   }
 
-  // Create rows based on the provided configuration
-  const rows = [];
-  for (let i = 0; i < maxRows; i++) {
-    const rowNumbers = numbers.slice(i * numbersPerRow, (i + 1) * numbersPerRow);
-    if (rowNumbers.length > 0) {
-      rows.push(rowNumbers);
-    }
-  }
+  // Split numbers into four rows for better display
+  const numRows = 4;
+  const itemsPerRow = Math.ceil(numbers.length / numRows);
+  const rows = Array.from({ length: numRows }, (_, i) =>
+    numbers.slice(i * itemsPerRow, (i + 1) * itemsPerRow)
+  );
 
   return (
-    <div className="flex flex-col items-center gap-1.5 max-w-full">
+    <div className="flex flex-col items-center gap-1 max-w-full">
       {rows.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex justify-center gap-1.5 flex-wrap">
+        <div key={rowIndex} className="flex justify-center gap-1">
           {row.map((num, i) => (
             <RouletteNumber 
-              key={i + rowIndex * numbersPerRow} 
+              key={i + rowIndex * itemsPerRow} 
               number={num} 
               size="sm" 
             />

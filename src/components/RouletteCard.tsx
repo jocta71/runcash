@@ -11,7 +11,8 @@ import RouletteActionButtons from './roulette/RouletteActionButtons';
 import { supabase } from '@/integrations/supabase/client';
 import HotNumbers from './roulette/HotNumbers';
 import { defaultStrategies, Strategy } from './strategies/types';
-import RouletteNumber from './roulette/RouletteNumber';
+import { Button } from './ui/button';
+import RouletteStatsDialog from './roulette/RouletteStatsDialog';
 
 interface RouletteCardProps {
   name: string;
@@ -21,8 +22,6 @@ interface RouletteCardProps {
   trend: {
     value: number;
   }[];
-  isSelected?: boolean;
-  onClick?: () => void;
 }
 
 const RouletteCard = ({
@@ -30,9 +29,7 @@ const RouletteCard = ({
   lastNumbers: initialLastNumbers,
   wins,
   losses,
-  trend,
-  isSelected = false,
-  onClick
+  trend
 }: RouletteCardProps) => {
   const navigate = useNavigate();
   const [selectedStrategyId, setSelectedStrategyId] = useState<string | null>(null);
@@ -40,6 +37,7 @@ const RouletteCard = ({
   const [lastNumbers, setLastNumbers] = useState<number[]>(initialLastNumbers);
   const [isLoading, setIsLoading] = useState(true);
   const [dataSeeded, setDataSeeded] = useState(false);
+  const [statsOpen, setStatsOpen] = useState(false);
   const [hotNumbers, setHotNumbers] = useState<{
     numbers: number[];
     occurrences: number[];
@@ -91,7 +89,7 @@ const RouletteCard = ({
           error
         } = await supabase.from('roleta_numeros').select('numero').eq('roleta_nome', name).order('timestamp', {
           ascending: false
-        }).limit(600); // Increased limit to fetch up to 600 numbers
+        }).limit(24);
         
         if (error) {
           console.error('Error fetching roulette numbers:', error);
@@ -152,54 +150,27 @@ const RouletteCard = ({
     });
   };
 
-  const maxRows = 3;
-  const numbersPerRow = 6;
-  const displayNumbers = lastNumbers.slice(0, maxRows * numbersPerRow);
-
-  const handleCardClick = () => {
-    if (onClick) {
-      onClick();
-    }
-  };
-
-  const latestNumber = lastNumbers.length > 0 ? lastNumbers[0] : null;
-
-  return (
-    <div 
-      className={`backdrop-filter backdrop-blur-sm border ${isSelected ? 'border-vegas-green' : 'border-white/10'} rounded-xl p-3 space-y-2 animate-fade-in h-full bg-[#1A1E1D] cursor-pointer transition-all duration-300 hover:border-vegas-green/50`}
-      onClick={handleCardClick}
-    >
+  return <div className="backdrop-filter backdrop-blur-sm border border-white/10 rounded-xl p-3 space-y-2 animate-fade-in h-auto bg-zinc-950">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-200">{name}</h3>
+        <h3 className="text-sm font-semibold">{name}</h3>
         <div className="flex items-center gap-2">
-          <TrendingUp size={18} className="text-vegas-green" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-6 w-6 text-[#00ff00] hover:text-[#00ff00]/80 hover:bg-white/10"
+            onClick={() => setStatsOpen(true)}
+          >
+            <BarChart2 size={18} />
+          </Button>
+          <TrendingUp size={18} className="text-[#00ff00]" />
         </div>
       </div>
       
-      {latestNumber !== null && (
-        <div className="flex justify-center my-2">
-          <RouletteNumber 
-            number={latestNumber}
-            size="lg" 
-            className="animate-pulse-soft"
-          />
-        </div>
-      )}
+      <LastNumbers numbers={lastNumbers} isLoading={isLoading} />
       
-      <div className="overflow-hidden">
-        <LastNumbers 
-          numbers={displayNumbers} 
-          isLoading={isLoading} 
-          maxRows={maxRows}
-          numbersPerRow={numbersPerRow}
-        />
-      </div>
+      {hotNumbers.numbers.length > 0 && <HotNumbers numbers={hotNumbers.numbers} occurrences={hotNumbers.occurrences} />}
       
-      {hotNumbers.numbers.length > 0 && (
-        <div className="overflow-hidden">
-          <HotNumbers numbers={hotNumbers.numbers} occurrences={hotNumbers.occurrences} />
-        </div>
-      )}
+      <SuggestionDisplay strategies={userStrategies} selectedStrategyId={selectedStrategyId} onSelectStrategy={handleSelectStrategy} />
       
       <div className="grid grid-cols-2 gap-2">
         <WinRateDisplay wins={wins} losses={losses} />
@@ -207,8 +178,17 @@ const RouletteCard = ({
       </div>
       
       <RouletteActionButtons onPlayClick={handlePlayClick} />
-    </div>
-  );
+      
+      <RouletteStatsDialog 
+        open={statsOpen} 
+        onOpenChange={setStatsOpen} 
+        name={name}
+        lastNumbers={lastNumbers}
+        wins={wins}
+        losses={losses}
+        trend={trend}
+      />
+    </div>;
 };
 
 export default RouletteCard;
