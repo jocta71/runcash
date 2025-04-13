@@ -62,8 +62,8 @@ export default {
 					black: '#0A0C14',
 					darkgray: '#161A26',
 					green: '#00ff00',
-					gold: '#D4AF37',
-					darkgold: '#B8860B',
+					gold: '#FFFFFF',        // Changed from D4AF37 to white
+					darkgold: '#E0E0E0',    // Changed to light gray
 					blue: '#36B5FF',
 					red: '#FF4560',
 					darkgreen: '#0E3B28',
@@ -102,8 +102,8 @@ export default {
 					'50%': { boxShadow: '0 0 20px 5px rgba(59, 255, 161, 0.25)' }
 				},
 				'pulse-gold': {
-					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(212, 175, 55, 0.5)' },
-					'50%': { boxShadow: '0 0 20px 5px rgba(212, 175, 55, 0.7)' }
+					'0%, 100%': { boxShadow: '0 0 10px 0 rgba(255, 255, 255, 0.5)' },  // Changed to white
+					'50%': { boxShadow: '0 0 20px 5px rgba(255, 255, 255, 0.7)' }      // Changed to white
 				},
 				'shine-gold': {
 					'0%': { backgroundPosition: '0% 50%' },
@@ -156,10 +156,10 @@ export default {
 					'50%': { opacity: '0.5' }
 				},
 				'jackpot-lights': {
-					'0%': { boxShadow: '0 0 5px rgba(212, 175, 55, 0.7), 0 0 10px rgba(212, 175, 55, 0.5), 0 0 15px rgba(212, 175, 55, 0.3)' },
+					'0%': { boxShadow: '0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.3)' },  // Changed to white
 					'33%': { boxShadow: '0 0 5px rgba(255, 69, 96, 0.7), 0 0 10px rgba(255, 69, 96, 0.5), 0 0 15px rgba(255, 69, 96, 0.3)' },
 					'66%': { boxShadow: '0 0 5px rgba(54, 181, 255, 0.7), 0 0 10px rgba(54, 181, 255, 0.5), 0 0 15px rgba(54, 181, 255, 0.3)' },
-					'100%': { boxShadow: '0 0 5px rgba(212, 175, 55, 0.7), 0 0 10px rgba(212, 175, 55, 0.5), 0 0 15px rgba(212, 175, 55, 0.3)' }
+					'100%': { boxShadow: '0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.3)' }  // Changed to white
 				}
 			},
 			animation: {
@@ -183,7 +183,7 @@ export default {
 				'jackpot-lights': 'jackpot-lights 5s linear infinite'
 			},
 			backgroundImage: {
-				'gold-gradient': 'linear-gradient(135deg, #D4AF37 0%, #FCD978 50%, #D4AF37 100%)',
+				'gold-gradient': 'linear-gradient(135deg, #FFFFFF 0%, #F0F0F0 50%, #FFFFFF 100%)',  // Changed from gold to white/gray
 				'dark-gradient': 'linear-gradient(135deg, #0A0C14 0%, #161A26 100%)',
 				'table-felt': 'linear-gradient(135deg, #0E3B28 0%, #0D2F20 100%)'
 			}

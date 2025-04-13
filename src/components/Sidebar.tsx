@@ -112,7 +112,7 @@ const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) =>
                 onClick={() => handleSettingsItemClick(option.id)}
               >
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
-                  <option.icon size={18} className={activeSettingsTab === option.id ? "text-vegas-gold" : "text-white"} />
+                  <option.icon size={18} className={activeSettingsTab === option.id ? "text-green-400" : "text-white"} />
                 </div>
                 <span>{option.label}</span>
               </div>
