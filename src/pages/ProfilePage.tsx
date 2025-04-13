@@ -111,7 +111,7 @@ const ProfilePage = () => {
               </div>
               
               <div>
-                <Label htmlFor="postalCode" className="text-white mb-2 block">Postal Code</Label>
+                
                 
               </div>
               
