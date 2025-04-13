@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,9 +7,10 @@ import { CustomSelect } from '@/components/ui/custom-select';
 import { Pencil, X } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
 import { useToast } from "@/components/ui/use-toast";
-
 const ProfilePage = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [avatar, setAvatar] = useState<string | null>('/lovable-uploads/63c79802-491a-4de2-97c9-26e0ab910245.png');
   const [profileData, setProfileData] = useState({
     firstName: 'Washim',
@@ -25,24 +25,29 @@ const ProfilePage = () => {
     language: 'English',
     bio: 'Washim Chowdhury is a dedicated truck owner with 10 years of experience in transportation and logistics. Specializing in long-haul freight services. John ensures timely, safe, and reliable deliveries across the Midwest and East Coast regions. Known for his strong work ethic and commitment to quality, Washim takes pride in maintaining top-notch vehicles and building lasting client relationships.'
   });
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setProfileData(prev => ({ ...prev, [name]: value }));
+    const {
+      name,
+      value
+    } = e.target;
+    setProfileData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
   const handleSelectChange = (name: string, value: string) => {
-    setProfileData(prev => ({ ...prev, [name]: value }));
+    setProfileData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
   const handleChangeAvatar = () => {
     // In a real app, this would open a file picker
     toast({
       title: "Feature coming soon",
-      description: "Avatar upload functionality will be available soon.",
+      description: "Avatar upload functionality will be available soon."
     });
   };
-
   const handleRemoveAvatar = () => {
     setAvatar(null);
     toast({
@@ -50,17 +55,14 @@ const ProfilePage = () => {
       description: "Your profile avatar has been removed."
     });
   };
-
   const handleSave = () => {
     toast({
       title: "Profile updated",
       description: "Your profile information has been saved successfully.",
-      variant: "default",
+      variant: "default"
     });
   };
-
-  return (
-    <div className="flex min-h-screen bg-[#0B0A0F]">
+  return <div className="flex min-h-screen bg-[#0B0A0F]">
       <div className="w-64 flex-shrink-0">
         <Sidebar />
       </div>
@@ -72,34 +74,18 @@ const ProfilePage = () => {
           <div className="mb-8 pb-6 border-b border-[#33333359]">
             <div className="flex items-center gap-6">
               <div className="relative">
-                {avatar ? (
-                  <img 
-                    src={avatar} 
-                    alt="Profile" 
-                    className="w-20 h-20 rounded-full object-cover border-2 border-vegas-gold"
-                  />
-                ) : (
-                  <div className="w-20 h-20 rounded-full bg-[#33333359] flex items-center justify-center text-vegas-gold text-2xl">
+                {avatar ? <img src={avatar} alt="Profile" className="w-20 h-20 rounded-full object-cover border-2 border-vegas-gold" /> : <div className="w-20 h-20 rounded-full bg-[#33333359] flex items-center justify-center text-vegas-gold text-2xl">
                     {profileData.firstName[0]}{profileData.lastName[0]}
-                  </div>
-                )}
+                  </div>}
               </div>
               
               <div className="flex gap-3">
-                <Button 
-                  variant="outline" 
-                  onClick={handleChangeAvatar}
-                  className="border-vegas-gold text-vegas-gold hover:bg-vegas-gold hover:text-black"
-                >
+                <Button variant="outline" onClick={handleChangeAvatar} className="border-vegas-gold text-vegas-gold hover:bg-vegas-gold hover:text-black">
                   <Pencil size={16} className="mr-2" />
                   Change avatar
                 </Button>
                 
-                <Button 
-                  variant="outline" 
-                  onClick={handleRemoveAvatar}
-                  className="border-[#33333359] text-white hover:bg-[#33333359]"
-                >
+                <Button variant="outline" onClick={handleRemoveAvatar} className="border-[#33333359] text-white hover:bg-[#33333359]">
                   <X size={16} className="mr-2" />
                   Remove avatar
                 </Button>
@@ -111,149 +97,73 @@ const ProfilePage = () => {
             <div className="space-y-4">
               <div>
                 <Label htmlFor="firstName" className="text-white mb-2 block">First Name</Label>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  value={profileData.firstName}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="firstName" name="firstName" value={profileData.firstName} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
                 <Label htmlFor="email" className="text-white mb-2 block">Email Address</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={profileData.email}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="email" name="email" type="email" value={profileData.email} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
-                <Label htmlFor="cityState" className="text-white mb-2 block">City/State</Label>
-                <Input
-                  id="cityState"
-                  name="cityState"
-                  value={profileData.cityState}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                
+                
               </div>
               
               <div>
                 <Label htmlFor="postalCode" className="text-white mb-2 block">Postal Code</Label>
-                <Input
-                  id="postalCode"
-                  name="postalCode"
-                  value={profileData.postalCode}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="postalCode" name="postalCode" value={profileData.postalCode} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
                 <Label htmlFor="companyName" className="text-white mb-2 block">Company Name</Label>
-                <Input
-                  id="companyName"
-                  name="companyName"
-                  value={profileData.companyName}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="companyName" name="companyName" value={profileData.companyName} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
             </div>
             
             <div className="space-y-4">
               <div>
                 <Label htmlFor="lastName" className="text-white mb-2 block">Last Name</Label>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  value={profileData.lastName}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="lastName" name="lastName" value={profileData.lastName} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
                 <Label htmlFor="phone" className="text-white mb-2 block">Phone</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  value={profileData.phone}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="phone" name="phone" value={profileData.phone} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
                 <Label htmlFor="country" className="text-white mb-2 block">Country</Label>
-                <CustomSelect
-                  id="country"
-                  options={["USA", "Canada", "UK", "Australia", "Brazil"]}
-                  defaultValue={profileData.country}
-                  onChange={(value) => handleSelectChange("country", value)}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <CustomSelect id="country" options={["USA", "Canada", "UK", "Australia", "Brazil"]} defaultValue={profileData.country} onChange={value => handleSelectChange("country", value)} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
                 <Label htmlFor="taxId" className="text-white mb-2 block">Tax ID</Label>
-                <Input
-                  id="taxId"
-                  name="taxId"
-                  value={profileData.taxId}
-                  onChange={handleInputChange}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <Input id="taxId" name="taxId" value={profileData.taxId} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
                 <Label htmlFor="language" className="text-white mb-2 block">Language</Label>
-                <CustomSelect
-                  id="language"
-                  options={["English", "Spanish", "Portuguese", "French", "German"]}
-                  defaultValue={profileData.language}
-                  onChange={(value) => handleSelectChange("language", value)}
-                  className="bg-[#111118] border-[#33333359] text-white"
-                />
+                <CustomSelect id="language" options={["English", "Spanish", "Portuguese", "French", "German"]} defaultValue={profileData.language} onChange={value => handleSelectChange("language", value)} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
             </div>
             
             <div className="md:col-span-2 space-y-4">
               <Label htmlFor="bio" className="text-white mb-2 block">Bio</Label>
-              <Textarea
-                id="bio"
-                name="bio"
-                value={profileData.bio}
-                onChange={handleInputChange}
-                rows={6}
-                className="bg-[#111118] border-[#33333359] text-white w-full resize-none"
-              />
+              <Textarea id="bio" name="bio" value={profileData.bio} onChange={handleInputChange} rows={6} className="bg-[#111118] border-[#33333359] text-white w-full resize-none" />
             </div>
           </div>
           
           <div className="mt-8 flex justify-end gap-4">
-            <Button 
-              variant="outline" 
-              className="border-[#33333359] text-white hover:bg-[#33333359]"
-            >
+            <Button variant="outline" className="border-[#33333359] text-white hover:bg-[#33333359]">
               Cancel
             </Button>
-            <Button 
-              onClick={handleSave}
-              className="bg-vegas-gold text-black hover:bg-vegas-darkgold"
-            >
+            <Button onClick={handleSave} className="bg-vegas-gold text-black hover:bg-vegas-darkgold">
               Save
             </Button>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ProfilePage;
