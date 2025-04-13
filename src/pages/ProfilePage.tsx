@@ -112,12 +112,12 @@ const ProfilePage = () => {
               
               <div>
                 <Label htmlFor="postalCode" className="text-white mb-2 block">Postal Code</Label>
-                <Input id="postalCode" name="postalCode" value={profileData.postalCode} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
+                
               </div>
               
               <div>
-                <Label htmlFor="companyName" className="text-white mb-2 block">Company Name</Label>
-                <Input id="companyName" name="companyName" value={profileData.companyName} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
+                
+                
               </div>
             </div>
             
@@ -133,25 +133,22 @@ const ProfilePage = () => {
               </div>
               
               <div>
-                <Label htmlFor="country" className="text-white mb-2 block">Country</Label>
+                
                 <CustomSelect id="country" options={["USA", "Canada", "UK", "Australia", "Brazil"]} defaultValue={profileData.country} onChange={value => handleSelectChange("country", value)} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
               
               <div>
-                <Label htmlFor="taxId" className="text-white mb-2 block">Tax ID</Label>
-                <Input id="taxId" name="taxId" value={profileData.taxId} onChange={handleInputChange} className="bg-[#111118] border-[#33333359] text-white" />
+                
+                
               </div>
               
               <div>
-                <Label htmlFor="language" className="text-white mb-2 block">Language</Label>
+                
                 <CustomSelect id="language" options={["English", "Spanish", "Portuguese", "French", "German"]} defaultValue={profileData.language} onChange={value => handleSelectChange("language", value)} className="bg-[#111118] border-[#33333359] text-white" />
               </div>
             </div>
             
-            <div className="md:col-span-2 space-y-4">
-              <Label htmlFor="bio" className="text-white mb-2 block">Bio</Label>
-              <Textarea id="bio" name="bio" value={profileData.bio} onChange={handleInputChange} rows={6} className="bg-[#111118] border-[#33333359] text-white w-full resize-none" />
-            </div>
+            
           </div>
           
           <div className="mt-8 flex justify-end gap-4">
