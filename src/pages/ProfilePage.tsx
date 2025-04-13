@@ -5,15 +5,17 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Camera, Copy } from "lucide-react";
+import { Camera, Copy, Settings } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { CustomSelect } from "@/components/ui/custom-select";
+import { cn } from "@/lib/utils";
 
 const ProfilePage = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("account");
+  const [activeSettingsTab, setActiveSettingsTab] = useState("account-information");
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -40,12 +42,45 @@ const ProfilePage = () => {
   // Sample country options
   const countryOptions = ["United States", "Canada", "United Kingdom", "Australia", "Germany"];
 
+  // Settings panel options
+  const settingsOptions = [
+    { id: 'account-information', label: 'Account Information' },
+    { id: 'change-password', label: 'Change Password' },
+    { id: 'notification', label: 'Notification' },
+    { id: 'personalization', label: 'Personalization' },
+    { id: 'security-privacy', label: 'Security & Privacy' },
+  ];
+
   return (
     <div className="container py-6 md:py-10">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Profile Sidebar */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {/* Settings Sidebar Panel */}
         <div className="col-span-1">
-          <Card className="p-6 bg-white dark:bg-vegas-darkgray border-vegas-darkgray">
+          <Card className="p-4 bg-white dark:bg-vegas-darkgray border-vegas-darkgray">
+            <div className="flex items-center gap-2 mb-4 px-2">
+              <Settings className="h-5 w-5" />
+              <h3 className="text-lg font-medium">Settings</h3>
+            </div>
+            
+            <div className="space-y-1">
+              {settingsOptions.map((option) => (
+                <Button
+                  key={option.id}
+                  variant={activeSettingsTab === option.id ? "default" : "ghost"}
+                  className={cn(
+                    "w-full justify-start text-left rounded-md px-3 py-2",
+                    activeSettingsTab === option.id ? "bg-blue-600 text-white" : "hover:bg-gray-100 dark:hover:bg-vegas-black"
+                  )}
+                  onClick={() => setActiveSettingsTab(option.id)}
+                >
+                  {option.label}
+                </Button>
+              ))}
+            </div>
+          </Card>
+
+          {/* Profile Card */}
+          <Card className="p-6 mt-6 bg-white dark:bg-vegas-darkgray border-vegas-darkgray">
             <div className="flex flex-col items-center text-center">
               <div className="relative mb-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 border-2 border-vegas-gold">
@@ -97,7 +132,7 @@ const ProfilePage = () => {
         </div>
         
         {/* Profile Settings */}
-        <div className="col-span-1 md:col-span-2">
+        <div className="col-span-1 md:col-span-3">
           <Card className="overflow-hidden bg-white dark:bg-vegas-darkgray border-vegas-darkgray">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <div className="border-b border-gray-200 dark:border-gray-700">
