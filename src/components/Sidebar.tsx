@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X, Settings } from 'lucide-react';
+import { CircleDollarSign, Rocket, Heart, Gift, Ticket, Trophy, Users, BarChart3, Scale, LifeBuoy, ChevronDown, Gamepad2, Flame, Globe, Send, X, Settings, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface SidebarProps {
@@ -15,16 +15,17 @@ const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) =>
   const navigate = useNavigate();
   
   const settingsOptions = [
-    { id: 'account-information', label: 'Account Information' },
-    { id: 'change-password', label: 'Change Password' },
-    { id: 'notification', label: 'Notification' },
-    { id: 'personalization', label: 'Personalization' },
-    { id: 'security-privacy', label: 'Security & Privacy' },
+    { id: 'account-information', label: 'Account Information', icon: Settings },
+    { id: 'billing', label: 'Billing', icon: CreditCard },
   ];
   
   const handleSettingsItemClick = (id: string) => {
     setActiveSettingsTab(id);
-    navigate('/profile');
+    if (id === 'account-information') {
+      navigate('/profile');
+    } else if (id === 'billing') {
+      navigate('/billing');
+    }
   };
   
   const sidebarClasses = isMobile
@@ -111,7 +112,7 @@ const Sidebar = ({ isOpen = false, onClose, isMobile = false }: SidebarProps) =>
                 onClick={() => handleSettingsItemClick(option.id)}
               >
                 <div className="bg-[#1A191F] p-1.5 rounded-md">
-                  <Settings size={18} className={activeSettingsTab === option.id ? "text-vegas-gold" : "text-white"} />
+                  <option.icon size={18} className={activeSettingsTab === option.id ? "text-vegas-gold" : "text-white"} />
                 </div>
                 <span>{option.label}</span>
               </div>
