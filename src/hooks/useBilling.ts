@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plan, Subscription } from "@/types/billing";
+import { showSuccessToast } from '@/components/ui/success-toast';
 
 export const useBilling = () => {
   const { toast } = useToast();
@@ -128,10 +129,10 @@ export const useBilling = () => {
       return await response.json();
     },
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Your subscription has been created successfully",
-      });
+      showSuccessToast(
+        "Assinatura criada",
+        "Sua assinatura foi criada com sucesso!"
+      );
       queryClient.invalidateQueries({ queryKey: ['user-subscription'] });
     },
     onError: (error) => {
@@ -174,10 +175,10 @@ export const useBilling = () => {
       return await response.json();
     },
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Your subscription has been canceled",
-      });
+      showSuccessToast(
+        "Assinatura cancelada",
+        "Sua assinatura foi cancelada com sucesso"
+      );
       queryClient.invalidateQueries({ queryKey: ['user-subscription'] });
     },
     onError: (error) => {
