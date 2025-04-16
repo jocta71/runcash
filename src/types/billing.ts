@@ -11,10 +11,15 @@ export interface Plan {
 
 export interface Subscription {
   id: string;
-  customer: string;
+  customer: {
+    name: string;
+    email: string;
+    cpfCnpj?: string;
+  };
   plan: string;
   status: 'ACTIVE' | 'INACTIVE' | 'OVERDUE' | 'CANCELED';
   nextDueDate: string;
+  createdAt: string;
   value: number;
 }
 
