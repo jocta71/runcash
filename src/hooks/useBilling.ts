@@ -5,6 +5,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Plan, Subscription } from "@/types/billing";
 import { showSuccessToast } from '@/components/ui/success-toast';
+import { showErrorToast } from '@/components/ui/error-toast';
+import { EmailNotificationsService } from '@/services/EmailNotificationsService';
+import { showInfoToast } from '@/components/ui/info-toast';
 
 export const useBilling = () => {
   const { toast } = useToast();
@@ -27,11 +30,10 @@ export const useBilling = () => {
         return (data as unknown) as Plan[];
       } catch (error) {
         console.error('Error fetching plans:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load subscription plans",
-          variant: "destructive",
-        });
+        showErrorToast(
+          "Erro ao carregar planos", 
+          "Não foi possível carregar os planos de assinatura"
+        );
         return [] as Plan[];
       } finally {
         setLoading(false);
@@ -61,17 +63,38 @@ export const useBilling = () => {
         return (data as unknown) as Subscription | null;
       } catch (error) {
         console.error('Error fetching subscription:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load subscription information",
-          variant: "destructive",
-        });
+        showErrorToast(
+          "Erro ao carregar assinatura", 
+          "Não foi possível carregar as informações da sua assinatura"
+        );
         return null;
       } finally {
         setLoading(false);
       }
     },
   });
+  
+  // Check if a subscription renewal is coming soon (within 5 days)
+  const isRenewalSoon = subscription && 
+    new Date(subscription.nextDueDate).getTime() - new Date().getTime() < 5 * 24 * 60 * 60 * 1000;
+
+  // If renewal is soon, show a notification
+  if (isRenewalSoon && subscription) {
+    showInfoToast(
+      "Renovação em breve",
+      `Sua assinatura será renovada em ${new Date(subscription.nextDueDate).toLocaleDateString('pt-BR')}`
+    );
+    
+    // We could also send an email reminder here
+    const userEmail = subscription.customer.email;
+    const planName = plans.find(p => p.id === subscription.plan)?.name || "Premium";
+    
+    EmailNotificationsService.sendRenewalReminder(
+      userEmail, 
+      planName,
+      subscription.nextDueDate
+    );
+  }
   
   // Create a new subscription
   const subscriptionMutation = useMutation({
@@ -126,6 +149,17 @@ export const useBilling = () => {
         throw new Error(errorData.message || 'Failed to create subscription');
       }
       
+      // Get selected plan name for the email notification
+      const selectedPlan = plans.find(p => p.id === planId);
+      
+      // Send welcome email
+      if (selectedPlan) {
+        await EmailNotificationsService.sendSubscriptionWelcome(
+          email, 
+          selectedPlan.name
+        );
+      }
+      
       return await response.json();
     },
     onSuccess: () => {
@@ -137,11 +171,10 @@ export const useBilling = () => {
     },
     onError: (error) => {
       console.error('Error creating subscription:', error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create subscription",
-        variant: "destructive",
-      });
+      showErrorToast(
+        "Erro",
+        error instanceof Error ? error.message : "Falha ao criar assinatura"
+      );
     },
     onSettled: () => {
       setLoading(false);
@@ -172,6 +205,14 @@ export const useBilling = () => {
         throw new Error(errorData.message || 'Failed to cancel subscription');
       }
       
+      // Send cancellation confirmation email
+      if (subscription.customer?.email && subscription.nextDueDate) {
+        await EmailNotificationsService.sendCancellationConfirmation(
+          subscription.customer.email,
+          subscription.nextDueDate
+        );
+      }
+      
       return await response.json();
     },
     onSuccess: () => {
@@ -183,11 +224,10 @@ export const useBilling = () => {
     },
     onError: (error) => {
       console.error('Error canceling subscription:', error);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to cancel subscription",
-        variant: "destructive",
-      });
+      showErrorToast(
+        "Erro",
+        error instanceof Error ? error.message : "Falha ao cancelar assinatura"
+      );
     },
     onSettled: () => {
       setLoading(false);

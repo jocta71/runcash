@@ -8,6 +8,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Bell, Globe, Lock, Save, User } from "lucide-react";
 import { showSuccessToast } from '../ui/success-toast';
+import LoadingSpinner from '../ui/loading-spinner';
+import TwoFactorSetup from './TwoFactorSetup';
 
 const SettingsPanel = () => {
   const [notifications, setNotifications] = useState({
@@ -55,7 +57,7 @@ const SettingsPanel = () => {
           
           <TabsContent value="profile" className="space-y-4 mt-4">
             <div className="grid gap-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nome</Label>
                   <Input id="name" placeholder="Seu nome" className="bg-[#252429] border-[#33333359] text-white" />
@@ -117,27 +119,25 @@ const SettingsPanel = () => {
           </TabsContent>
           
           <TabsContent value="security" className="space-y-4 mt-4">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="current-password">Senha atual</Label>
-                <Input id="current-password" type="password" className="bg-[#252429] border-[#33333359] text-white" />
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium">Alterar Senha</h3>
+                <div className="space-y-2">
+                  <Label htmlFor="current-password">Senha atual</Label>
+                  <Input id="current-password" type="password" className="bg-[#252429] border-[#33333359] text-white" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="new-password">Nova senha</Label>
+                  <Input id="new-password" type="password" className="bg-[#252429] border-[#33333359] text-white" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="confirm-password">Confirmar nova senha</Label>
+                  <Input id="confirm-password" type="password" className="bg-[#252429] border-[#33333359] text-white" />
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="new-password">Nova senha</Label>
-                <Input id="new-password" type="password" className="bg-[#252429] border-[#33333359] text-white" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirmar nova senha</Label>
-                <Input id="confirm-password" type="password" className="bg-[#252429] border-[#33333359] text-white" />
-              </div>
-              <div className="pt-2">
-                <Label className="flex items-center space-x-2">
-                  <Switch id="2fa" />
-                  <span>Ativar autenticação de dois fatores (2FA)</span>
-                </Label>
-                <p className="text-sm text-gray-400 mt-1">
-                  Adicione uma camada extra de segurança à sua conta
-                </p>
+              
+              <div className="pt-4">
+                <TwoFactorSetup />
               </div>
             </div>
           </TabsContent>
