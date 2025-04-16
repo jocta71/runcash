@@ -21,7 +21,9 @@ export const useBilling = () => {
           .select('*');
         
         if (error) throw error;
-        return data as Plan[];
+        
+        // Type assertion to convert database results to our Plan type
+        return (data as unknown) as Plan[];
       } catch (error) {
         console.error('Error fetching plans:', error);
         toast({
@@ -53,7 +55,9 @@ export const useBilling = () => {
           .single();
         
         if (error && error.code !== 'PGRST116') throw error;
-        return data as Subscription | null;
+        
+        // Type assertion to convert database result to our Subscription type
+        return (data as unknown) as Subscription | null;
       } catch (error) {
         console.error('Error fetching subscription:', error);
         toast({
