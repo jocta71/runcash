@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -7,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
@@ -14,9 +14,9 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { signIn, signUp, signInWithGoogle, signInWithGitHub, user } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
-    // Redirect to home if already logged in
     if (user) {
       navigate('/');
     }
@@ -54,6 +54,28 @@ const AuthPage = () => {
 
   const handleGitHubSignIn = async () => {
     await signInWithGitHub();
+  };
+
+  const handleDemoLogin = async () => {
+    setIsLoading(true);
+    try {
+      const { error } = await signIn('demo@example.com', 'demo123456');
+      if (!error) {
+        toast({
+          title: "Login bem-sucedido",
+          description: "Bem-vindo ao modo demo!"
+        });
+        navigate('/');
+      }
+    } catch (error) {
+      toast({
+        title: "Erro no login demo",
+        description: "Não foi possível fazer login com a conta demo.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -97,6 +119,16 @@ const AuthPage = () => {
               <CardFooter className="flex flex-col gap-4">
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "Entrando..." : "Entrar"}
+                </Button>
+                
+                <Button 
+                  type="button" 
+                  variant="secondary"
+                  className="w-full"
+                  onClick={handleDemoLogin}
+                  disabled={isLoading}
+                >
+                  Entrar como Usuário Demo
                 </Button>
                 
                 <div className="flex items-center w-full gap-2 my-2">
