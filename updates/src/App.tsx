@@ -22,12 +22,14 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Root route now without ProtectedRoute wrapper */}
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/roulette/:rouletteId" element={<RouletteDetailsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/billing" element={<BillingPage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            
+            {/* All other routes remain protected */}
+            <Route path="/roulette/:rouletteId" element={<ProtectedRoute><RouletteDetailsPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path="/billing" element={<ProtectedRoute><BillingPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
