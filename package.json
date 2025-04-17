@@ -10,7 +10,6 @@
     "preview": "cd frontend && npm run preview"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.6.7",
     "mongodb": "^6.3.0"
   }
