@@ -11,6 +11,7 @@ import RouletteDetailsPage from "./pages/RouletteDetailsPage";
 import ProfilePage from "./pages/ProfilePage";
 import BillingPage from "./pages/BillingPage";
 import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
