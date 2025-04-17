@@ -1,6 +1,5 @@
 
-#!/usr/bin/env node
-
+/* Script para iniciar o servidor de desenvolvimento */
 const { execSync } = require('child_process');
 const path = require('path');
 
