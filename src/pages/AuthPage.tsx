@@ -1,4 +1,4 @@
-
+import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +15,7 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { signIn, signUp, signInWithGoogle, signInWithGitHub, user } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (user) {
@@ -22,7 +23,7 @@ const AuthPage = () => {
     }
   }, [user, navigate]);
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -35,7 +36,7 @@ const AuthPage = () => {
     }
   };
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     try {
@@ -61,13 +62,15 @@ const AuthPage = () => {
     try {
       const { error } = await signIn('demo@example.com', 'demo123456');
       if (!error) {
-        toast('Login bem-sucedido', {
+        toast({
+          title: "Login bem-sucedido",
           description: "Bem-vindo ao modo demo!"
         });
         navigate('/');
       }
     } catch (error) {
-      toast('Erro no login demo', {
+      toast({
+        title: "Erro no login demo",
         description: "Não foi possível fazer login com a conta demo.",
         variant: "destructive"
       });

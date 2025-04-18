@@ -1,156 +1,178 @@
 
+import * as React from 'react';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from 'sonner';
 
-type User = {
-  id?: string;
-  email?: string;
-} | null;
+// Define user type
+interface User {
+  id: string;
+  email: string;
+  name?: string;
+  avatar_url?: string;
+}
 
-type AuthContextType = {
-  user: User;
-  loading: boolean;
+// Define auth context type
+interface AuthContextType {
+  user: User | null;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signInWithGitHub: () => Promise<void>;
-  checkAuth: () => Promise<void>;
-};
+}
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Create auth context with default values
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  signIn: async () => ({ error: null }),
+  signUp: async () => ({ error: null }),
+  signOut: async () => {},
+  signInWithGoogle: async () => {},
+  signInWithGitHub: async () => {},
+});
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>(null);
+// Auth provider props type
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+// Auth provider component
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if user is authenticated on mount
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  // Mock data - in a real app, fetch from API or Supabase
+  const mockUsers = [
+    {
+      id: '1',
+      email: 'demo@example.com',
+      password: 'demo123456',
+      name: 'Demo User',
+      avatar_url: 'https://ui-avatars.com/api/?name=Demo+User',
+    },
+    {
+      id: '2',
+      email: 'user@example.com',
+      password: 'password123',
+      name: 'Test User',
+      avatar_url: 'https://ui-avatars.com/api/?name=Test+User',
+    },
+  ];
 
-  // Demo authentication check
-  const checkAuth = async () => {
-    setLoading(true);
-    try {
-      // Check if we have a user in local storage
-      const storedUser = localStorage.getItem('runcash_user');
-      
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+  // Check if user is already logged in (e.g., from localStorage)
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Failed to parse user from localStorage', error);
+        localStorage.removeItem('user');
       }
-    } catch (error) {
-      console.error('Authentication check error:', error);
-    } finally {
-      setLoading(false);
     }
-  };
+    setLoading(false);
+  }, []);
 
   // Sign in with email and password
   const signIn = async (email: string, password: string) => {
-    setLoading(true);
-    
     try {
-      // Demo authentication
-      if (email === 'demo@example.com' && password === 'demo123456') {
-        const user = { id: 'demo-id', email };
-        setUser(user);
-        localStorage.setItem('runcash_user', JSON.stringify(user));
-        toast.success('Login bem-sucedido!');
-        return { error: null };
+      // Mock authentication - replace with actual auth logic
+      const foundUser = mockUsers.find(
+        (u) => u.email === email && u.password === password
+      );
+
+      if (!foundUser) {
+        toast.error('Invalid email or password');
+        return { error: 'Invalid email or password' };
       }
+
+      // Create a user object without the password
+      const authenticatedUser = {
+        id: foundUser.id,
+        email: foundUser.email,
+        name: foundUser.name,
+        avatar_url: foundUser.avatar_url,
+      };
+
+      // Store user in state and localStorage
+      setUser(authenticatedUser);
+      localStorage.setItem('user', JSON.stringify(authenticatedUser));
+      toast.success('Successfully logged in');
       
-      // Simulate sign in delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // For now, just accept any valid email/password
-      if (email && password.length >= 6) {
-        const user = { id: 'user-' + Date.now(), email };
-        setUser(user);
-        localStorage.setItem('runcash_user', JSON.stringify(user));
-        toast.success('Login bem-sucedido!');
-        return { error: null };
-      }
-      
-      toast.error('Credenciais inválidas');
-      return { error: 'Credenciais inválidas' };
+      return { error: null };
     } catch (error) {
       console.error('Sign in error:', error);
-      toast.error('Erro ao fazer login');
+      toast.error('Failed to sign in');
       return { error };
-    } finally {
-      setLoading(false);
     }
   };
 
   // Sign up with email and password
   const signUp = async (email: string, password: string) => {
-    setLoading(true);
-    
     try {
-      // Simulate sign up delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // For now, just accept any valid email/password
-      if (email && password.length >= 6) {
-        const user = { id: 'user-' + Date.now(), email };
-        setUser(user);
-        localStorage.setItem('runcash_user', JSON.stringify(user));
-        toast.success('Conta criada com sucesso!');
-        return { error: null };
+      // Check if user already exists
+      const userExists = mockUsers.some((u) => u.email === email);
+      if (userExists) {
+        toast.error('User already exists');
+        return { error: 'User already exists' };
       }
-      
-      toast.error('Email ou senha inválidos');
-      return { error: 'Email ou senha inválidos' };
+
+      // In a real app, this would create a user in your database
+      // Here, we'll just simulate success
+      toast.success('Account created! Please check your email to verify your account.');
+      return { error: null };
     } catch (error) {
       console.error('Sign up error:', error);
-      toast.error('Erro ao criar conta');
+      toast.error('Failed to create account');
       return { error };
-    } finally {
-      setLoading(false);
     }
   };
 
   // Sign out
   const signOut = async () => {
     setUser(null);
-    localStorage.removeItem('runcash_user');
-    toast.success('Logout realizado com sucesso');
+    localStorage.removeItem('user');
+    toast.info('Logged out successfully');
   };
 
   // Sign in with Google
   const signInWithGoogle = async () => {
-    setLoading(true);
-    
     try {
-      // In this demo, we'll just create a mock Google user
-      const mockGoogleUser = { id: 'google-user-' + Date.now(), email: 'google-user@example.com' };
-      setUser(mockGoogleUser);
-      localStorage.setItem('runcash_user', JSON.stringify(mockGoogleUser));
-      toast.success('Login com Google realizado com sucesso!');
+      // Mock Google authentication
+      const googleUser = {
+        id: 'google-123',
+        email: 'google-user@example.com',
+        name: 'Google User',
+        avatar_url: 'https://ui-avatars.com/api/?name=Google+User',
+      };
+
+      setUser(googleUser);
+      localStorage.setItem('user', JSON.stringify(googleUser));
+      toast.success('Logged in with Google');
     } catch (error) {
       console.error('Google sign in error:', error);
-      toast.error('Erro ao fazer login com Google');
-    } finally {
-      setLoading(false);
+      toast.error('Failed to log in with Google');
     }
   };
 
   // Sign in with GitHub
   const signInWithGitHub = async () => {
-    setLoading(true);
-    
     try {
-      // In this demo, we'll just create a mock GitHub user
-      const mockGitHubUser = { id: 'github-user-' + Date.now(), email: 'github-user@example.com' };
-      setUser(mockGitHubUser);
-      localStorage.setItem('runcash_user', JSON.stringify(mockGitHubUser));
-      toast.success('Login com GitHub realizado com sucesso!');
+      // Mock GitHub authentication
+      const githubUser = {
+        id: 'github-123',
+        email: 'github-user@example.com',
+        name: 'GitHub User',
+        avatar_url: 'https://ui-avatars.com/api/?name=GitHub+User',
+      };
+
+      setUser(githubUser);
+      localStorage.setItem('user', JSON.stringify(githubUser));
+      toast.success('Logged in with GitHub');
     } catch (error) {
       console.error('GitHub sign in error:', error);
-      toast.error('Erro ao fazer login com GitHub');
-    } finally {
-      setLoading(false);
+      toast.error('Failed to log in with GitHub');
     }
   };
 
@@ -158,24 +180,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     <AuthContext.Provider
       value={{
         user,
-        loading,
         signIn,
         signUp,
         signOut,
         signInWithGoogle,
         signInWithGitHub,
-        checkAuth
       }}
     >
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+// Hook to use the auth context
+export const useAuth = () => useContext(AuthContext);
