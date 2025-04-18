@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 // Define user type
 interface User {
@@ -83,7 +83,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       );
 
       if (!foundUser) {
-        toast.error('Invalid email or password');
+        toast({
+          title: "Invalid credentials",
+          description: "Invalid email or password",
+          variant: "destructive"
+        });
         return { error: 'Invalid email or password' };
       }
 
@@ -98,12 +102,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // Store user in state and localStorage
       setUser(authenticatedUser);
       localStorage.setItem('user', JSON.stringify(authenticatedUser));
-      toast.success('Successfully logged in');
+      toast({
+        title: "Success",
+        description: "Successfully logged in"
+      });
       
       return { error: null };
     } catch (error) {
       console.error('Sign in error:', error);
-      toast.error('Failed to sign in');
+      toast({
+        title: "Error",
+        description: "Failed to sign in",
+        variant: "destructive"
+      });
       return { error };
     }
   };
@@ -114,17 +125,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       // Check if user already exists
       const userExists = mockUsers.some((u) => u.email === email);
       if (userExists) {
-        toast.error('User already exists');
+        toast({
+          title: "Error",
+          description: "User already exists",
+          variant: "destructive"
+        });
         return { error: 'User already exists' };
       }
 
       // In a real app, this would create a user in your database
       // Here, we'll just simulate success
-      toast.success('Account created! Please check your email to verify your account.');
+      toast({
+        title: "Success",
+        description: "Account created! Please check your email to verify your account."
+      });
       return { error: null };
     } catch (error) {
       console.error('Sign up error:', error);
-      toast.error('Failed to create account');
+      toast({
+        title: "Error",
+        description: "Failed to create account",
+        variant: "destructive"
+      });
       return { error };
     }
   };
@@ -133,7 +155,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const signOut = async () => {
     setUser(null);
     localStorage.removeItem('user');
-    toast.info('Logged out successfully');
+    toast({
+      title: "Success",
+      description: "Logged out successfully"
+    });
   };
 
   // Sign in with Google
@@ -149,10 +174,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       setUser(googleUser);
       localStorage.setItem('user', JSON.stringify(googleUser));
-      toast.success('Logged in with Google');
+      toast({
+        title: "Success",
+        description: "Logged in with Google"
+      });
     } catch (error) {
       console.error('Google sign in error:', error);
-      toast.error('Failed to log in with Google');
+      toast({
+        title: "Error",
+        description: "Failed to log in with Google",
+        variant: "destructive"
+      });
     }
   };
 
@@ -169,10 +201,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       setUser(githubUser);
       localStorage.setItem('user', JSON.stringify(githubUser));
-      toast.success('Logged in with GitHub');
+      toast({
+        title: "Success",
+        description: "Logged in with GitHub"
+      });
     } catch (error) {
       console.error('GitHub sign in error:', error);
-      toast.error('Failed to log in with GitHub');
+      toast({
+        title: "Error",
+        description: "Failed to log in with GitHub",
+        variant: "destructive"
+      });
     }
   };
 
